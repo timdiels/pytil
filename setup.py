@@ -2,9 +2,9 @@ from pathlib import Path
 here = Path(__file__).parent
 
 import sys
-sys.path.append(here / 'blue_py_project')
+sys.path.append(here / 'chicken_turtle')
 
-from blue_py_project.setuptools import setup
+from chicken_turtle.setuptools import setup
 
 # setup
 setup(
@@ -46,12 +46,12 @@ setup(
     ''',
     
     # standard
-    name='blue_py_project',
+    name='chicken_turtle',
     description="Python 3 project template, tailored to the author's needs",
     author='Tim Diels',
     author_email='timdiels.m@gmail.com',
 
-    url='https://github.com/TODO', # project homepage
+    url='https://github.com/timdiels/chicken_turtle', # project homepage
  
     license='LGPL3',
     
@@ -60,7 +60,7 @@ setup(
  
     # Required dependencies
     setup_requires=[],  # required to run setup.py. I'm not aware of any setup tool that uses this though
-    install_requires=['pytest'],
+    install_requires='pytest click'.split(),
  
     # Optional dependencies
     extras_require={

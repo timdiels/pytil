@@ -1,3 +1,4 @@
-from project_name.version import __version__
+from $project_name.version import __version__
+from pathlib import Path
 
-__root__ = pb.local.path(__file__).dirname  #TODO use std
+__root__ = Path(__file__).parent

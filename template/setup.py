@@ -1,6 +1,7 @@
-from blue_py_project.setuptools import setup
+from chicken_turtle.setuptools import setup
+from pathlib import Path
 
-here = pb.local.path(__file__).dirname
+here = Path(__file__).parent
 
 # setup
 setup(
@@ -42,7 +43,7 @@ setup(
     ''',
     
     # standard
-    name='project_name',
+    name='$project_name',
     description='Short description',
     author='your name',
     author_email='your_email@example.com',

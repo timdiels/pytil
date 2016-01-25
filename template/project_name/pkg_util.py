@@ -1,4 +1,4 @@
-from project_name import __root__
+from $project_name import __root__
 
 def get_data_file(path):
     '''
