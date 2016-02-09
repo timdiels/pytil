@@ -1,6 +1,6 @@
 Python 3 utility library. Looks like a turtle, tastes like chicken.
 
-Be warned: it's tailored to the author's needs and is probably not very reusable outside that context.
+Be warned: as a pre-alpha, none of the interface is stable yet, may be tailored to the author's current needs and is probably not very reusable outside that context.
 
 ## Project template usage
 

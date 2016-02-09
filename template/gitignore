@@ -1,6 +1,7 @@
 *.orig
 *.swp
 .project
+.pydevproject
 .cproject
 test/last_runs
 venv

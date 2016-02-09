@@ -27,12 +27,13 @@ See:
 
 from setuptools import setup as setup_, find_packages  # Always prefer setuptools over distutils
 from codecs import open  # To use a consistent encoding
+import os
 
 def setup(**args):    
     # read some of args
     name = args['name']
     here = args['here']
-    src_root = here
+    del args['here']
     
     try:
         import pypandoc
@@ -44,7 +45,7 @@ def setup(**args):
     args['classifiers'] = [line.strip() for line in args['classifiers'].splitlines() if line.strip()]
     
     # various tidbits
-    pkg_root = src_root / name
+    pkg_root = here / name
     
     # version
     version_file = pkg_root / 'version.py'
@@ -55,16 +56,14 @@ def setup(**args):
         __version__ = locals_['__version__']
         
     # data files
-    data_files = [str(path - pkg_root) for path in (pkg_root / 'data').walk(filter=lambda x: not x.isdir())]
+    data_files = [str(parent / file) for parent, _, files in os.walk(str(pkg_root / 'data')) for file in files]
     
     # override
-    relative_src_root = str(src_root - here)
     args.update(
         version=__version__,
         
         # List packages
-        packages=find_packages(relative_src_root),
-        package_dir={'': relative_src_root}, # tell setup where packages are
+        packages=find_packages(name),
         
         # List data files
         package_data={name: data_files},

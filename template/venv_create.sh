@@ -4,8 +4,7 @@
 
 set -e
 
-rm -rf venv
-python3.4 -m venv venv
+[ -d venv ] || python -m venv venv
 . venv/bin/activate
 pip install --upgrade pip
 pip install --upgrade setuptools

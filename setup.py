@@ -2,7 +2,7 @@ from pathlib import Path
 here = Path(__file__).parent
 
 import sys
-sys.path.append(here / 'chicken_turtle')
+sys.path.append(str(here / 'chicken_turtle'))
 
 from chicken_turtle.setuptools import setup
 
@@ -39,10 +39,14 @@ setup(
         License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)
         Programming Language :: Python
         Programming Language :: Python :: 3
+        Programming Language :: Python :: 3 :: Only
         Programming Language :: Python :: 3.2
         Programming Language :: Python :: 3.3
         Programming Language :: Python :: 3.4
         Programming Language :: Python :: 3.5
+        Programming Language :: Python :: Implementation
+        Programming Language :: Python :: Implementation :: CPython
+        Programming Language :: Python :: Implementation :: Stackless
     ''',
     
     # standard
@@ -50,18 +54,18 @@ setup(
     description="Python 3 project template, tailored to the author's needs",
     author='Tim Diels',
     author_email='timdiels.m@gmail.com',
-
-    url='https://github.com/timdiels/chicken_turtle', # project homepage
  
+    url='https://github.com/timdiels/chicken_turtle', # project homepage
+  
     license='LGPL3',
-    
+     
     # What does your project relate to?
     keywords='',
- 
+  
     # Required dependencies
     setup_requires=[],  # required to run setup.py. I'm not aware of any setup tool that uses this though
-    install_requires='pytest click'.split(),
- 
+    install_requires='pytest'.split(),
+  
     # Optional dependencies
     extras_require={
         'dev': ['pypandoc'],
