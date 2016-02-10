@@ -142,4 +142,47 @@ def spread_points_in_hypercube(point_count, dim_count):
     points = np.linspace(0, 1, side_count)
     points = cartesian([points]*dim_count)
     return np.random.permutation(points)[:point_count]
+
+class _Bin(object):
+    def __init__(self):
+        self._items = []
+        self._weights_sum = 0
+        
+    def add(self, item, weight):
+        self._items.append(item)
+        self._weights_sum += weight
+        
+    @property
+    def items(self):
+        return self._items
     
+    @property
+    def weights_sum(self):
+        return self._weights_sum
+
+def multi_way_partitioning(items, bin_count):
+    '''
+    Greedily solve a multi-way partition problem
+    
+    I.e. split items evenly across `count` bins, approximately minimizing the difference between the largest and smallest sum of weights in a bin
+    
+    See: http://stackoverflow.com/a/6855546/1031434
+    
+    Parameters
+    ----------
+    items : {item : any -> weight : number}
+    bin_count : int
+        Number of bins
+        
+    Returns
+    -------
+    [[item]...]
+        List of partitions
+    '''
+    bins = [_Bin() for _ in range(bin_count)]
+    for item, weight in sorted(items.items(), key=lambda x: x[1], reverse=True):
+        bin_ = min(bins, key=lambda bin_: bin_.weights_sum) 
+        bin_.add(item, weight)
+    return [bin_.items for bin_ in bins]
+    
+
