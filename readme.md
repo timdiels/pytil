@@ -1,6 +1,17 @@
 Python 3 utility library. Looks like a turtle, tastes like chicken.
 
-Be warned: as a pre-alpha, none of the interface is stable yet, may be tailored to the author's current needs and is probably not very reusable outside that context.
+Chicken Turtle provides a project template, development tools (CLI) and various
+utility functions (API). Chicken Turtle primarily supports Python3.
+
+Chicken Turtle is pre-alpha. None of the interface is stable, may be tailored
+to the author's current needs and is probably not very reusable outside that
+context.
+
+Chicken Turtle has some optional dependencies. E.g. to use
+`chicken_turtle.pyqt`, you will need to add PyQt to your project's
+dependencies. For now, you'll have to let the `ImportError`s guide you to the
+right dependencies to add to setup.py assuming your tests have full coverage.
+
 
 ## Project template usage
 
@@ -20,3 +31,5 @@ To use the created project:
 - test data should be placed in test/data
 - output of last test runs is kept in test/last_runs 
 - run_tests.py to run the tests, but you need to run it from withing the venv (i.e. `. venv/bin/activate` before running this)
+
+
