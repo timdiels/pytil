@@ -56,3 +56,14 @@ def flatten_deep(list_):
                 yield sub
         else:
             yield item
+            
+def find(list_, value, key=None):
+    if key:
+        for x in list_:
+            if key(x) == value:
+                return x
+    else:
+        try:
+            return list_[list_.index(value)]
+        except ValueError:
+            return None
