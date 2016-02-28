@@ -21,8 +21,8 @@ Mixins to build a Context class (or 'Application' class if you prefer)
 To create a context class: e.g. class MyContext(Mixin1, Mixin2, ...): pass
 '''
 
-from .functools import compose
-from .list import flatten
+from chicken_turtle_util import compose
+from chicken_turtle_util import flatten
 from chicken_turtle import cli
 import click
 

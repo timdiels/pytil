@@ -2,7 +2,7 @@ from pathlib import Path
 here = Path(__file__).parent
 
 import sys
-sys.path.append(str(here / 'chicken_turtle'))
+sys.path.append(str(here / 'chicken_turtle_util'))
 
 from chicken_turtle.setuptools import setup
 
@@ -50,12 +50,12 @@ setup(
     ''',
     
     # standard
-    name='chicken_turtle',
-    description="Python 3 project template, tailored to the author's needs",
+    name='chicken_turtle_util',
+    description="Python 3 utility library",
     author='Tim Diels',
     author_email='timdiels.m@gmail.com',
  
-    url='https://github.com/timdiels/chicken_turtle', # project homepage
+    url='https://github.com/timdiels/chicken_turtle_util', # project homepage
   
     license='LGPL3',
      

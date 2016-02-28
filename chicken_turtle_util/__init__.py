@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle.  If not, see <http://www.gnu.org/licenses/>.
 
-from chicken_turtle.version import __version__
+from chicken_turtle_util.version import __version__
 from pathlib import Path
 
 __root__ = Path(__file__).parent
