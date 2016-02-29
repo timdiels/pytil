@@ -38,7 +38,7 @@ def prefix_with_name(obj): #TODO this is out of place (although used by log_exce
     '{}: {}'.format(obj.__class__.__name__, obj)
    
 @contextmanager 
-def log_exception(logger, exception_type, level=logging.ERROR):
+def log_exception(logger, exception_type, level=logging.WARNING):
     '''
     Suppress and log exception using its message, no trace is printed
     
