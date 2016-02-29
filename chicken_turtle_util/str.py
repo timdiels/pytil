@@ -24,4 +24,3 @@ def multiline_lstrip(text):
     Like `lstrip`, but applies to each line in a multiline string
     '''
     return '\n'.join(map(str.lstrip, text.splitlines()))
-
