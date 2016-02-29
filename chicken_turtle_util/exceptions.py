@@ -22,7 +22,7 @@ import logging
 Exception handling helpers
 '''
 
-def prefix_with_name(obj):
+def prefix_with_name(obj): #TODO this is out of place (although used by log_exception_msg)
     '''
     Prefix str(obj) with its class name
     
@@ -38,7 +38,7 @@ def prefix_with_name(obj):
     '{}: {}'.format(obj.__class__.__name__, obj)
    
 @contextmanager 
-def log_exception_msg(logger, exception_type, level=logging.WARNING):
+def log_exception(logger, exception_type, level=logging.ERROR):
     '''
     Suppress and log exception using its message, no trace is printed
     
@@ -55,4 +55,12 @@ def log_exception_msg(logger, exception_type, level=logging.WARNING):
         yield
     except exception_type as ex:
         logger.log(level, prefix_with_name(ex))
+        
+class UserException(Exception):
+    '''
+    Exception that indicates user error.
+    
+    Its message is directed at the user and user-friendly in general.
+    '''
+    
         
