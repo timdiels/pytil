@@ -37,6 +37,7 @@ def prefix_with_name(obj): #TODO this is out of place (although used by log_exce
     '''
     '{}: {}'.format(obj.__class__.__name__, obj)
    
+   
 @contextmanager 
 def log_exception(logger, exception_type, level=logging.WARNING):
     '''
@@ -55,12 +56,21 @@ def log_exception(logger, exception_type, level=logging.WARNING):
         yield
     except exception_type as ex:
         logger.log(level, prefix_with_name(ex))
+    
         
 class UserException(Exception):
+    
     '''
     Exception that indicates user error.
     
     Its message is directed at the user and user-friendly in general.
     '''
+    
+    def __init__(self, message):
+        self._message = message
+        
+    @property
+    def message(self):
+        return self._message
     
         
