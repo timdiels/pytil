@@ -1,3 +1,6 @@
+.cache
+last_test_runs
+dist
 *.orig
 *.swp
 .project
