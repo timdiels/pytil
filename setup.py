@@ -44,7 +44,7 @@ setup(
                         '\n'
                         'Chicken Turtle Util provides various Python utility functions (API).\n'
                         '\n'
-                        'Chicken Turtle is pre-alpha. None of the interface is stable, i.e. it\n'
+                        'Chicken Turtle is pre-alpha. None of the interface is stable, meaning it\n'
                         'may change in the future.\n'
                         '\n'
                         'Chicken Turtle has some optional dependencies. E.g. to use\n'

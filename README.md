@@ -2,7 +2,7 @@ Python 3 utility library. Looks like a turtle, tastes like chicken.
 
 Chicken Turtle Util provides various Python utility functions (API).
 
-Chicken Turtle is pre-alpha. None of the interface is stable, i.e. it may
+Chicken Turtle is pre-alpha. None of the interface is stable, meaning it may
 change in the future.
 
 Chicken Turtle has some optional dependencies. E.g. to use
