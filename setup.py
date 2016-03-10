@@ -37,6 +37,7 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
+    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v1.0.0.tar.gz',
     'install_requires': ['pytest'],
     'keywords': 'development util library',
     'license': 'LGPL3',
@@ -56,5 +57,5 @@ setup(
     'package_data': {},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.test'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '0.0.0'}
+    'version': '1.0.0'}
 )
