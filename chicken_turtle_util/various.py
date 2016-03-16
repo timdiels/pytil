@@ -20,7 +20,7 @@ import pandas as pd
 import requests
 import re
 import plumbum as pb
-from chicken_turtle.pandas import df_expand_iterable_values
+from chicken_turtle_util.pandas import df_expand_iterable_values
 
 class Object(object):
     '''

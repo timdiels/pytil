@@ -21,11 +21,10 @@ Mixins to build a Context class (or 'Application' class if you prefer)
 To create a context class: e.g. class MyContext(Mixin1, Mixin2, ...): pass
 '''
 
-from chicken_turtle_util import compose
-from chicken_turtle_util import flatten
-from chicken_turtle import cli
+from chicken_turtle_util.functools import compose
+from chicken_turtle_util.list import flatten
+from chicken_turtle_util import cli
 import click
-
         
 def cli_options(class_):
     '''
@@ -55,7 +54,7 @@ def DatabaseMixin(Database):
         
         def __init__(self, database_host, database_user, database_password, database_name, **kwargs):
             super().__init__(**kwargs)
-            self._database = Database(host=database_host, user=database_user, password=database_password, name=database_name)
+            self._database = Database(context=self, host=database_host, user=database_user, password=database_password, name=database_name)
         
         @property
         def database(self):

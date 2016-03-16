@@ -37,25 +37,33 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v1.0.0.tar.gz',
     'install_requires': ['pytest'],
     'keywords': 'development util library',
     'license': 'LGPL3',
     'long_description': 'Python 3 utility library. Looks like a turtle, tastes like chicken.\n'
                         '\n'
-                        'Chicken Turtle Util provides various Python utility functions (API).\n'
+                        'Chicken Turtle Util (CTU) provides various an API of Python utility\n'
+                        'functions.\n'
                         '\n'
-                        'Chicken Turtle is pre-alpha. None of the interface is stable, meaning it\n'
-                        'may change in the future.\n'
+                        'Chicken Turtle Util is pre-alpha. None of the interface is stable,\n'
+                        'meaning it may change in the future.\n'
                         '\n'
-                        'Chicken Turtle has some optional dependencies. E.g. to use\n'
+                        'Chicken Turtle Util has some optional dependencies. E.g. to use\n'
                         "``chicken_turtle.pyqt``, you will need to add PyQt to your project's\n"
                         "dependencies. For now, you'll have to let the ``ImportError``\\ s guide\n"
                         'you to the right dependencies to add to setup.py assuming your tests\n'
-                        'have full coverage.\n',
-    'name': 'chicken_turtle_util',
+                        'have full coverage.\n'
+                        '\n'
+                        'Project decisions\n'
+                        '-----------------\n'
+                        '\n'
+                        'API design\n'
+                        '~~~~~~~~~~\n'
+                        '\n'
+                        "If it's a path, expect a ``pathlib.Path``, not a ``str``.\n",
+    'name': 'chicken-turtle-util',
     'package_data': {},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.test'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '1.0.0'}
+    'version': '0.0.0'}
 )
