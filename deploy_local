@@ -1,6 +1,0 @@
-
-#!/bin/sh
-set -e
-ct-mkvenv -e   
-echo deploy_local: Testing disabled!
-#venv/bin/py.test

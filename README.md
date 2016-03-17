@@ -15,3 +15,9 @@ right dependencies to add to setup.py assuming your tests have full coverage.
 ### API design
 
 If it's a path, expect a `pathlib.Path`, not a `str`.
+
+If extending a module from another project, e.g. `pandas`, use the same name
+as the module. While a `from pandas import *` would allow the user to access
+functions of the real pandas module through the extended module, we have no
+control over additions to the real pandas, which could lead to name clashes
+later on, so don't. 

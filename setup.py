@@ -37,7 +37,8 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'install_requires': ['pytest'],
+    'extras_require': {'test': ['pytest', 'pytest-xdist', 'pytest-env']},
+    'install_requires': [],
     'keywords': 'development util library',
     'license': 'LGPL3',
     'long_description': 'Python 3 utility library. Looks like a turtle, tastes like chicken.\n'
@@ -60,8 +61,14 @@ setup(
                         'API design\n'
                         '~~~~~~~~~~\n'
                         '\n'
-                        "If it's a path, expect a ``pathlib.Path``, not a ``str``.\n",
-    'name': 'chicken-turtle-util',
+                        "If it's a path, expect a ``pathlib.Path``, not a ``str``.\n"
+                        '\n'
+                        'If extending a module from another project, e.g. ``pandas``, use the\n'
+                        'same name as the module. While a ``from pandas import *`` would allow\n'
+                        'the user to access functions of the real pandas module through the\n'
+                        'extended module, we have no control over additions to the real pandas,\n'
+                        "which could lead to name clashes later on, so don't.\n",
+    'name': 'chicken_turtle_util',
     'package_data': {},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.test'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
