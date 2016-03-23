@@ -1,4 +1,4 @@
-# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 # 
 # This file is part of Chicken Turtle Util.
 # 
@@ -16,19 +16,31 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Exception classes
+Function utilities
 '''
 
-class UserException(Exception):
-    
+from functools import reduce as reduce
+
+def compose(*functions):
     '''
-    Exception with message to show the user.
+    Compose functions
+    
+    Like the `o` operator in math.
     
     Parameters
     ----------
-    message : str
-        User-friendly message
+    functions : [any -> any]
+        List of functions to compose. You need to supply at least 1.
+    
+    Returns
+    -------
+    any -> any
+        Function composed of `functions`
+    
+    Examples
+    --------
+    `compose(f1, f2)` is equivalent to `f1 o f2`, or to `lambda x: f1(f2(x))`
     '''
-    
-    #XXX note: if you miss message, use ex.args[0]
-    
+    apply = lambda x, y: y(x)
+    return lambda x: reduce(apply, functions, x)
+

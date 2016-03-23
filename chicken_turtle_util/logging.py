@@ -16,19 +16,29 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Exception classes
+Logging utilities
 '''
 
-class UserException(Exception):
+from contextlib import contextmanager
+import logging
     
+@contextmanager
+def set_level(logger, level):
     '''
-    Exception with message to show the user.
+    Temporarily change log level
     
     Parameters
     ----------
-    message : str
-        User-friendly message
+    logger : str
+        Logger name
+    level
+        Log level to set
     '''
-    
-    #XXX note: if you miss message, use ex.args[0]
-    
+    logger = logging.getLogger(logger)
+    original = logger.level
+    logger.setLevel(level)
+    try:
+        yield
+    finally:
+        logger.setLevel(original)
+        

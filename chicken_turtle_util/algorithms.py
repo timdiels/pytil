@@ -1,146 +1,59 @@
 # Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 # 
-# This file is part of Chicken Turtle.
+# This file is part of Chicken Turtle Util.
 # 
-# Chicken Turtle is free software: you can redistribute it and/or modify
+# Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# Chicken Turtle is distributed in the hope that it will be useful,
+# Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public License
-# along with Chicken Turtle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Various efficient algorithms
+Various algorithms
 '''
 
 from sklearn.utils.extmath import cartesian
 import math
 import numpy as np
 
-def _locate_bin(bins, n):
-    """
-    Find the bin where list n has ended up: Follow bin references until
-    we find a bin that has not moved.
-    """
-    while bins[n] != n:
-        n = bins[n]
-    return n
-    
-# TODO test both overlapping set merge funcs
-# TODO test performance compared to original alg
-
-# Original implementation by http://stackoverflow.com/users/699305/alexis
-# Found here http://stackoverflow.com/a/9453249/1031434
-# Outperformed all other algorithms on python3.4 on a wide range of inputs
-# Adjusted to handle named sets
-def merge_overlapping_named_sets(sets):
+def spread_points_in_hypercube(point_count, dimension_count):
     '''
-    Merge named sets that overlap.
-    
-    Merge sets that overlap, keep other sets unchanged. 
-    
-    >>> merge_overlapping_named_sets([({'a'}, {1,2}), ({'b'}, set()), ({'c'}, {2,3}), ({'d'}, {4,5,6}), (set(), {6,7})])
-    [({'a','c'}, {1,2,3}), ({'d'}, {4,5,6,7})]
-    
-    Parameters
-    ----------
-    sets : iterable of (names : {any}, values : {any})
-        `names` is a set of names assigned to the set, `values`. Tuples with
-        empty `values` will be ignored (and will not appear in the output).
-        `names` may be the empty set and may show up in the output.
-    
-    Returns
-    -------
-    iterable of (names : {any}, values : {any})
-        Order of input tuples in `sets` might not be preserved.
-    '''
-    data = list(sets)
-    bins = list(range(len(data)))  # Initialize each bin[n] == n
-    nums = dict()
-    
-    for r, row in enumerate(data):
-        if not row[1]:
-            data[r] = None
-        else:
-            for num in row[1]:
-                if num not in nums:
-                    # New number: tag it with a pointer to this row's bin
-                    nums[num] = r
-                    continue
-                else:
-                    dest = _locate_bin(bins, nums[num])
-                    if dest == r:
-                        continue # already in the same bin
-    
-                    if dest > r:
-                        dest, r = r, dest   # always merge into the smallest bin
-    
-                    tup = data[r]
-                    data[dest][0].update(tup[0])
-                    data[dest][1].update(tup[1])
-                    data[r] = None
-                    # Update our indices to reflect the move
-                    bins[r] = dest
-                    r = dest 
-
-    # Filter out the empty bins
-    return (m for m in data if m)
-
-def merge_overlapping_sets(sets):
-    '''
-    Merge sets that overlap.
-    
-    Merge sets that overlap, keep other sets unchanged. 
-    
-    >>> merge_overlapping_named_sets([{1,2}, set(), {2,3}, {4,5,6}, {6,7}])
-    [{1,2,3}, {4,5,6,7}]
-    
-    Parameters
-    ----------
-    sets : iterable of {any}
-        Empty sets in the input will be ignored.
-    
-    Returns
-    -------
-    iterable of {any}
-        Order of input tuples in `sets` might not be preserved.
-    '''
-    merged_named_sets = merge_overlapping_named_sets((set(), set_) for set_ in sets)
-    return (set_ for names, set_ in merged_named_sets)
-
-def spread_points_in_hypercube(point_count, dim_count):
-    '''
-    Approximate a spreading of `n` points in a unit hypercube of given dimension.
+    Place `n` points in a unit hypercube such that the minimum distance between
+    points is approximately maximal.
     
     Euclidean distance is used.
     
-    Note that the exact solution to this problem is known for only a few `n`.
-    
-    Related: http://stackoverflow.com/a/2723764/1031434
-    
     Parameters
     ----------
-    point_count : int-like
+    point_count : int
         Number of points to pick
-    dim_count : int-like
+    dimension_count : int
         Number of dimensions of the hypercube
         
     Returns
     -------
-    array-like
-        Points spread approximately optimally in the hypercube. I.e. each point
-        component will lie in the interval [0,1].
+    np.array
+        Points spread approximately optimally across the hypercube.
+        
+    Notes
+    -----
+    The exact solution to this problem is known for only a few `n`.
+    
+    References
+    ----------
+    .. [1] http://stackoverflow.com/a/2723764/1031434
     '''
     # Current implementation simply puts points in a grid
-    side_count = math.ceil(point_count ** (1/dim_count)) # number of points per side #XXX use np.ceil instead
+    side_count = math.ceil(point_count ** (1/dimension_count)) # number of points per side #XXX use np.ceil instead
     points = np.linspace(0, 1, side_count)
-    points = cartesian([points]*dim_count)
+    points = cartesian([points]*dimension_count)
     return np.random.permutation(points)[:point_count]
 
 class _Bin(object):
@@ -162,25 +75,30 @@ class _Bin(object):
 
 def multi_way_partitioning(items, bin_count):
     '''
-    Greedily solve a multi-way partition problem
+    Greedily divide weighted items equally across bins (multi-way partition problem)
     
-    I.e. split items evenly across `count` bins, approximately minimizing the difference between the largest and smallest sum of weights in a bin
-    
-    See: http://stackoverflow.com/a/6855546/1031434
+    This approximately minimises the difference between the largest and smallest
+    sum of weights in a bin.
     
     Parameters
     ----------
-    items : {item : any -> weight : number}
+    items : iterable((item :: any) : (weight :: number))
+        Weighted items
     bin_count : int
         Number of bins
         
     Returns
     -------
-    [[item]...]
-        List of partitions
+    bins : bag(bin :: bag(item :: any))
+        Bins with the items
+        
+    References
+    ----------
+    .. [1] http://stackoverflow.com/a/6855546/1031434 describes the greedy algorithm
+    .. [2] http://ijcai.org/Proceedings/09/Papers/096.pdf defines the problem and describes algorithms
     '''
     bins = [_Bin() for _ in range(bin_count)]
-    for item, weight in sorted(items.items(), key=lambda x: x[1], reverse=True):
+    for item, weight in sorted(items, key=lambda x: x[1], reverse=True):
         bin_ = min(bins, key=lambda bin_: bin_.weights_sum) 
         bin_.add(item, weight)
     return [bin_.items for bin_ in bins]

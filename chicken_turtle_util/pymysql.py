@@ -1,29 +1,31 @@
 # Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 # 
-# This file is part of Chicken Turtle.
+# This file is part of Chicken Turtle Util.
 # 
-# Chicken Turtle is free software: you can redistribute it and/or modify
+# Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# Chicken Turtle is distributed in the hope that it will be useful,
+# Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public License
-# along with Chicken Turtle.  If not, see <http://www.gnu.org/licenses/>.
+# along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Database util
+pymysql utilities
 '''
 
-import numpy as np
 import pymysql
+from contextlib import suppress
 
-def patch_pymysql():
+def patch():
     '''
-    Patch pymysql with e.g. knowledge about other int-like types 
+    Patch pymysql for better compatibility with other libraries (e.g. numpy)
     '''
-    pymysql.converters.encoders[np.int64] = pymysql.converters.encoders[int]
+    with suppress(ImportError):
+        import numpy as np
+        pymysql.converters.encoders[np.int64] = pymysql.converters.encoders[int]

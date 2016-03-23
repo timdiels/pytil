@@ -16,19 +16,29 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Exception classes
+Utilities for working with `pandas.Series`
 '''
 
-class UserException(Exception):
-    
+def invert(series):
     '''
-    Exception with message to show the user.
+    Swap index with values of series
     
     Parameters
     ----------
-    message : str
-        User-friendly message
+    series
+        Series to swap on, must have a name
+    
+    Returns
+    -------
+    pandas.Series
+        Series after swap
+        
+    See also
+    --------
+    pandas.Series.map
+        Joins series a -> b and b -> c into a -> c.
     '''
-    
-    #XXX note: if you miss message, use ex.args[0]
-    
+    df = series.reset_index() #TODO alt is to to_frame and then use som dataframe methods
+    df.set_index(series.name, inplace=True)
+    return df[df.columns[0]]
+

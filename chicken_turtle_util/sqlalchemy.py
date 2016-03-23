@@ -16,19 +16,25 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Exception classes
+sqlalchemy utilities
 '''
 
-class UserException(Exception):
+from chicken_turtle_util import logging as logging_
+import logging
     
+def log_sql():
     '''
-    Exception with message to show the user.
+    Temporarily log SQL statements
+    '''
+    return logging_.set_level('sqlalchemy.engine', logging.INFO)
+        
+def pretty_sql(statement):
+    '''
+    Pretty format sql
     
     Parameters
     ----------
-    message : str
-        User-friendly message
+    statement : str or sql expression or Query or anything whose str() returns SQL
+        The SQL statement to print
     '''
-    
-    #XXX note: if you miss message, use ex.args[0]
-    
+    return str(statement).replace('JOIN', '\nJOIN').replace('UNION ', '\nUNION\n').replace('(', '(\n').replace(')', '\n)').replace('GROUP', '\nGROUP')

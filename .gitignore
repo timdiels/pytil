@@ -1,3 +1,6 @@
+.testmondata
+.tmontmp
+.coverage
 .cache
 last_test_runs
 dist
