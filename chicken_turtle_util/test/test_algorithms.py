@@ -19,27 +19,59 @@
 Test chicken_turtle_util.algorithms
 '''
 
-# class TestSpreadPointsInHyperCube(object):
-#     
-#     def test_(self):
-#         meh
+import pytest
+import numpy as np
+from chicken_turtle_util.algorithms import spread_points_in_hypercube, multi_way_partitioning
+from scipy.spatial.distance import euclidean
+from itertools import product
+
+class TestSpreadPointsInHypercube(object):
+     
+    def test_invalid_point_count(self):
+        '''When point_count < 0, ValueError'''
+        with pytest.raises(ValueError):
+            spread_points_in_hypercube(point_count=-1, dimension_count=1)
+            
+    def test_invalid_dimension_count(self):
+        '''When dimension_count < 1, ValueError'''
+        with pytest.raises(ValueError):
+            spread_points_in_hypercube(point_count=1, dimension_count=-1)
         
-    #TODO design tests of everything, in '''comments'''
+    @pytest.mark.parametrize('dims', range(1,5))    
+    def test_no_points(self, dims):
+        '''When point_count = 0, returns empty np.array, regardless of dimension_count'''
+        assert np.array_equal(spread_points_in_hypercube(point_count=0, dimension_count=dims), np.empty(shape=(0,dims)))
+        
+    @pytest.mark.parametrize('dims', range(1,5))    
+    def test_one_point(self, dims):
+        '''When point_count = 1, it should lay in the hypercube'''
+        points = spread_points_in_hypercube(point_count=1, dimension_count=dims)
+        assert np.all((points >= 0) & (points <= 1))
+        
+    @pytest.mark.parametrize('point_count,dim_count', product((2,5,10,30), range(1,5)))    
+    def test_happy_days(self, point_count, dim_count):
+        '''When any other input, perform at least as well as a hypergrid layout of points'''
+        points = spread_points_in_hypercube(point_count=point_count, dimension_count=dim_count)
+        assert points.shape == (point_count, dim_count)
+        
+        # points must lay in the hypercube
+        assert np.all((points >= 0) & (points <= 1))
+        
+        # actual min distance >= min distance in a hypergrid 
+        min_distance = min(euclidean(points[i], points[j]) for i in range(point_count) for j in range(i+1, point_count))
+        points_per_side = np.ceil(point_count ** (1/dim_count))
+        hypergrid_min_distance = 1 / (points_per_side - 1)
+        assert min_distance > hypergrid_min_distance or np.isclose(min_distance, hypergrid_min_distance)         
+        
+        # Note: alternatively we could test that relative error stays within
+        # some constant, relative to the ideal solution (found through brute force)
         
 '''
 TODO don't forget to update Raises sections of all added ValueErrors
+- spread_points_in_hypercube
+    When point_count < 0
+    When dimension_count < 1
 
-algorithms
-==========
-
-spread_points_in_hypercube(point_count, dimension_count)
---------------------------------------------------------
-
-- When point_count < 0, ValueError
-- When dimension_count < 1, ValueError
-- When point_count = 0, returns empty np.array, regardless of dimension_count
-- When any other input, perform at least as well as a hypergrid layout of points
-  i.e. When any other input (try a couple with parametrize), largest minimum distance between returned points should be at most the distance between adjacent points in a hypergrid (maybe calc manually)
   
 multi_way_partitioning(items, bin_count)
 ----------------------------------------

@@ -39,7 +39,7 @@ def spread_points_in_hypercube(point_count, dimension_count):
         
     Returns
     -------
-    np.array
+    np.array(shape=(point_count, dimension_count))
         Points spread approximately optimally across the hypercube.
         
     Notes
@@ -51,10 +51,16 @@ def spread_points_in_hypercube(point_count, dimension_count):
     .. [1] http://stackoverflow.com/a/2723764/1031434
     '''
     # Current implementation simply puts points in a grid
-    side_count = math.ceil(point_count ** (1/dimension_count)) # number of points per side #XXX use np.ceil instead
+    if point_count < 0:
+        raise ValueError('point_count must be at least 0')
+    if dimension_count < 1:
+        raise ValueError('dimension_count must be at least 1')
+    if point_count == 0:
+        return np.empty(shape=(0,dimension_count))
+    side_count = np.ceil(point_count ** (1/dimension_count)) # number of points per side
     points = np.linspace(0, 1, side_count)
     points = cartesian([points]*dimension_count)
-    return np.random.permutation(points)[:point_count]
+    return np.random.permutation(points)[:point_count] #XXX permutation is unnecessary
 
 class _Bin(object):
     def __init__(self):
