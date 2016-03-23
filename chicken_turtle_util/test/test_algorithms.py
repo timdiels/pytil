@@ -24,6 +24,8 @@ import numpy as np
 from chicken_turtle_util.algorithms import spread_points_in_hypercube, multi_way_partitioning
 from scipy.spatial.distance import euclidean
 from itertools import product
+from more_itertools import ilen
+from collections_extended import bag, frozenbag
 
 class TestSpreadPointsInHypercube(object):
      
@@ -65,30 +67,93 @@ class TestSpreadPointsInHypercube(object):
         
         # Note: alternatively we could test that relative error stays within
         # some constant, relative to the ideal solution (found through brute force)
+
+class TestMultiWayPartitioning(object):
+    
+    # From http://stackoverflow.com/a/18354471/1031434
+    def _groups(self, list_, group_count):
+        if list_:
+            prev = None
+            for t in self._groups(list_[1:], group_count):
+                tup = sorted(t)
+                if tup != prev:
+                    prev = tup
+                    for i in range(group_count):
+                        yield tup[:i] + [[list_[0]] + tup[i],] + tup[i+1:]
+        else:
+            yield [[] for _ in range(group_count)]
+            
+    def _multi_way_partitioning_brute_force(self, items, bin_count):
+        '''Brute force that generates ideal solution'''
+        assert bin_count > 1
+        best_bins = [items, []*(bin_count-1)]
+        best_diff = np.inf
+        for bins in self._groups(items, bin_count):
+            diff= self.get_distance(bins)
+            if diff < best_diff:
+                best_bins = bins
+                best_diff = diff
+        return best_bins
+    
+    def get_distance(self, bins):
+        sums = set()
+        for bin_ in bins:
+            sums.add(sum(weight for _, weight in bin_))
+        return max(sums) - min(sums)
         
-'''
-TODO don't forget to update Raises sections of all added ValueErrors
-- spread_points_in_hypercube
-    When point_count < 0
-    When dimension_count < 1
-
-  
-multi_way_partitioning(items, bin_count)
-----------------------------------------
-
-TODO return bags
-
-- When bin_count < 1, ValueError
-- When items empty, return [[]] * bin_count
-- When 1 item, return bag(bag(item), bag()*bin_count)
-- For a parameterized run:
-    assert filled bin count = min(bin_count, ilen(items))
-        Try item count in bin_count-1, bin_count, bin_count+1 -> 
-    Error from ideal solution should remain acceptable (although the interface offers no real guarantees)
-        A couple of examples for which you brute force the ideal solution up front,
-        brute force up to what we can, store the results, we will not rerun each time we test. _multi_way_partitioning_brute_force, pprint.pprint(result)
-        then relative error (measure: largest - smallest bin sum, (x - ~x~ / x)) may not exceed.. 1.3 the ideal
+    def reapply_weights(self, items, bins):
+        weights = dict(items)
+        return [[(x, weights[x]) for x in bin_] for bin_ in bins]
         
+    def generate_test_data(self):
+        items = list(enumerate(list(range(1,4))*20))
+        params = list(product((2,5,10,12), range(2,6)))
+        params = [(items[:item_count], bin_count) for item_count, bin_count in params]
+        solutions = []
+        for items, bin_count in params:
+            bins = self._multi_way_partitioning_brute_force(items, bin_count)
+            distance = self.get_distance(bins)
+            solutions.append((items, bin_count, distance))
+            print('+', end='', flush=True)
+        print()
+        print(repr(solutions))
+    
+    def test_invalid_bin_count(self):
+        '''When bin_count < 1, ValueError'''
+        with pytest.raises(ValueError):
+            multi_way_partitioning({(1,2)}, bin_count=0)
+            
+    def test_no_items(self):
+        '''When no items, return empty bins'''
+        assert multi_way_partitioning([], bin_count=2) == bag([frozenbag(), frozenbag()])
+        
+    def test_one_item(self):
+        '''When one item, return 1 singleton and x empty bins'''
+        assert multi_way_partitioning([(1,2)], bin_count=2) == bag([frozenbag([1]), frozenbag()])
+        
+    def test_one_bin(self):
+        '''When one bin, return single bin containing all items'''
+        assert multi_way_partitioning([(1,2), (2,3)], bin_count=1) == bag([frozenbag([1,2])])
+    
+    params=[([(0, 1), (1, 2)], 2, 1), ([(0, 1), (1, 2)], 3, 2), ([(0, 1), (1, 2)], 4, 2), ([(0, 1), (1, 2)], 5, 2), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2)], 2, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2)], 3, 0), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2)], 4, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2)], 5, 2), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1)], 2, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1)], 3, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1)], 4, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1)], 5, 1), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1), (10, 2), (11, 3)], 2, 0), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1), (10, 2), (11, 3)], 3, 0), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1), (10, 2), (11, 3)], 4, 0), ([(0, 1), (1, 2), (2, 3), (3, 1), (4, 2), (5, 3), (6, 1), (7, 2), (8, 3), (9, 1), (10, 2), (11, 3)], 5, 1)]
+    @pytest.mark.parametrize('items,bin_count,ideal_distance', params)
+    def test_happy_days(self, items, bin_count, ideal_distance):
+        '''When any other input, ...'''
+        bins = multi_way_partitioning(items, bin_count)
+        
+        # Fill as many bins as possible
+        assert bins.count(frozenbag()) == max(bin_count - len(items), 0)
+        
+        # Relative error to ideal solution should be acceptable
+        actual_distance = self.get_distance(self.reapply_weights(items, bins))
+        assert actual_distance >= (ideal_distance - 1e8), 'bug in test'
+        assert actual_distance <= 1.3 * ideal_distance
+        
+        # XXX could use more varied input
+        
+# TestMultiWayPartitioning().generate_test_data()
+
+'''     
 cli
 ===
 from click.test import CliRunner
@@ -483,4 +548,9 @@ various
 def test_object():
     Object('ignore')
     Object(ignore='ignore')
+    
+TODO update Raises sections of all added ValueErrors
+- spread_points_in_hypercube
+    When point_count < 0
+    When dimension_count < 1
 '''

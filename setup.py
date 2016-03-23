@@ -37,7 +37,7 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'extras_require': {   'algorithms': ['numpy', 'scipy', 'sklearn'],
+    'extras_require': {   'algorithms': ['numpy', 'scipy', 'sklearn', 'collections-extended'],
                           'cli': ['click'],
                           'data_frame': ['numpy', 'pandas'],
                           'debug': ['psutil'],

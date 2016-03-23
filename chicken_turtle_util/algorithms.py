@@ -20,6 +20,7 @@ Various algorithms
 '''
 
 from sklearn.utils.extmath import cartesian
+from collections_extended import bag, frozenbag
 import math
 import numpy as np
 
@@ -95,7 +96,7 @@ def multi_way_partitioning(items, bin_count):
         
     Returns
     -------
-    bins : bag(bin :: bag(item :: any))
+    bins : bag(bin :: frozenbag(item :: any))
         Bins with the items
         
     References
@@ -107,6 +108,6 @@ def multi_way_partitioning(items, bin_count):
     for item, weight in sorted(items, key=lambda x: x[1], reverse=True):
         bin_ = min(bins, key=lambda bin_: bin_.weights_sum) 
         bin_.add(item, weight)
-    return [bin_.items for bin_ in bins]
+    return bag(frozenbag(bin_.items) for bin_ in bins)
     
 
