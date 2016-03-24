@@ -1,4 +1,4 @@
-# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 # 
 # This file is part of Chicken Turtle Util.
 # 
@@ -16,33 +16,30 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Function utilities
+Test chicken_turtle_util.function
 '''
 
-from functools import reduce as reduce
+import pytest
+from chicken_turtle_util.function import compose
 
-def compose(*functions):
-    '''
-    Compose functions
+class TestCompose(object):
     
-    Like the `o` operator in math.
+    def double(self, x):
+        return 2*x
     
-    Parameters
-    ----------
-    functions : collection(any -> any)
-        Collection of one or more functions to compose.
-    
-    Returns
-    -------
-    any -> any
-        Function composed of `functions`
-    
-    Examples
-    --------
-    `compose(f1, f2)` is equivalent to `f1 o f2`, or to `lambda x: f1(f2(x))`
-    '''
-    if not functions:
-        raise ValueError('Must supply at least one function to `compose`')
-    apply = lambda x, y: y(x)
-    return lambda x: reduce(apply, reversed(functions), x)
-
+    def add(self, x):
+        return x+1
+        
+    def test_empty(self):
+        '''When composing nothing, ValueError'''
+        with pytest.raises(ValueError):
+            compose()
+        
+    def test_one(self):
+        '''Allow 'composing' just 1 function'''
+        assert compose(self.double)(2) == 4
+        
+    def test_order(self):
+        '''Compose in the right order'''
+        assert compose(self.double, self.add)(2) == 2 * (2+1)
+        assert compose(self.add, self.double)(2) == 1 + 2*2 

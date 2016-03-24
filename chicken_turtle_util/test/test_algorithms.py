@@ -155,28 +155,6 @@ class TestMultiWayPartitioning(object):
 
 '''
 
-function
-========
-compose(*functions)
--------------------
-class TestCompose(object)
-    double = lambda x: 2*x
-    add = lambda x: x+1
-        
-    def test_empty():
-        \'''Composing nothing is
-        with pytest.raises(ValueError):
-            compose()
-        
-    def test_one():
-        \'''Allow 'composing' just 1 function
-        assert compose(double)(2) == 4
-        
-    def test_order():
-        \'''Compose in the right order
-        assert compose(double, add)(2) == 2 * (2+1)
-        assert compose(add, double)(2) == 1 + 2*2 
-
 http
 ====
 
@@ -389,10 +367,13 @@ def test_object():
     Object(ignore='ignore')
     
 TODO update Raises sections of all added ValueErrors
-- spread_points_in_hypercube
+- algorithms.spread_points_in_hypercube
     When point_count < 0
     When dimension_count < 1
     
-- pretty_print_head
+- dict.pretty_print_head
     When count < 1, ValueError
+    
+- function.compose
+    When composing nothing, ValueError
 '''
