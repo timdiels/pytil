@@ -152,18 +152,7 @@ class TestMultiWayPartitioning(object):
         
 # TestMultiWayPartitioning().generate_test_data()
 
-'''
-    
-series
-======
-
-invert(series)
---------------
-def test_invert():
-    inverted = series.invert(pd.Series([1,2,3], index=[4,5,6], name='named'))
-    inverted == pd.Series([4,5,6], index=[1,2,3], name='named')
-    assert False # TODO does it check name and index equality?
-    
+'''    
 set
 ===
 
