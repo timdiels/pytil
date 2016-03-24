@@ -60,10 +60,13 @@ def sliding_window(iterable, size=2):
     >>> list(sliding_window(range(1)))
     []
     '''
+    if size < 1:
+        raise ValueError('Window `size` must be at least 1')
     it = iter(iterable)
     result = tuple(islice(it, size))
-    if len(result) == size:
-        yield result    
+    if len(result) < size:
+        raise ValueError('Window larger than `ilen(iterable)`')
+    yield result    
     for elem in it:
         result = result[1:] + (elem,)
         yield result
@@ -151,17 +154,20 @@ def flatten(iterable, times=1):
     '''
     if not _is_sensibly_iterable(iterable):
         raise ValueError('`iterable` is not iterable or is `str` or `bytes`')
-    return _flatten(iterable, times)
-        
-def _flatten(item, times):
     if times < 0:
         raise ValueError('times < 0: {}'.format(times))
-    
+    for x in _flatten(iterable, times+1):
+        yield x
+        
+def _flatten(item, times):
+    assert times >= 0
     if times > 0 and _is_sensibly_iterable(item):
+        print('+')
         for x in item:
             for y in _flatten(x, times-1):
                 yield y
     else:
+        print('-')
         yield item
 
 def _is_sensibly_iterable(obj):

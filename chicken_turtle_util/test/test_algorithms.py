@@ -153,60 +153,9 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-    
-    
-iterable
-========
-
-# The implementation comes from: http://stackoverflow.com/a/6822773/1031434
-sliding_window(iterable, size=2)
---------------------------------
-- When size < 1, ValueError
-- When size > ilen(iterable), ValueError
-    with pytest.raises(ValueError):
-        list(sliding_window(range(5), size=6))
-- Try a couple of sizes
-    assert list(sliding_window(range(5), size=1)) == [0,1,2,3,4]
-    assert list(sliding_window(range(5), size=2)) == [(0,1),(1,2),(2,3),(3,4)]
-    assert list(sliding_window(range(5), size=3)) == [(0,1,2),(1,2,3),(2,3,4)]
-    assert list(sliding_window(range(5), size=4)) == [(0,1,2,3),(1,2,3,4)]
-    assert list(sliding_window(range(5), size=5)) == [(0,1,2,3,4)] 
-        
-partition(iterable, key)
-------------------------
-def test_partition():
-    assert partition(range(5), lambda x: x % 2) == {
-        0: [0,2,4]
-        1: [2,3]
-    }
-
-is_sorted(iterable)
--------------------
-def test_is_sorted():
-    assert is_sorted(range(7))
-    assert not is_sorted((1,4,3))
-
-flatten(iterable, times=1)
---------------------------
-- When times < 0, ValueError
-- 
-    >>> list(flatten([[2, 3], 1, [5, [7, 8]]]))
-    [2, 3, 1, 5, [7, 8]]
-    
-    >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=2))
-    [2, 3, 1, 5, 7, 8]
-    
-    >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=3))
-    [2, 3, 1, 5, 7, 8]
-    
-    >>> flatten([iter([2, 3]), 1, [5, iter([7, 8])]])
-    iter([2, 3, 1, 5, iter([7, 8])])
-    
-    >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=0))
-    [[2, 3], 1, [5, [7, 8]]]
 
 logging
--------
+=======
 
 def test_set_level
 ----------------------------
@@ -346,4 +295,8 @@ TODO update Raises sections of all added ValueErrors
     
 - function.compose
     When composing nothing, ValueError
+    
+- iterable.sliding_window
+    When size < 1, ValueError
+    When size > ilen(iterable), ValueError
 '''

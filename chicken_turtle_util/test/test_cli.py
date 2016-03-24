@@ -19,8 +19,7 @@
 Test chicken_turtle_util.cli
 '''
 
-import pytest
-from chicken_turtle_util import cli, iterable
+from chicken_turtle_util import cli
 from click.testing import CliRunner
 
 def test_cli(mocker):
@@ -29,13 +28,6 @@ def test_cli(mocker):
     
     The implementation itself doesn't leave much room for complex bugs
     '''
-
-    db_args = dict(
-        database_host='db_host',
-        database_user='db_user',
-        database_password='db_password',
-        database_name='db_name'
-    )
     
     Database = mocker.Mock(return_value='database')
     
