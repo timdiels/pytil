@@ -19,7 +19,7 @@
 sqlalchemy utilities
 '''
 
-from chicken_turtle_util import logging as logging_
+from chicken_turtle_util import logging as logging_, str as str_
 import logging
     
 def log_sql():
@@ -37,4 +37,15 @@ def pretty_sql(statement):
     statement : str or sql expression or Query or anything whose str() returns SQL
         The SQL statement to print
     '''
-    return str(statement).replace('JOIN', '\nJOIN').replace('UNION ', '\nUNION\n').replace('(', '(\n').replace(')', '\n)').replace('GROUP', '\nGROUP')
+    replacements = (
+        ('INNER JOIN', '\nINNER JOIN'),
+        ('FROM', '\nFROM'),
+        ('GROUP', '\nGROUP'),
+        ('WHERE', '\nWHERE'),
+        ('UNION ', '\nUNION\n'),
+        ('(', '(\n'),
+        (')', '\n)')
+    )
+    for from_, to in replacements:
+        statement = statement.replace(from_, to)
+    return str_.multiline_strip(statement, drop_empty=True)

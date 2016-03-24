@@ -16,37 +16,29 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-String manipulation functions
+Test chicken_turtle_util.set
 '''
 
-def multiline_lstrip(text, drop_empty=False):
-    '''
-    Apply `lstrip` to each line
-    
-    Parameters
-    ----------
-    text : str
-    drop_empty : bool
-        Drop empty lines
-        
-    Returns
-    -------
-    str
-    '''
-    return '\n'.join(x for x in map(str.lstrip, text.splitlines()) if (not drop_empty or x))
+from chicken_turtle_util.sqlalchemy import pretty_sql
 
-def multiline_strip(text, drop_empty=False):
-    '''
-    Apply `strip` to each line
-    
-    Parameters
-    ----------
-    text : str
-    drop_empty : bool
-        Drop empty lines
-    
-    Returns
-    -------
-    str
-    '''
-    return '\n'.join(x for x in map(str.strip, text.splitlines()) if (not drop_empty or x)) 
+# Note: we don't expect too much atm. Code for pprint sql must exist somewhere already, we should go look for that
+expected = '''
+SELECT meh, *
+FROM (
+SELECT magic
+FROM table
+) as t1
+UNION
+(
+SELECT magic2
+FROM TABLE
+) t2
+INNER JOIN table_thing t3 ON t2.id = t3.id
+WHERE t3.thing = 5
+GROUP BY t3.meh
+'''.strip()
+
+def test_pretty_sql():
+    input_ = expected.replace('\n', ' ').replace('  ', ' ')
+    actual = pretty_sql(input_)
+    assert actual == expected

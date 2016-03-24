@@ -153,28 +153,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-
-sqlalchemy
-==========
-
-# Note: we don't expect too much atm. Code for pprint sql must exist somewhere already, we should go look for that
-expected = \'''
-SELECT meh, *
-FROM (
-SELECT magic FROM table
-) as t1
-UNION (
-SELECT magic2 FROM TABLE
-) t2
-INNER JOIN table_thing t3 ON t2.id = t3.id
-WHERE t3.thing = 5
-GROUP BY t3.meh
-\'''.lstrip()
-
-def test_pretty_sql():
-    input = expected.replace('\n', ' ').replace('  ', ' ')
-    assert pretty_sql(input) == expected
-
 str
 ===
 
