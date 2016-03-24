@@ -24,7 +24,6 @@ import numpy as np
 from chicken_turtle_util.algorithms import spread_points_in_hypercube, multi_way_partitioning
 from scipy.spatial.distance import euclidean
 from itertools import product
-from more_itertools import ilen
 from collections_extended import bag, frozenbag
 
 class TestSpreadPointsInHypercube(object):
@@ -154,35 +153,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-
-http
-====
-
-download_file(url, destination)
--------------------------------
-url = some lorem ipsum we include in our git repo and push, in test/data/lorem_ipsum.txt
-OR figure out a way to launch a mini http server that serves a file via pytest
-
-params = (
-    ('.', 'lorem_ipsum.txt'), 
-    ('existing_file', 'existing_file'), 
-    ('new_file', 'new_file')
-)
-@pytest.parametrize('destination, path_expected', params)
-def test_download(tmpdir, destination, path_expected):
-    \'''
-    - When destination is directory, README.md is saved in it
-    - When destination is a file, it is overwritten with README.md contents
-    - When destination does not exist, it is overwritten with README.md contents
-    \'''
-    tmpdir = Path(tmpdir)
-    path_expected = tmpdir / path_expected
-    path, name = download(url, destination)
-    write_file(Path('existing_file'), 'exists')
-    assert path == path_expected
-    assert path.exists()
-    assert name == 'README.md' 
-    assert read_file(path_expected) == read_file(actual file in our repo)
     
     
 iterable

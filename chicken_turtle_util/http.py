@@ -27,7 +27,7 @@ import re
 URL_MAX_LENGTH = 2000  # http://stackoverflow.com/a/417184/1031434
 
 # Based on http://stackoverflow.com/a/16696317/1031434
-def download_file(url, destination):
+def download(url, destination):
     '''
     Download an HTTP resource
     
@@ -55,16 +55,20 @@ def download_file(url, destination):
     # Get file name suggested by server
     file_name = None
     if 'content-disposition' in response.headers:
-        match = re.match(r'filename=(.+)', response.headers['content-disposition'])
+        match = re.search(r'filename="?([^"]+)"?', response.headers['content-disposition'])
         if match:
-            file_name = match.groups(0)
+            file_name = match.group(1)
             
     # Ensure destination is a file
     if destination.is_dir():
         if file_name:
             destination /= file_name
         else:
-            destination /= Path(urlparse(url).path).name
+            name = Path(urlparse(url).path).name
+            if name:
+                destination /= name
+            else:
+                destination /= 'unknown' 
     
     # Download
     with destination.open('wb') as f:

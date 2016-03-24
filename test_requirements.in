@@ -5,3 +5,4 @@ pytest-testmon
 pytest-cov
 coverage_pth
 pytest-mock
+pytest-localserver
