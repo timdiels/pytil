@@ -152,17 +152,7 @@ class TestMultiWayPartitioning(object):
         
 # TestMultiWayPartitioning().generate_test_data()
 
-'''    
-set
-===
-
-merge_sets_by_overlap(sets)
---------------------------- 
-    
-def test_merge_sets_by_overlap():
-    sets = [{1,2}, set(), {2,3}, {4,5,6}, {6,7}]
-    merge_sets_by_overlap(sets)
-    assert sets == [{1,2,3}, {4,5,6,7}]  # Note the order doesn't actually matter
+'''
 
 sqlalchemy
 ==========
