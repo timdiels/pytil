@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Test chicken_turtle_util.algorithms
+Test chicken_turtle_util.cli
 '''
 
 import pytest
