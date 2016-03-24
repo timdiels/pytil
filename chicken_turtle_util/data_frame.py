@@ -22,7 +22,7 @@ Utilities for working with `pandas.DataFrame`
 import pandas as pd
 import numpy as np
 
-def replace_na_with_none(df, inplace=False):
+def replace_na_with_none(df):
     '''
     Replace NaN values in DataFrame with None
     
@@ -30,8 +30,6 @@ def replace_na_with_none(df, inplace=False):
     ----------
     df : pd.DataFrame
         DataFrame whose NaN values to replace
-    inplace : bool, optional
-        Whether to perform the operation in place on the data
         
     Returns
     -------
@@ -46,7 +44,7 @@ def replace_na_with_none(df, inplace=False):
     These None values will not be treated as 'missing' by DataFrame, as the
     dtypes will be set to 'object'
     '''
-    return df.where(pd.notnull(df), None, inplace=inplace)
+    return df.where(pd.notnull(df), None)
 
 def split_array_like(df, columns):
     '''

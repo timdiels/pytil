@@ -24,7 +24,7 @@ from chicken_turtle_util.data_frame import replace_na_with_none, split_array_lik
 import pandas as pd
 import numpy as np
 
-class ReplaceNAWithNone(object): #TODO
+class TestReplaceNAWithNone(object):
 
     @pytest.fixture
     def df(self):
@@ -42,17 +42,11 @@ class ReplaceNAWithNone(object): #TODO
             5 : [7, 8, 9]  
         })
       
-    def test_not_inplace(self, df, df_replaced):
+    def test_inplace(self, df, df_replaced):
         '''When df contains NaN and inplace=False, df contains NaN, return has NaN replaced'''
         df_original = df.copy()
         retval = replace_na_with_none(df)
         assert df.equals(df_original)
-        assert retval.equals(df_replaced)
-      
-    def test_inplace(self, df, df_replaced):
-        '''When df contains NaN and inplace=True, df and return have NaN replaced'''
-        retval = replace_na_with_none(df, inplace=True)
-        assert df.equals(df_replaced)
         assert retval.equals(df_replaced)
     
 class TestSplitArrayLike(object):

@@ -1,30 +1,30 @@
-requests==2.9.1
 pytest==2.9.0
 pytest-xdist==1.14
+numpy==1.10.4
+pandas==0.18.0
+click==6.3
+requests==2.9.1
+scipy==0.17.0
+sklearn==0.0
 pytest-env==0.6.0
 pytest-testmon==0.8.2
-psutil==4.1.0
-more-itertools==2.2
-numpy==1.10.4
 pytest-cov==2.2.1
 coverage-pth==0.0.1
 pytest-mock==0.11.0
-pandas==0.18.0
-click==6.3
-scipy==0.17.0
 pytest-localserver==0.3.5
-sklearn==0.0
-collections-extended==0.7.0
 pymysql==0.7.2
-werkzeug==0.11.5          # via pytest-localserver
-execnet==1.4.1            # via pytest-xdist
-py==1.4.31                # via pytest, pytest-xdist
-six==1.10.0               # via mock, python-dateutil
-pytz==2016.2              # via pandas
-coverage==4.0.3           # via coverage-pth, pytest-cov, pytest-testmon
-apipkg==1.4               # via execnet
-python-dateutil==2.5.1    # via pandas
-scikit-learn==0.17.1      # via sklearn
-pbr==1.8.1                # via mock
+more-itertools==2.2
+collections-extended==0.7.0
+psutil==4.1.0
 funcsigs==0.4             # via mock
+scikit-learn==0.17.1      # via sklearn
+execnet==1.4.1            # via pytest-xdist
+pytz==2016.2              # via pandas
+six==1.10.0               # via mock, python-dateutil
+py==1.4.31                # via pytest, pytest-xdist
+apipkg==1.4               # via execnet
+coverage==4.0.3           # via coverage-pth, pytest-cov, pytest-testmon
+pbr==1.8.1                # via mock
+python-dateutil==2.5.1    # via pandas
 mock==1.3.0               # via pytest-mock
+werkzeug==0.11.5          # via pytest-localserver
