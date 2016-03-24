@@ -153,19 +153,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-pyqt
-====
-def test_block_signals():
-    obj = QObject()
-    
-    with block_signals(obj):
-        assert obj.blockSignals()
-    assert not obj.blockSignals()
-    
-    obj.blockSignals(True)
-    with block_signals(obj):
-        assert obj.blockSignals()
-    assert obj.blockSignals()
     
 series
 ======
