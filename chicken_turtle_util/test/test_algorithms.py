@@ -154,42 +154,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-debug
-=====
-def test_pretty_memory_info():
-    assert 'memory usage' in pretty_memory_info()
-    
-dict
-====
-
-class PrettyPrintHead(object)
-
-pretty_print_head(dict_, count=10)
-----------------------------------
-- When count < 1, ValueError
-- When large enough dict, print only 10 items
-- When smaller than count, print whole dict
-
-DefaultDict
------------
-def test_default_dict():
-    dict_ = DefaultDict(lambda key: key)
-    assert dict_['missing'] == 'missing'
-    
-    dict_['present'] = 5
-    assert dict_['present'] == 5
-    
-    del dict_['present']
-    assert dict_['present'] == 'present'
-
-
-invert(dict_)
--------------
->>> invert({1: 2, 3: 4})
-    {2: {1}, 4: {3}}
-    
->>> invert({1: 2, 3: 2, 4: 5})
-{2: {1,3}, 5: {4}}
 
 function
 ========
@@ -428,4 +392,7 @@ TODO update Raises sections of all added ValueErrors
 - spread_points_in_hypercube
     When point_count < 0
     When dimension_count < 1
+    
+- pretty_print_head
+    When count < 1, ValueError
 '''

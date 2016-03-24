@@ -36,6 +36,8 @@ def pretty_print_head(dict_, count=10):
     count : int, optional
         Number of items to print.
     '''
+    if count < 1:
+        raise ValueError('`count` must be at least 1')
     pprint(dict(take(count, dict_.items())))
 
 # Idea and implementation comes from: http://stackoverflow.com/a/2912455/1031434
