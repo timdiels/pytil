@@ -88,12 +88,19 @@ def split_array_like(df, columns):
     9     2  1  2
     '''
     #TODO could add option to keep_index by using reset_index and eventually set_index. index names trickery: MultiIndex.names, Index.name. Both can be None. If Index.name can be None in which case it translates to 'index' or if that already exists, it translates to 'level_0'. If MultiIndex.names is None, it translates to level_0,... level_N
+    dtypes = df.dtypes
+    
     if isinstance(columns, str):
         columns = [columns]
         
     for column in columns:
         expanded = np.repeat(df.values, df[column].apply(len).values, axis=0)
         expanded[:, df.columns.get_loc(column)] = np.concatenate(df[column].tolist())
-        df = pd.DataFrame(expanded, columns=df.columns)
+        df = pd.DataFrame(expanded, columns=df.columns) # XXX can optimise to outside of loop perhaps
+        
+    # keep types unchanged
+    for i, dtype in enumerate(dtypes):
+        df.iloc[:,i] = df.iloc[:,i].astype(dtype)
+     
     return df
 
