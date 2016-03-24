@@ -153,40 +153,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-multi_dict
-==========
-
-class MultiDict(object):
-
-    def test_empty(object):
-        actual = MultiDict({})
-        assert set(actual.items()) == set()
-        assert set(actual.keys()) == set()
-        assert set(actual.values()) == set()
-        assert actual.invert() == {}
-        
-    def test_normal(object):
-        original = {
-            1: {1,2,3},
-            2: {1},
-            3: {4,5}
-        }
-            
-        actual_dict = original.copy()
-        actual = MultiDict(actual_dict)
-        
-        assert actual.dict == actual_dict
-        assert set(actual.items()) == {(1,1), (1,2), (1,3), (2,1), (3,4), (3,5)}
-        assert set(actual.keys()) == {1, 2, 3}
-        assert set(actual.values()) == {1, 2, 3, 4, 5}
-        assert actual.invert() == {
-            1: {1,2},
-            2: {1},
-            3: {1},
-            4: {3},
-            5: {3}
-        }
-
 pyqt
 ====
 def test_block_signals():
