@@ -26,7 +26,15 @@ from functools import partial
 from chicken_turtle_util.function import compose
 import click
 
-command = partial(click.command, help_option_names=['-h', '--help']) #XXX don't forget to adjust in other projects when done
+def command(*args, **kwargs):
+    #XXX don't forget to adjust in other projects when done
+    kwargs_ = {
+        'context_settings': {
+            'help_option_names': ['-h', '--help']
+        }
+    }
+    kwargs_.update(kwargs)
+    return click.command(*args, **kwargs_)
 '''Like `click.command`, but by default use short and long help options''' 
 
 option = partial(click.option, show_default=True, required=True)
@@ -111,11 +119,11 @@ def DatabaseMixin(create_database):
     
     Parameters
     ----------
-    create_database : (database_host :: str, database_user :: str, database_password :: str, database_name :: str) -> (database :: any)
-        function that creates a database. `database_host` is a DNS or IP of the
-        database server to connect to. `database_user` and `database_password`
-        are the credentials to connect with. `database_name` is the name of the
-        database to connect to.
+    create_database : (context :: Context, host :: str, user :: str, password :: str, name :: str) -> (database :: any)
+        function that creates a database. `context` is an instance of your
+        Context class. `host` is a DNS or IP of the database server to connect
+        to. `user` and `password` are the credentials to connect with. `name` is
+        the name of the database to connect to.
     
     Returns
     -------
