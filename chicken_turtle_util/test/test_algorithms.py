@@ -153,21 +153,6 @@ class TestMultiWayPartitioning(object):
 # TestMultiWayPartitioning().generate_test_data()
 
 '''
-
-logging
-=======
-
-def test_set_level
-----------------------------
-    logger = create dummy logger that still uses enough of logging, so maybe you'll need to capture root log output? or how know whether it emits or not?
-        caplog?
-    with set_level(logger, logging.INFO):
-        logger.info('not ignored')
-        logger.warning('not ignored')
-    logger.info('ignored')
-    logger.warning('not ignored')
-    assert log output == 'INFO not ignored', WARNING not ignored, WARNING not ignored
-
 multi_dict
 ==========
 

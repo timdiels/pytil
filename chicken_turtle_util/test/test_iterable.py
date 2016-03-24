@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Test chicken_turtle_util.function
+Test chicken_turtle_util.iterable
 '''
 
 import pytest

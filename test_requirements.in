@@ -6,3 +6,4 @@ pytest-cov
 coverage_pth
 pytest-mock
 pytest-localserver
+pytest-capturelog

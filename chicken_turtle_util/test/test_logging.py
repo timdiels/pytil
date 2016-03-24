@@ -16,30 +16,18 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Logging utilities
+Test chicken_turtle_util.logging
 '''
 
-from contextlib import contextmanager
+from chicken_turtle_util.logging import set_level
 import logging
-    
-@contextmanager
-def set_level(logger, level):
-    '''
-    Temporarily change log level
-    
-    Parameters
-    ----------
-    logger : str or Logger
-        Logger name
-    level
-        Log level to set
-    '''
-    if isinstance(logger, str):
-        logger = logging.getLogger(logger)
-    original = logger.level
-    logger.setLevel(level)
-    try:
-        yield
-    finally:
-        logger.setLevel(original)
-        
+
+def test_set_level(caplog):
+    logger = logging.getLogger('test89374.logger')
+    logger.setLevel(logging.WARNING)
+    with set_level(logger, logging.INFO):
+        logger.info('not ignored')
+        logger.warning('not ignored')
+    logger.info('ignored')
+    logger.warning('not ignored')
+    assert [x.msg for x in caplog.records()] == ['not ignored'] * 3
