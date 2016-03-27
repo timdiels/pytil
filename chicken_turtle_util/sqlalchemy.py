@@ -28,7 +28,7 @@ def log_sql():
     '''
     return logging_.set_level('sqlalchemy.engine', logging.INFO)
         
-def pretty_sql(statement):
+def pretty_sql(statement): #TODO replace with proper pretty print that parses sql, take it from other library and just make note of it, don't actually add it here
     '''
     Pretty format sql
     

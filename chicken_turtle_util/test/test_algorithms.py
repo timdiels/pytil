@@ -152,27 +152,7 @@ class TestMultiWayPartitioning(object):
         
 # TestMultiWayPartitioning().generate_test_data()
 
-'''
-str
-===
-
-input = \'''   
-  the big
-     white nose 
-is
-    very white
-\'''.lstrip()
-
-expected = \'''
-the big
-white nose 
-is
-very white
-\'''
-
-def test_multiline_lstrip():
-    assert multiline_lstrip(input) == expected
-    
+'''    
     
 various
 =======
