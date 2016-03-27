@@ -36,6 +36,11 @@ def compose(*functions):
     -------
     any -> any
         Function composed of `functions`
+        
+    Raises
+    ------
+    ValueError
+        When `len(functions) < 1`
     
     Examples
     --------

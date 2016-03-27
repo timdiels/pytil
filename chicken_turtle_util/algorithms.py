@@ -21,7 +21,6 @@ Various algorithms
 
 from sklearn.utils.extmath import cartesian
 from collections_extended import bag, frozenbag
-import math
 import numpy as np
 
 def spread_points_in_hypercube(point_count, dimension_count):
@@ -42,6 +41,11 @@ def spread_points_in_hypercube(point_count, dimension_count):
     -------
     np.array(shape=(point_count, dimension_count))
         Points spread approximately optimally across the hypercube.
+        
+    Raises
+    ------
+    ValueError
+        When `point_count` < 0 or when `dimension_count` < 1
         
     Notes
     -----

@@ -45,6 +45,11 @@ def sliding_window(iterable, size=2):
     (any, ...)
         Iterator slices of size `size`, taken from start to end through the iterator.
         
+    Raises
+    ------
+    ValueError
+        When `ilen(iterable) < size or size < 1`
+        
     See also
     --------
     more_itertools.chunked : Divide iterable into (non-overlapping) chunks of given size

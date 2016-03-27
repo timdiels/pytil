@@ -35,6 +35,11 @@ def pretty_print_head(dict_, count=10):
         Dict to print from
     count : int, optional
         Number of items to print.
+        
+    Raises
+    ------
+    ValueError
+        When `count` < 1
     '''
     if count < 1:
         raise ValueError('`count` must be at least 1')

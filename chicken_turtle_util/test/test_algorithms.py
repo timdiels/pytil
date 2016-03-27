@@ -151,20 +151,3 @@ class TestMultiWayPartitioning(object):
         # XXX could use more varied input
         
 # TestMultiWayPartitioning().generate_test_data()
-
-'''
-TODO update Raises sections of all added ValueErrors
-- algorithms.spread_points_in_hypercube
-    When point_count < 0
-    When dimension_count < 1
-    
-- dict.pretty_print_head
-    When count < 1, ValueError
-    
-- function.compose
-    When composing nothing, ValueError
-    
-- iterable.sliding_window
-    When size < 1, ValueError
-    When size > ilen(iterable), ValueError
-'''
