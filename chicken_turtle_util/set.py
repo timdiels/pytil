@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Set utilities and algorithms
+Set utilities
 '''
 
 def _locate_bin(bins, n):

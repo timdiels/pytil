@@ -1,12 +1,41 @@
 Chicken Turtle Util (CTU) provides an API of various Python utility functions.
 
-Chicken Turtle Util is pre-alpha. None of the interface is stable, meaning it may
-change in the future.
+Chicken Turtle Util is alpha. None of the interface is stable (yet), meaning it
+may change in the future.
 
-Chicken Turtle Util has some optional dependencies. E.g. to use
-`chicken_turtle.pyqt`, you will need to add PyQt to your project's
-dependencies. For now, you'll have to let the `ImportError`s guide you to the
-right dependencies to add to setup.py assuming your tests have full coverage.
+Chicken Turtle Util offers a variety of features, as such we kept most
+dependencies optional.  When using a module, add/install its dependencies,
+listed in its corresponding `*_requirements.in` file found in the root of the
+project; e.g.
+[cli_requirements.in](<https://github.com/timdiels/chicken_turtle_util/blob/master/cli_requirements.in>)
+lists the dependencies of `chicken_turtle_util.cli`.
+
+Features:
+
+- `algorithms.spread_points_in_hypercube`:
+  Place `n` points in a unit hypercube such that the minimum distance between
+  points is approximately maximal
+- `algorithms.multi_way_partitioning`: Greedily divide weighted items equally across bins (multi-way partition problem)       
+- `data_frame` and `series`: [pandas](http://pandas.pydata.org/) utility functions
+  - `data_frame.replace_na_with_none`: Replace `NaN` values in `DataFrame` with `None`
+  - `data_frame.split_array_like`: Split cells with `array_like` values along row axis.
+  - `series.invert`: Swap index with values of series
+- `dict`: dictionary utilities:
+  - `invert`: Invert dict by swapping each value with its key
+  - `DefaultDict`: Like `collections.defaultdict`, but its value factory function takes a key argument, e.g. `DefaultDict(lambda key: MyClass(key))`
+  - `pretty_print_head`: Pretty print the 'first' lines of a dict
+- `function.compose`: Compose functions
+- `http.download`: Download http resource (using `requests`) and save to file name suggested by HTTP server
+- `iterable.sliding_window`: Iterate using a sliding window
+- `iterable.partition`: Split iterable into partitions
+- `iterable.is_sorted`: Get whether iterable is sorted ascendingly
+- `iterable.flatten`: Flatten shallowly zero or more times
+- `set.merge_by_overlap`: Of a list of sets, merge those that overlap, in place
+- `logging.set_level`: Context manager to temporarily change log level of logger
+- `cli`: extensions to [click](click.pocoo.org) for building CLI applications
+- `pyqt.block_signals`: Context manager to temporarily turn on `QObject.blockSignals`
+- `sqlalchemy.log_sql`: Context manager to temporarily log sql statements emitted by [sqlalchemy](http://www.sqlalchemy.org/)
+- `various.Object`: Like `object`, but does not raise given args to `__init__`
 
 ## Developer guide
 

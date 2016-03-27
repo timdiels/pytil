@@ -25,7 +25,7 @@ import logging
 @contextmanager
 def set_level(logger, level):
     '''
-    Temporarily change log level
+    Temporarily change log level of logger
     
     Parameters
     ----------

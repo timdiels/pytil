@@ -23,7 +23,7 @@ project = dict(
     classifiers='''
         Natural Language :: English
         Intended Audience :: Developers
-        Development Status :: 2 - Pre-Alpha
+        Development Status :: 3 - Alpha
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         Operating System :: POSIX

@@ -24,7 +24,7 @@ import numpy as np
 
 def replace_na_with_none(df):
     '''
-    Replace NaN values in DataFrame with None
+    Replace NaN values in `DataFrame` with `None`
     
     Parameters
     ----------

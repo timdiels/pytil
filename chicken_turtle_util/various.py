@@ -15,6 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
+'''
+Various utilities
+'''
+
 PATH_MAX_LENGTH = 256  # currently set to win32 limit: http://stackoverflow.com/a/1880453/1031434
 
 class Object(object):
