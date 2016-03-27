@@ -19,7 +19,7 @@
 sqlalchemy utilities
 '''
 
-from chicken_turtle_util import logging as logging_, str as str_
+from chicken_turtle_util import logging as logging_
 import logging
     
 def log_sql():
@@ -48,4 +48,4 @@ def pretty_sql(statement): #TODO replace with proper pretty print that parses sq
     )
     for from_, to in replacements:
         statement = statement.replace(from_, to)
-    return str_.multiline_strip(statement, drop_empty=True)
+    return '\n'.join(line for line in map(str.strip, statement.splitlines()) if line)
