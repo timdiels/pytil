@@ -152,14 +152,7 @@ class TestMultiWayPartitioning(object):
         
 # TestMultiWayPartitioning().generate_test_data()
 
-'''    
-    
-various
-=======
-def test_object():
-    Object('ignore')
-    Object(ignore='ignore')
-    
+'''
 TODO update Raises sections of all added ValueErrors
 - algorithms.spread_points_in_hypercube
     When point_count < 0
