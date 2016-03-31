@@ -27,7 +27,7 @@ class Object(object):
     
     Notes
     -----
-    This is the default behaviour of `object` in Python 2.x. 
+    This was the default behaviour of `object` in Python 2.x. 
     '''
     def __init__(self, *args, **kwargs):
         super().__init__()

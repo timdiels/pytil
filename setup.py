@@ -37,23 +37,24 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'extras_require': {   'algorithms': ['numpy', 'scipy', 'sklearn', 'collections-extended'],
+    'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
                           'cli': ['click'],
                           'data_frame': ['numpy', 'pandas'],
                           'debug': ['psutil'],
-                          'dict': ['more_itertools'],
+                          'dev': ['sphinx-rtd-theme', 'sphinx', 'numpydoc'],
+                          'dict': ['more-itertools'],
                           'http': ['requests'],
                           'pymysql': ['pymysql'],
                           'pyqt': [],
                           'test': [   'pytest',
                                       'pytest-xdist',
                                       'pytest-env',
-                                      'pytest-testmon',
                                       'pytest-cov',
-                                      'coverage_pth',
+                                      'coverage-pth',
                                       'pytest-mock',
                                       'pytest-localserver',
                                       'pytest-capturelog']},
+    'human_friendly_name': 'Chicken Turtle Util',
     'install_requires': [],
     'keywords': 'development util library',
     'license': 'LGPL3',
@@ -71,7 +72,7 @@ setup(
                         '<https://github.com/timdiels/chicken_turtle_util/blob/master/cli_requirements.in>`__\n'
                         'lists the dependencies of ``chicken_turtle_util.cli``.\n'
                         '\n'
-                        'Features:\n'
+                        'Feature overview:\n'
                         '\n'
                         '-  ``algorithms.spread_points_in_hypercube``: Place ``n`` points in a\n'
                         '   unit hypercube such that the minimum distance between points is\n'
@@ -102,14 +103,21 @@ setup(
                         '   overlap, in place\n'
                         '-  ``logging.set_level``: Context manager to temporarily change log\n'
                         '   level of logger\n'
-                        '-  ``cli``: extensions to `click <click.pocoo.org>`__ for building CLI\n'
-                        '   applications\n'
+                        '-  ``cli``: extensions to `click <http://click.pocoo.org/>`__ for\n'
+                        '   building CLI applications\n'
                         '-  ``pyqt.block_signals``: Context manager to temporarily turn on\n'
                         '   ``QObject.blockSignals``\n'
                         '-  ``sqlalchemy.log_sql``: Context manager to temporarily log sql\n'
                         '   statements emitted by `sqlalchemy <http://www.sqlalchemy.org/>`__\n'
                         '-  ``various.Object``: Like ``object``, but does not raise given args to\n'
                         '   ``__init__``\n'
+                        '\n'
+                        'Links\n'
+                        '-----\n'
+                        '\n'
+                        '-  `Documentation <http://pythonhosted.org/chicken_turtle_util/>`__\n'
+                        '-  `PyPI <https://pypi.python.org/pypi/chicken_turtle_util/>`__\n'
+                        '-  `GitHub <https://github.com/timdiels/chicken_turtle_util/>`__\n'
                         '\n'
                         'Developer guide\n'
                         '---------------\n'
@@ -176,10 +184,12 @@ setup(
                         '\n'
                         '::\n'
                         '\n'
-                        "    {'apples': bool, 'name': str}\n"
+                        "    {'apples' => bool, 'name' => str}\n"
                         '\n'
                         "A dictionary with keys 'apples' and 'name' which respectively have a\n"
-                        'boolean and a string as value.\n'
+                        'boolean and a string as value. (Note that the ``:`` token is already\n'
+                        'used by Sphinx, and ``->`` is usually used for lambdas, so we use ``=>``\n'
+                        'instead)\n'
                         '\n'
                         '::\n'
                         '\n'
@@ -192,10 +202,17 @@ setup(
                         '    Parameters\n'
                         '    ----------\n'
                         '    field : str\n'
-                        '    dict_ : {field: bool}\n'
+                        '    dict_ : {field => bool}\n'
                         '\n'
                         'A dictionary with one key, specified by the value of ``field``, another\n'
                         'parameter (but can be any expression, e.g. a global).\n'
+                        '\n'
+                        '::\n'
+                        '\n'
+                        '    {apples => bool, name => str}\n'
+                        '\n'
+                        'Not equivalent to the apples dict earlier. ``apples`` and ``name`` are\n'
+                        'references to the value used as a key.\n'
                         '\n'
                         '::\n'
                         '\n'

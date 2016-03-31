@@ -36,7 +36,7 @@ def invert(series):
     See also
     --------
     pandas.Series.map
-        Joins series a -> b and b -> c into a -> c.
+        Joins series ``a -> b`` and ``b -> c`` into ``a -> c``.
     '''
     df = series.reset_index() #TODO alt is to to_frame and then use som dataframe methods
     df.set_index(series.name, inplace=True)

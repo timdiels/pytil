@@ -25,9 +25,9 @@ from more_itertools import take
 
 def pretty_print_head(dict_, count=10):
     '''
-    Pretty print the 'first' lines of a dict
+    Pretty print some items of a dict
     
-    For an unordered dict, `count` random items will be printed. 
+    For an unordered dict, `count` arbitrary items will be printed. 
     
     Parameters
     ----------
@@ -39,7 +39,7 @@ def pretty_print_head(dict_, count=10):
     Raises
     ------
     ValueError
-        When `count` < 1
+        When ``count < 1``
     '''
     if count < 1:
         raise ValueError('`count` must be at least 1')
@@ -49,12 +49,14 @@ def pretty_print_head(dict_, count=10):
 class DefaultDict(defaultdict):
     
     '''
-    Replacement for `collections.defaultdict`, its default value factory takes a key argument
+    Replacement for `collections.defaultdict`, its default value factory takes a
+    key argument
     
     Parameters
     ----------
     default_factory : (key :: any) -> (value :: any)
-        Function that is called with the missing key and returns the default value to use for it
+        Function that is called with the missing key and returns the default
+        value to use for it
     '''
     
     def __missing__(self, key):
@@ -70,23 +72,23 @@ def invert(dict_):
     
     Parameters
     ----------
-    dict_ : {hashable : hashable}
+    dict_ : {hashable => hashable}
         Dict to invert
         
     Returns
     -------
-    {hashable : {hashable}}
+    {hashable => {hashable}}
         `dict_` copy with key and value swapped, a multi-dict (as some keys in
         `dict_` may have had the same value).
     
     See also
     --------
-    MultiDict : A mutable multi-dict view of a `{hashable -> {hashable}}` dict.
+    MultiDict : A mutable multi-dict view of a ``{hashable => {hashable}}`` dict.
         
     Notes
     -----
     If your dict never has 2 keys mapped to the same value, you can convert it
-    to a `{hashable : any}` dict using::
+    to a ``{hashable => any}`` dict using::
         
         from chicken_turtle_util.multi_dict import MultiDict
         inverted_dict = dict(MultiDict(inverted_dict))

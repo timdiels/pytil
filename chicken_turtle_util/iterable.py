@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Fucntions for working with iterables
+Utilities for working with iterables
 
 See also
 --------
@@ -48,7 +48,7 @@ def sliding_window(iterable, size=2):
     Raises
     ------
     ValueError
-        When `ilen(iterable) < size or size < 1`
+        When ``ilen(iterable) < size or size < 1``
         
     See also
     --------
@@ -133,7 +133,7 @@ def flatten(iterable, times=1):
     Yields
     -------
     any
-        Items of iterable flattened to depth `depth(iterable) - times`
+        Items of iterable flattened to depth ``depth(iterable) - times``
         
     Raises
     ------
@@ -161,7 +161,7 @@ def flatten(iterable, times=1):
         raise ValueError('`iterable` is not iterable or is `str` or `bytes`')
     if times < 0:
         raise ValueError('times < 0: {}'.format(times))
-    for x in _flatten(iterable, times+1):
+    for x in _flatten(iterable, times+1):  # times+1 as _flatten includes unpacking the passed iterable in times
         yield x
         
 def _flatten(item, times):

@@ -25,7 +25,7 @@ def compose(*functions):
     '''
     Compose functions
     
-    Like the `o` operator in math.
+    Like the ``o`` operator in math.
     
     Parameters
     ----------
@@ -40,11 +40,11 @@ def compose(*functions):
     Raises
     ------
     ValueError
-        When `len(functions) < 1`
+        When ``len(functions) < 1``
     
     Examples
     --------
-    `compose(f1, f2)` is equivalent to `f1 o f2`, or to `lambda x: f1(f2(x))`
+    ``compose(f1, f2)`` is equivalent to ``f1 o f2``, or to ``lambda x: f1(f2(x))``
     '''
     if not functions:
         raise ValueError('Must supply at least one function to `compose`')

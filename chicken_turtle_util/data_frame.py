@@ -24,25 +24,25 @@ import numpy as np
 
 def replace_na_with_none(df):
     '''
-    Replace NaN values in `DataFrame` with `None`
+    Replace ``NaN`` values in `pd.DataFrame` with ``None``
     
     Parameters
     ----------
     df : pd.DataFrame
-        DataFrame whose NaN values to replace
+        DataFrame whose ``NaN`` values to replace
         
     Returns
     -------
     pd.DataFrame
-        `df` with NaN values replaced by None
+        `df` with ``NaN`` values replaced by None
         
     Notes
     -----
-    Like `DataFrame.fillna`, but replaces NaN values with None, which
+    Like `DataFrame.fillna`, but replaces ``NaN`` values with ``None``, which
     `DataFrame.fillna` cannot do.
     
-    These None values will not be treated as 'missing' by DataFrame, as the
-    dtypes will be set to 'object'
+    These ``None`` values will not be treated as ``NA`` by DataFrame, as the
+    dtypes will be set to ``object``
     '''
     return df.where(pd.notnull(df), None)
 
@@ -55,14 +55,14 @@ def split_array_like(df, columns):
     Parameters
     ----------
     df : pandas.DataFrame
-        Data frame `df[columns]` should have cell values of type `np.array_like`.
+        Data frame ``df[columns]`` should have cell values of type `np.array_like`.
     columns : iterable(str) or str
         Columns (or column) whose values to split.
         
     Returns
     -------
     pandas.DataFrame
-        Data frame with `array_like` values in `df[columns]` split across rows,
+        Data frame with `array_like` values in ``df[columns]`` split across rows,
         and corresponding values in other columns repeated.
         
     Examples

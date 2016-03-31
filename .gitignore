@@ -1,3 +1,7 @@
+build
+docs/build
+.settings
+docs/api
 .testmondata
 .tmontmp
 .coverage

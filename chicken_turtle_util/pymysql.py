@@ -24,7 +24,7 @@ from contextlib import suppress
 
 def patch():
     '''
-    Patch pymysql for better compatibility with other libraries (e.g. numpy)
+    Patch pymysql for better compatibility with other libraries (e.g. NumPy)
     '''
     with suppress(ImportError):
         import numpy as np

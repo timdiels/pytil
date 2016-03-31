@@ -25,7 +25,7 @@ import numpy as np
 
 def spread_points_in_hypercube(point_count, dimension_count):
     '''
-    Place `n` points in a unit hypercube such that the minimum distance between
+    Place points in a unit hypercube such that the minimum distance between
     points is approximately maximal.
     
     Euclidean distance is used.
@@ -45,7 +45,7 @@ def spread_points_in_hypercube(point_count, dimension_count):
     Raises
     ------
     ValueError
-        When `point_count` < 0 or when `dimension_count` < 1
+        When ``point_count < 0 or dimension_count < 1``
         
     Notes
     -----

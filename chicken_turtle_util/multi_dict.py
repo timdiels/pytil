@@ -26,23 +26,23 @@ from collections import defaultdict
 class MultiDict(object):
     
     '''
-    A multi-dict view of a `{hashable -> {hashable}}` dict.
+    A multi-dict view of a ``{hashable => {hashable}}`` dict.
     
     A light wrapper offering a few methods for working with multi-dicts.
     
     Parameters
     ----------
-    dict_ : {hashable : {hashable}}
+    dict_ : {hashable => {hashable}}
         Dict to access as a multi-dict
     
     Notes
     -----
     A multi-dict (or multi map) is a dict that maps each key to one or more values.
     
-    `MultiDict`s provided by other libraries tend to be more feature rich, while
+    ``MultiDict``\ s provided by other libraries tend to be more feature rich, while
     this interface is far more conservative. Instead of wrapping, they provide
     an interface that mixes regular and multi-dict access. Additionally, other
-    `MultiDict`'s map keys to lists of values, allowing a key to map to the same
+    ``MultiDict``\ 's map keys to lists of values, allowing a key to map to the same
     value multiple times.
     '''
     
@@ -56,7 +56,7 @@ class MultiDict(object):
         
         Returns
         -------
-        {hashable : {hashable}}
+        {hashable => {hashable}}
         '''
         return self._dict
     
@@ -66,12 +66,12 @@ class MultiDict(object):
         
         Parameters
         ----------
-        dict_ : {hashable -> {hashable}}
+        dict_ : {hashable => {hashable}}
             Multi-dict to invert
             
         Returns
         -------
-        {hashable -> {hashable}}
+        {hashable => {hashable}}
             `dict_` copy with key and value swapped.
             
         Examples

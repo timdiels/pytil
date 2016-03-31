@@ -10,7 +10,7 @@ project; e.g.
 [cli_requirements.in](<https://github.com/timdiels/chicken_turtle_util/blob/master/cli_requirements.in>)
 lists the dependencies of `chicken_turtle_util.cli`.
 
-Features:
+Feature overview:
 
 - `algorithms.spread_points_in_hypercube`:
   Place `n` points in a unit hypercube such that the minimum distance between
@@ -32,10 +32,15 @@ Features:
 - `iterable.flatten`: Flatten shallowly zero or more times
 - `set.merge_by_overlap`: Of a list of sets, merge those that overlap, in place
 - `logging.set_level`: Context manager to temporarily change log level of logger
-- `cli`: extensions to [click](click.pocoo.org) for building CLI applications
+- `cli`: extensions to [click](http://click.pocoo.org/) for building CLI applications
 - `pyqt.block_signals`: Context manager to temporarily turn on `QObject.blockSignals`
 - `sqlalchemy.log_sql`: Context manager to temporarily log sql statements emitted by [sqlalchemy](http://www.sqlalchemy.org/)
 - `various.Object`: Like `object`, but does not raise given args to `__init__`
+
+## Links
+- [Documentation](http://pythonhosted.org/chicken_turtle_util/)
+- [PyPI](https://pypi.python.org/pypi/chicken_turtle_util/)
+- [GitHub](https://github.com/timdiels/chicken_turtle_util/)
 
 ## Developer guide
 
@@ -83,10 +88,11 @@ A set of booleans.
 
 A set of anything.
 
-    {'apples': bool, 'name': str}
+    {'apples' => bool, 'name' => str}
 
 A dictionary with keys 'apples' and 'name' which respectively have a boolean
-and a string as value.
+and a string as value. (Note that the `:` token is already used by Sphinx, and
+`->` is usually used for lambdas, so we use `=>` instead) 
 
     dict(apples=bool, name=str)
 
@@ -95,9 +101,13 @@ Equivalent to the previous example.
     Parameters
     ----------
     field : str
-    dict_ : {field: bool}
+    dict_ : {field => bool}
 
 A dictionary with one key, specified by the value of `field`, another parameter (but can be any expression, e.g. a global).
+
+    {apples => bool, name => str}
+
+Not equivalent to the apples dict earlier. `apples` and `name` are references to the value used as a key.
 
     (bool,)
 

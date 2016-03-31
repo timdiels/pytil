@@ -24,7 +24,7 @@ import contextlib
 @contextlib.contextmanager
 def block_signals(qobject):
     '''
-    Context manager to temporarily turn on QObject.blockSignals
+    Context manager to temporarily turn on `QObject.blockSignals`
     
     Parameters
     ----------
