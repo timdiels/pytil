@@ -37,7 +37,7 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v2.0.2.tar.gz',
+    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v2.0.3.tar.gz',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
                           'cli': ['click'],
                           'data_frame': ['numpy', 'pandas'],
@@ -325,5 +325,5 @@ setup(
     'package_data': {},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.test'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '2.0.2'}
+    'version': '2.0.3'}
 )
