@@ -19,7 +19,8 @@
 Path utilities
 '''
 
-from pathlib import Path 
+from pathlib import Path
+import shutil
 import os
 
 #: The file system root to use (used for testing)
@@ -58,3 +59,60 @@ def read(path):
     '''
     with path.open('r') as f:
         return f.read()
+    
+def remove(path):
+    '''
+    Remove file or directory (recursively), unless it's missing
+    
+    Parameters
+    ----------
+    path : Path
+        path to remove
+    '''
+    if not path.exists():
+        return
+    elif path.is_dir():
+        shutil.rmtree(str(path))
+    else:
+        path.unlink()     
+
+# Finish adding when needed: docstring is done. If implement properly, remove the note. Test it.
+# # https://github.com/cakepietoast/checksumdir/blob/master/checksumdir/__init__.py
+# # license: https://github.com/cakepietoast/checksumdir/blob/master/LICENSE.txt
+# # dependency: checksumdir
+# from checksumdir import dirhash
+# old = dirhash(str(path), 'sha512')
+# import hashlib
+# def digest(path):
+#     '''
+#     Get SHA512 checksum of file or directory
+#     
+#     See `checksumdir.dirhash` on how a directory's hash is calculated.
+#     
+#     .. note::
+#     
+#         The current implementation does not yet take into account the relative
+#         path (including file names) of files in a directory when hashing a
+#         directory.
+#     
+#     Parameters
+#     ----------
+#     path : pathlib.Path
+#         file or directory to hash
+#     
+#     Returns
+#     -------
+#     bytes
+#         digest of file or directory contents. If a directory, the digest takes
+#         into account the file contents of each of its descendants combined with
+#         their relative path, the directory name itself is ignored. File stat
+#         data is ignored.
+#     '''
+#     with path.open('rb') as f:
+#         hash_ = hashlib.sha512()
+#         while True:
+#             buffer = f.read(65536)
+#             hash_.update(buffer)
+#             if not buffer:
+#                 return hash_.digest()
+            

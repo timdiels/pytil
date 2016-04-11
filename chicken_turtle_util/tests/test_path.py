@@ -45,3 +45,28 @@ def test_read(path, contents):
     with path.open('w') as f:
         f.write(contents)
     assert path_.read(path) == contents
+    
+class TestRemove(object):
+    
+    def test_missing(self, path):
+        'When remove missing, ignore'
+        path_.remove(path)
+        
+    def test_file(self, path):
+        path.touch()
+        path_.remove(path)
+        assert not path.exists()
+        
+    def test_empty_dir(self, path):
+        path.mkdir()
+        path_.remove(path)
+        assert not path.exists()
+        
+    def test_full_dir(self, path):
+        path.mkdir()
+        (path / 'child').touch()
+        (path / 'subdir').mkdir()
+        (path / 'subdir' / 'child child').touch()
+        path_.remove(path)
+        assert not path.exists()
+        

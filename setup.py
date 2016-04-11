@@ -142,6 +142,8 @@ setup(
                         '-  Removed cli.command. Use cli.Context.command() instead\n'
                         '-  Added \\`path.write\\`: create or overwrite file with contents\n'
                         '-  Added \\`path.read\\`: get file contents\n'
+                        '-  Added \\`path.remove\\`: remove file or directory (recursively), unless\n'
+                        "   it's missing\n"
                         '-  Added \\`test.temp\\_dir\\_cwd\\`: pytest fixture that sets current\n'
                         '   working directory to a temporary directory\n'
                         '-  Added \\`dict.assign\\`: assign one dict to the other through mutations\n'
