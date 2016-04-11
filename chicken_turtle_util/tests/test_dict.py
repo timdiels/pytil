@@ -21,7 +21,7 @@ Test chicken_turtle_util.dict
 
 import pytest
 import ast
-from chicken_turtle_util.dict import pretty_print_head, DefaultDict, invert
+from chicken_turtle_util.dict import pretty_print_head, DefaultDict, invert, assign
 
 class TestPrettyPrintHead(object):
 
@@ -67,4 +67,10 @@ def test_invert():
     assert invert({}) == {}
     assert invert({1: 2, 3: 4}) == {2: {1}, 4: {3}}
     assert invert({1: 2, 3: 2, 4: 5}) =={2: {1,3}, 5: {4}}
+    
+def test_assign():
+    destination = {1: 2, 3: 4}
+    source = {3: 5, 6: 7}
+    assign(destination, source)
+    assert destination == {3: 5, 6: 7}
     

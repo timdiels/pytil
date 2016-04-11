@@ -42,6 +42,22 @@ Feature overview:
 - [PyPI](https://pypi.python.org/pypi/chicken_turtle_util/)
 - [GitHub](https://github.com/timdiels/chicken_turtle_util/)
 
+## Changelist
+
+.. todo: add to overview
+### v2.1.0 (to be released)
+- Added cli.ConfigurationMixin: application context mixin for loading a configuration
+- Added configuration.ConfigurationLoader: loads a single configuration from one or more files
+- cli.Context: `cli_options()` replaced by `command()`, which is more flexible
+- Removed cli.command. Use cli.Context.command() instead
+- Added `path.write`: create or overwrite file with contents
+- Added `path.read`: get file contents
+- Added `test.temp_dir_cwd`: pytest fixture that sets current working directory to a temporary directory
+- Added `dict.assign`: assign one dict to the other through mutations
+
+### v2.0.4
+No changelist
+
 ## Developer guide
 
 ### Docstrings type language

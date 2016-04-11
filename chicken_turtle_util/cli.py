@@ -22,20 +22,10 @@ Command line interface (CLI) utilities:
 - mixins to build a CLI application context
 '''
 
-from functools import partial
+from functools import partial, wraps
 from chicken_turtle_util.function import compose
-import click
-
-def command(*args, **kwargs):
-    #XXX don't forget to adjust in other projects when done
-    kwargs_ = {
-        'context_settings': {
-            'help_option_names': ['-h', '--help']
-        }
-    }
-    kwargs_.update(kwargs)
-    return click.command(*args, **kwargs_)
-'''Like `click.command`, but by default use short and long help options''' 
+from pathlib import Path
+import click 
 
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
@@ -51,24 +41,23 @@ class Context(object):
     '''
     CLI Application Context
     
-    The application context is meant to be passed around to disseminate what
+    The application context is meant to be passed around to spread what
     would otherwise be global variables or singletons, e.g. a database
     connection pool or a file cache.
     
     Usage example::
     
-        from my_project import __version  # optional, but good practice
+        from my_project import __version__, 
         from chicken_turtle_util.cli import Context
         
         # Put together an application context with mixins that fit your needs
-        class MyAppContext(Mixin1, Mixin2, Context):
+        # Here we used a mixin providing a database and one providing good practices
+        class MyAppContext(DatabaseMixin(Database), BasicsMixin(__version__), Context):
             pass
         
-        @click.command()
-        @click.version_option(version=__version__)  # optional, but good practice
-        @MyAppContext.cli_options()  # options provided by the mixins
-        def main(**kwargs):
-            context = MyAppContext(**kwargs)  # option values are fed back to the mixins, e.g. database credentials
+        @MyAppContext.command()  # The mixins add their options to the click.command, e.g. BasicsMixin adds a --version option
+        def main(context): # an instance of MyAppContext is constructed using CLI option input from the user. Its context.database (provided by DatabaseMixin) is now an instance of Database
+            pass
             
     Example of writing a custom mixin::
     
@@ -88,30 +77,78 @@ class Context(object):
                 return self._name
             
             @classmethod
-            def cli_options(cls):
+            def command(class_, *args, **kwargs):  # Note click.command takes a `cls` argument, so you should name your class arg `class_` instead of `cls`
                 # combine our cli options with that of super (decorators are single argument functions, so we can use function.compose)
                 return compose(
+                    # <-- decorators that decorate a click.Command go here
+                    super(NameMixin, class_).command(*args, **kwargs)
                     cli.option('--name', help='Your name.'),
-                    # <-- you can add more options here if you like
-                    super().cli_options()
+                    # <-- decorators that decorate the callback function, e.g. option and argument decorators should go here
                 )
     '''
     
     def __init__(self, *args, **kwargs):
-        pass
+        self.unused_cli_args = (args, kwargs)
     
     @classmethod
-    def cli_options(cls):
+    def command(class_, *args, **kwargs):
         '''
-        Get CLI options corresponding to the required kwargs to `__init__`
+        Like `click.command`, wraps a function and returns a Command.
         
-        Returns
-        -------
-        decorator
-            Decorator that decorates a function with the CLI options
+        Refer to the mixins' doc you use for any differences in parameter
+        defaults, and the returned Command.
+        
+        Parameters
+        ----------
+        *args, **kwargs
+            See `click.command` and refer to your mixins' doc for any differences
         '''
-        return lambda x: x
+        def pass_context(func):
+            @wraps(func)
+            def wrapped(**kwargs):
+                context = class_(**kwargs)
+                args, kwargs = context.unused_cli_args
+                return func(*args, context=context, **kwargs)
+            return wrapped
+        
+        return compose(
+            click.command(*args, **kwargs),
+            pass_context
+        )
+
+def BasicsMixin(version):        
+    '''
+    Application context mixin that provides good practices such as a short and
+    long help options, as well as a version option
     
+    Parameters
+    ----------
+    version : str
+        Application version string, e.g. ``1.0.0``
+    '''
+    
+    class _BasicsMixin(Context):
+        
+        @classmethod
+        def command(class_, *args, **kwargs):
+            '''
+            Like `click.command`, but by default use short and long help options and
+            add a version option. Subclasses may make additional modifications.
+            '''
+            kwargs_ = {
+                'context_settings': {
+                    'help_option_names': ['-h', '--help']
+                }
+            }
+            kwargs_.update(kwargs)
+            
+            return compose(
+                super(_BasicsMixin, class_).command(*args, **kwargs_),
+                click.version_option(version=version)
+            )
+
+    return _BasicsMixin
+
 def DatabaseMixin(create_database):
     
     '''
@@ -124,10 +161,6 @@ def DatabaseMixin(create_database):
         Context class. `host` is a DNS or IP of the database server to connect
         to. `user` and `password` are the credentials to connect with. `name` is
         the name of the database to connect to.
-    
-    Returns
-    -------
-    Context mixin
     '''
     
     class _DatabaseMixin(Context):
@@ -141,15 +174,73 @@ def DatabaseMixin(create_database):
             return self._database
         
         @classmethod
-        def cli_options(cls):
+        def command(class_, *args, **kwargs):
             return compose(
+                super(_DatabaseMixin, class_).command(*args, **kwargs),
                 option('--database-host', help='Host running the database to connect to. Provide its DNS or IP.'),
                 option('--database-user', help='User name to authenticate with.'),
                 password_option('--database-password', help='Password corresponding to user to authenticate with.'),
-                option('--database-name', help='Name to use for SQL database on given host.'),
-                super().cli_options()
+                option('--database-name', help='Name to use for SQL database on given host.')
             )
     
     return _DatabaseMixin
     
+def ConfigurationMixin(create_configuration, help_message):
+    '''
+    Application Context mixin for loading a configuration
+    
+    CLI options added:
+    
+    --configuration
+        Configuration file or directory.
+    
+    Parameters
+    ----------
+    create_configuration : (context :: Context, path :: Path or None) -> (configuration :: any)
+        function that creates a configuration. `context` is an instance of your
+        Context class. `path` is the path to a configuration file or directory
+        containing the configuration file, specified on the CLI, or None if none
+        was specified.
+    help_message : str
+        String to include in any command's help message that uses this Context
+        
+    See also
+    --------
+    configuration.ConfigurationLoader: loads and parses configurations
+    '''
+    
+    class _ConfigurationMixin(Context):
+    
+        def __init__(self, configuration, **kwargs):
+            super().__init__(**kwargs)
+            try:
+                configuration = Path(configuration) if configuration else None
+                self._configuration = create_configuration(self, configuration)
+            except Exception as ex:
+                print('Error: ' + str(ex))  # Note: click simply exits non-zero without printing the exception message
+                raise
+            
+        @property
+        def configuration(self):
+            return self._configuration
+        
+        @classmethod
+        def command(class_, *args, **kwargs):
+            def modify_command(command):
+                if not command.epilog:
+                    command.epilog = ''
+                command.epilog += '\n' + help_message
+                return command
+            return compose(
+                modify_command,
+                super(_ConfigurationMixin, class_).command(*args, **kwargs),
+                option(
+                    '--configuration', 
+                    type=click.Path(exists=True),
+                    required=False, 
+                    help='Configuration file or directory.' 
+                )
+            )
+        
+    return _ConfigurationMixin
     

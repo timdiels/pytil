@@ -1,0 +1,994 @@
+versions pytest-2.9.0, py-1.4.31, python-3.4.3.final.0
+cwd=/mnt/data/doc/eclipse_workspace/chicken_turtle_util
+args=['--basetemp=last_test_runs', '--cov-config=.coveragerc', '-n', 'auto', '-n0', 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::test_inheritance', '-v', '--debug']
+
+  pytest_cmdline_main [hook]
+      config: <_pytest.config.Config object at 0x7fdd35659a90>
+    pytest_plugin_registered [hook]
+        manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+        plugin: <Session 'chicken_turtle_util'>
+    finish pytest_plugin_registered --> [] [hook]
+    pytest_configure [hook]
+        config: <_pytest.config.Config object at 0x7fdd35659a90>
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x7fdd343a35f8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_logwarning [hook]
+          message: 'pytest_runtest_makereport' hook uses deprecated __multicall__ argument
+          nodeid: None
+          code: I1
+          fslocation: (local('/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'), 171)
+      finish pytest_logwarning --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          plugin: <pytest_capturelog.CaptureLogPlugin object at 0x7fdd343a38d0>
+      finish pytest_plugin_registered --> [] [hook]
+    configured with mode set to 'rewrite' [assertion]
+      pytest_logwarning [hook]
+          message: 'pytest_runtest_makereport' hook uses deprecated __multicall__ argument
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'message': "'pytest_runtest_makereport' hook uses deprecated __multicall__ argument", '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'nodeid': None, 'code': 'I1', 'fslocation': (local('/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'), 171)}>
+          nodeid: None
+          code: I1
+          fslocation: (local('/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'), 171)
+      finish pytest_logwarning --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>}>
+          plugin: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.config.Config object at 0x7fdd35659a90>}>
+          plugin: <_pytest.config.Config object at 0x7fdd35659a90>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.mark' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/mark.py'>}>
+          plugin: <module '_pytest.mark' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/mark.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.main' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/main.py'>}>
+          plugin: <module '_pytest.main' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/main.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.terminal' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/terminal.py'>}>
+          plugin: <module '_pytest.terminal' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/terminal.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.runner' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/runner.py'>}>
+          plugin: <module '_pytest.runner' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/runner.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.python' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/python.py'>}>
+          plugin: <module '_pytest.python' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/python.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.pdb' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pdb.py'>}>
+          plugin: <module '_pytest.pdb' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pdb.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.unittest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/unittest.py'>}>
+          plugin: <module '_pytest.unittest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/unittest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.capture' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/capture.py'>}>
+          plugin: <module '_pytest.capture' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/capture.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.skipping' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/skipping.py'>}>
+          plugin: <module '_pytest.skipping' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/skipping.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.tmpdir' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/tmpdir.py'>}>
+          plugin: <module '_pytest.tmpdir' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/tmpdir.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.monkeypatch' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/monkeypatch.py'>}>
+          plugin: <module '_pytest.monkeypatch' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/monkeypatch.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.recwarn' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/recwarn.py'>}>
+          plugin: <module '_pytest.recwarn' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/recwarn.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.pastebin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pastebin.py'>}>
+          plugin: <module '_pytest.pastebin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pastebin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.helpconfig' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/helpconfig.py'>}>
+          plugin: <module '_pytest.helpconfig' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/helpconfig.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.nose' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/nose.py'>}>
+          plugin: <module '_pytest.nose' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/nose.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.assertion' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/assertion/__init__.py'>}>
+          plugin: <module '_pytest.assertion' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/assertion/__init__.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.genscript' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/genscript.py'>}>
+          plugin: <module '_pytest.genscript' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/genscript.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.junitxml' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/junitxml.py'>}>
+          plugin: <module '_pytest.junitxml' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/junitxml.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.resultlog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/resultlog.py'>}>
+          plugin: <module '_pytest.resultlog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/resultlog.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.doctest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/doctest.py'>}>
+          plugin: <module '_pytest.doctest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/doctest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.cacheprovider' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/cacheprovider.py'>}>
+          plugin: <module '_pytest.cacheprovider' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/cacheprovider.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_localserver.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_localserver/plugin.py'>}>
+          plugin: <module 'pytest_localserver.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_localserver/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/plugin.py'>}>
+          plugin: <module 'xdist.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.boxed' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/boxed.py'>}>
+          plugin: <module 'xdist.boxed' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/boxed.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.looponfail' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/looponfail.py'>}>
+          plugin: <module 'xdist.looponfail' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/looponfail.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_env.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_env/plugin.py'>}>
+          plugin: <module 'pytest_env.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_env/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_capturelog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'>}>
+          plugin: <module 'pytest_capturelog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_cov.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_cov/plugin.py'>}>
+          plugin: <module 'pytest_cov.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_cov/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_mock' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_mock.py'>}>
+          plugin: <module 'pytest_mock' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_mock.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.capture.CaptureManager object at 0x7fdd344040f0>}>
+          plugin: <_pytest.capture.CaptureManager object at 0x7fdd344040f0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'chicken_turtle_util.test.conftest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/conftest.py'>}>
+          plugin: <module 'chicken_turtle_util.test.conftest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/conftest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <Session 'chicken_turtle_util'>}>
+          plugin: <Session 'chicken_turtle_util'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.cacheprovider.LFPlugin object at 0x7fdd343a35f8>}>
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x7fdd343a35f8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <pytest_capturelog.CaptureLogPlugin object at 0x7fdd343a38d0>}>
+          plugin: <pytest_capturelog.CaptureLogPlugin object at 0x7fdd343a38d0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          plugin: <_pytest.terminal.TerminalReporter object at 0x7fdd3436e438>
+      finish pytest_plugin_registered --> [] [hook]
+    finish pytest_configure --> [] [hook]
+    pytest_sessionstart [hook]
+        session: <Session 'chicken_turtle_util'>
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>}>
+          plugin: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.config.Config object at 0x7fdd35659a90>}>
+          plugin: <_pytest.config.Config object at 0x7fdd35659a90>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.mark' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/mark.py'>}>
+          plugin: <module '_pytest.mark' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/mark.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.main' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/main.py'>}>
+          plugin: <module '_pytest.main' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/main.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.terminal' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/terminal.py'>}>
+          plugin: <module '_pytest.terminal' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/terminal.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.runner' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/runner.py'>}>
+          plugin: <module '_pytest.runner' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/runner.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.python' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/python.py'>}>
+          plugin: <module '_pytest.python' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/python.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.pdb' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pdb.py'>}>
+          plugin: <module '_pytest.pdb' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pdb.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.unittest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/unittest.py'>}>
+          plugin: <module '_pytest.unittest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/unittest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.capture' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/capture.py'>}>
+          plugin: <module '_pytest.capture' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/capture.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.skipping' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/skipping.py'>}>
+          plugin: <module '_pytest.skipping' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/skipping.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.tmpdir' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/tmpdir.py'>}>
+          plugin: <module '_pytest.tmpdir' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/tmpdir.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.monkeypatch' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/monkeypatch.py'>}>
+          plugin: <module '_pytest.monkeypatch' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/monkeypatch.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.recwarn' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/recwarn.py'>}>
+          plugin: <module '_pytest.recwarn' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/recwarn.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.pastebin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pastebin.py'>}>
+          plugin: <module '_pytest.pastebin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/pastebin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.helpconfig' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/helpconfig.py'>}>
+          plugin: <module '_pytest.helpconfig' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/helpconfig.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.nose' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/nose.py'>}>
+          plugin: <module '_pytest.nose' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/nose.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.assertion' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/assertion/__init__.py'>}>
+          plugin: <module '_pytest.assertion' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/assertion/__init__.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.genscript' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/genscript.py'>}>
+          plugin: <module '_pytest.genscript' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/genscript.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.junitxml' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/junitxml.py'>}>
+          plugin: <module '_pytest.junitxml' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/junitxml.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.resultlog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/resultlog.py'>}>
+          plugin: <module '_pytest.resultlog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/resultlog.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.doctest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/doctest.py'>}>
+          plugin: <module '_pytest.doctest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/doctest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module '_pytest.cacheprovider' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/cacheprovider.py'>}>
+          plugin: <module '_pytest.cacheprovider' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/cacheprovider.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_localserver.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_localserver/plugin.py'>}>
+          plugin: <module 'pytest_localserver.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_localserver/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/plugin.py'>}>
+          plugin: <module 'xdist.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.boxed' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/boxed.py'>}>
+          plugin: <module 'xdist.boxed' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/boxed.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'xdist.looponfail' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/looponfail.py'>}>
+          plugin: <module 'xdist.looponfail' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/looponfail.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_env.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_env/plugin.py'>}>
+          plugin: <module 'pytest_env.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_env/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_capturelog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'>}>
+          plugin: <module 'pytest_capturelog' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_cov.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_cov/plugin.py'>}>
+          plugin: <module 'pytest_cov.plugin' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_cov/plugin.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'pytest_mock' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_mock.py'>}>
+          plugin: <module 'pytest_mock' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_mock.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.capture.CaptureManager object at 0x7fdd344040f0>}>
+          plugin: <_pytest.capture.CaptureManager object at 0x7fdd344040f0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <module 'chicken_turtle_util.test.conftest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/conftest.py'>}>
+          plugin: <module 'chicken_turtle_util.test.conftest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/conftest.py'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <Session 'chicken_turtle_util'>}>
+          plugin: <Session 'chicken_turtle_util'>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.cacheprovider.LFPlugin object at 0x7fdd343a35f8>}>
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x7fdd343a35f8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <pytest_capturelog.CaptureLogPlugin object at 0x7fdd343a38d0>}>
+          plugin: <pytest_capturelog.CaptureLogPlugin object at 0x7fdd343a38d0>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          __multicall__: <_MultiCall 0 results, 0 meths, kwargs={'manager': <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>, '__multicall__': <_MultiCall 0 results, 0 meths, kwargs={...}>, 'plugin': <_pytest.terminal.TerminalReporter object at 0x7fdd3436e438>}>
+          plugin: <_pytest.terminal.TerminalReporter object at 0x7fdd3436e438>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          manager: <_pytest.config.PytestPluginManager object at 0x7fdd358cc748>
+          plugin: <_pytest.python.FixtureManager object at 0x7fdd3436c710>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_report_header [hook]
+          config: <_pytest.config.Config object at 0x7fdd35659a90>
+          startdir: /mnt/data/doc/eclipse_workspace/chicken_turtle_util
+      finish pytest_report_header --> [['rootdir: /mnt/data/doc/eclipse_workspace/chicken_turtle_util, inifile: setup.cfg', 'plugins: localserver-0.3.5, xdist-1.14, env-0.6.0, capturelog-0.7, cov-2.2.1, mock-0.11.0'], 'cachedir: .cache', ['using: pytest-2.9.0 pylib-1.4.31', 'setuptools registered plugins:', '  pytest-localserver-0.3.5 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_localserver/plugin.py', '  pytest-xdist-1.14 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/plugin.py', '  pytest-xdist-1.14 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/boxed.py', '  pytest-xdist-1.14 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/xdist/looponfail.py', '  pytest-env-0.6.0 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_env/plugin.py', '  pytest-capturelog-0.7 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_capturelog.py', '  pytest-cov-2.2.1 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_cov/plugin.py', '  pytest-mock-0.11.0 at /mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest_mock.py']] [hook]
+    finish pytest_sessionstart --> [] [hook]
+    pytest_collection [hook]
+        session: <Session 'chicken_turtle_util'>
+    perform_collect <Session 'chicken_turtle_util'> ['chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::test_inheritance'] [collection]
+        pytest_collectstart [hook]
+            collector: <Session 'chicken_turtle_util'>
+        finish pytest_collectstart --> [] [hook]
+        pytest_make_collect_report [hook]
+            collector: <Session 'chicken_turtle_util'>
+        processing argument /mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::test_inheritance [collection]
+            pytest_collect_file [hook]
+                path: /mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py
+                parent: <Session 'chicken_turtle_util'>
+              pytest_pycollect_makemodule [hook]
+                  path: /mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py
+                  parent: <Session 'chicken_turtle_util'>
+              finish pytest_pycollect_makemodule --> <Module 'chicken_turtle_util/test/test_configuration.py'> [hook]
+            finish pytest_collect_file --> [<Module 'chicken_turtle_util/test/test_configuration.py'>] [hook]
+          matchnodes [<Module 'chicken_turtle_util/test/test_configuration.py'>] ['TestConfigurationLoader', 'test_inheritance'] [collection]
+              pytest_collectstart [hook]
+                  collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+              finish pytest_collectstart --> [] [hook]
+              pytest_make_collect_report [hook]
+                  collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+              find_module called for: chicken_turtle_util.test.test_configuration [assertion]
+              matched test file (was specified on cmdline): '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py' [assertion]
+              found cached rewritten pyc for '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py' [assertion]
+              find_module called for: pyfakefs [assertion]
+              find_module called for: pyfakefs.fake_filesystem [assertion]
+              find_module called for: cStringIO [assertion]
+              find_module called for: posixpath [assertion]
+              find_module called for: chicken_turtle_util.dict [assertion]
+              find_module called for: more_itertools [assertion]
+              find_module called for: more_itertools.more [assertion]
+              find_module called for: more_itertools.recipes [assertion]
+              find_module called for: plumbum [assertion]
+              find_module called for: plumbum.commands [assertion]
+              find_module called for: plumbum.commands.base [assertion]
+              find_module called for: plumbum.commands.processes [assertion]
+              find_module called for: plumbum.lib [assertion]
+              find_module called for: queue [assertion]
+              find_module called for: plumbum.commands.modifiers [assertion]
+              find_module called for: plumbum.path [assertion]
+              find_module called for: plumbum.path.local [assertion]
+              find_module called for: plumbum.path.base [assertion]
+              find_module called for: plumbum.path.remote [assertion]
+              find_module called for: urllib.request [assertion]
+              find_module called for: http [assertion]
+              find_module called for: http.client [assertion]
+              find_module called for: ssl [assertion]
+              find_module called for: _ssl [assertion]
+              find_module called for: urllib.error [assertion]
+              find_module called for: urllib.response [assertion]
+              find_module called for: plumbum.path.utils [assertion]
+              find_module called for: plumbum.machines [assertion]
+              find_module called for: plumbum.machines.local [assertion]
+              find_module called for: plumbum.machines.session [assertion]
+              find_module called for: plumbum.machines.base [assertion]
+              find_module called for: plumbum.commands.daemons [assertion]
+              find_module called for: plumbum.machines.env [assertion]
+              find_module called for: plumbum.machines.remote [assertion]
+              find_module called for: plumbum.machines.ssh_machine [assertion]
+              find_module called for: plumbum.version [assertion]
+              find_module called for: gc [assertion]
+                pytest_pycollect_makeitem [hook]
+                    name: object_usage
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <function object_usage at 0x7fdd3432c1e0>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: TestConfigurationLoader
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <class 'chicken_turtle_util.test.test_configuration.TestConfigurationLoader'>
+                finish pytest_pycollect_makeitem --> <Class 'TestConfigurationLoader'> [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: FakeOsModule
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <class 'pyfakefs.fake_filesystem.FakeOsModule'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __package__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: chicken_turtle_util.test
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: gc
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'gc' (built-in)>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: FakePathModule
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <class 'pyfakefs.fake_filesystem.FakePathModule'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __loader__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <_pytest.assertion.rewrite.AssertionRewritingHook object at 0x7fdd34404198>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: FakeFilesystem
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <class 'pyfakefs.fake_filesystem.FakeFilesystem'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __name__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: chicken_turtle_util.test.test_configuration
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __cached__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: /mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/__pycache__/test_configuration.cpython-34-PYTEST.pyc
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: sys
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'sys' (built-in)>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: dedent
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <function dedent at 0x7fdd368bf268>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: inspect
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'inspect' from '/usr/lib/python3.4/inspect.py'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __builtins__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: {'ascii': <built-in function ascii>, 'ConnectionError': <class 'ConnectionError'>, 'dict': <class 'dict'>, 'slice': <class 'slice'>, 'bin': <built-in function bin>, 'max': <built-in function max>, 'UserWarning': <class 'UserWarning'>, 'Warning': <class 'Warning'>, 'next': <built-in function next>, 'oct': <built-in function oct>, '__name__': 'builtins', 'isinstance': <built-in function isinstance>, 'str': <class 'str'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'TabError': <class 'TabError'>, 'zip': <class 'zip'>, 'SyntaxError': <class 'SyntaxError'>, '__build_class__': <built-in function __build_class__>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'GeneratorExit': <class 'GeneratorExit'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'IOError': <class 'OSError'>, 'license': Type license() to see the full license text, 'ResourceWarning': <class 'ResourceWarning'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'RuntimeError': <class 'RuntimeError'>, 'AttributeError': <class 'AttributeError'>, 'IndentationError': <class 'IndentationError'>, 'open': <built-in function open>, 'memoryview': <class 'memoryview'>, 'min': <built-in function min>, 'BytesWarning': <class 'BytesWarning'>, 'SystemError': <class 'SystemError'>, 'EOFError': <class 'EOFError'>, 'filter': <class 'filter'>, 'abs': <built-in function abs>, 'reversed': <class 'reversed'>, 'copyright': Copyright (c) 2001-2015 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'exec': <built-in function exec>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'hash': <built-in function hash>, 'tuple': <class 'tuple'>, 'True': True, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'KeyError': <class 'KeyError'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'set': <class 'set'>, 'BaseException': <class 'BaseException'>, 'issubclass': <built-in function issubclass>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'classmethod': <class 'classmethod'>, 'property': <class 'property'>, 'all': <built-in function all>, 'iter': <built-in function iter>, 'any': <built-in function any>, 'ArithmeticError': <class 'ArithmeticError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'NotImplemented': NotImplemented, 'getattr': <built-in function getattr>, 'compile': <built-in function compile>, 'bytes': <class 'bytes'>, 'hex': <built-in function hex>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'enumerate': <class 'enumerate'>, 'SystemExit': <class 'SystemExit'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'BlockingIOError': <class 'BlockingIOError'>, 'map': <class 'map'>, 'range': <class 'range'>, 'quit': Use quit() or Ctrl-D (i.e. EOF) to exit, 'list': <class 'list'>, '__package__': '', 'len': <built-in function len>, 'TypeError': <class 'TypeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ImportError': <class 'ImportError'>, 'None': None, 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'globals': <built-in function globals>, 'NameError': <class 'NameError'>, 'FileExistsError': <class 'FileExistsError'>, 'False': False, 'InterruptedError': <class 'InterruptedError'>, 'ord': <built-in function ord>, 'super': <class 'super'>, 'hasattr': <built-in function hasattr>, 'divmod': <built-in function divmod>, 'setattr': <built-in function setattr>, 'repr': <built-in function repr>, 'Ellipsis': Ellipsis, 'delattr': <built-in function delattr>, 'float': <class 'float'>, 'eval': <built-in function eval>, 'id': <built-in function id>, 'callable': <built-in function callable>, 'round': <built-in function round>, 'frozenset': <class 'frozenset'>, 'OverflowError': <class 'OverflowError'>, 'complex': <class 'complex'>, 'int': <class 'int'>, 'StopIteration': <class 'StopIteration'>, 'LookupError': <class 'LookupError'>, 'staticmethod': <class 'staticmethod'>, 'print': <built-in function print>, 'MemoryError': <class 'MemoryError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'help': Type help() for interactive help, or help(object) for help about object., 'dir': <built-in function dir>, 'PermissionError': <class 'PermissionError'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'BufferError': <class 'BufferError'>, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, 'UnicodeError': <class 'UnicodeError'>, 'sorted': <built-in function sorted>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'Exception': <class 'Exception'>, 'TimeoutError': <class 'TimeoutError'>, '__import__': <built-in function __import__>, 'IndexError': <class 'IndexError'>, 'format': <built-in function format>, 'chr': <built-in function chr>, '__debug__': True, 'type': <class 'type'>, 'AssertionError': <class 'AssertionError'>, 'vars': <built-in function vars>, 'exit': Use exit() or Ctrl-D (i.e. EOF) to exit, 'sum': <built-in function sum>, 'ReferenceError': <class 'ReferenceError'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), 'ValueError': <class 'ValueError'>, 'EnvironmentError': <class 'OSError'>, 'ImportWarning': <class 'ImportWarning'>, 'pow': <built-in function pow>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'OSError': <class 'OSError'>, 'object': <class 'object'>, '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", 'locals': <built-in function locals>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'input': <built-in function input>, 'bytearray': <class 'bytearray'>, 'bool': <class 'bool'>, 'FutureWarning': <class 'FutureWarning'>}
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __file__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: /mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/test/test_configuration.py
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __spec__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: ModuleSpec(name='chicken_turtle_util.test.test_configuration', loader=<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x7fdd34404198>)
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: pb
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'plumbum' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/plumbum/__init__.py'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: @py_builtins
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'builtins' (built-in)>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: _fake_os_path_getattr
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <function _fake_os_path_getattr at 0x7fdd3435df28>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __doc__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: 
+Test chicken_turtle_util.configuration
+
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: dict_
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'chicken_turtle_util.dict' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/chicken_turtle_util/dict.py'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: @pytest_ar
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module '_pytest.assertion.rewrite' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/_pytest/assertion/rewrite.py'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: pytest
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <module 'pytest' from '/mnt/data/doc/eclipse_workspace/chicken_turtle_util/venv/lib/python3.4/site-packages/pytest.py'>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __new__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <built-in method __new__ of type object at 0x7fdd3984ace0>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __dir__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__dir__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __getattribute__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__getattribute__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __delattr__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__delattr__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __repr__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__repr__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __setattr__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__setattr__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __init__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__init__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __dict__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <member '__dict__' of 'module' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __reduce_ex__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__reduce_ex__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __subclasshook__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__subclasshook__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __hash__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__hash__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __str__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__str__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __ge__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__ge__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __lt__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__lt__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __class__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <attribute '__class__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __format__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__format__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __sizeof__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__sizeof__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __reduce__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <method '__reduce__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __gt__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__gt__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __ne__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__ne__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __eq__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__eq__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+                pytest_pycollect_makeitem [hook]
+                    name: __le__
+                    collector: <Module 'chicken_turtle_util/test/test_configuration.py'>
+                    obj: <slot wrapper '__le__' of 'object' objects>
+                finish pytest_pycollect_makeitem --> None [hook]
+              finish pytest_make_collect_report --> <CollectReport 'chicken_turtle_util/test/test_configuration.py' lenresult=1 outcome='passed'> [hook]
+            matchnodes [<Class 'TestConfigurationLoader'>] ['test_inheritance'] [collection]
+                pytest_collectstart [hook]
+                    collector: <Class 'TestConfigurationLoader'>
+                finish pytest_collectstart --> [] [hook]
+                pytest_make_collect_report [hook]
+                    collector: <Class 'TestConfigurationLoader'>
+                finish pytest_make_collect_report --> <CollectReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader' lenresult=1 outcome='passed'> [hook]
+              matchnodes [<Instance '()'>] ['test_inheritance'] [collection]
+                  pytest_collectstart [hook]
+                      collector: <Instance '()'>
+                  finish pytest_collectstart --> [] [hook]
+                  pytest_make_collect_report [hook]
+                      collector: <Instance '()'>
+                    pytest_pycollect_makeitem [hook]
+                        name: test_load_path_arg
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.test_load_path_arg at 0x7fdd3318ad08>
+                      pytest_generate_tests [hook]
+                          metafunc: <_pytest.python.Metafunc object at 0x7fdd3318be80>
+                      finish pytest_generate_tests --> [] [hook]
+                    finish pytest_pycollect_makeitem --> [<Function 'test_load_path_arg'>] [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: configuration_stem
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.configuration_stem at 0x7fdd3318aa60>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: test_help_message
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.test_help_message at 0x7fdd3318ad90>
+                      pytest_generate_tests [hook]
+                          metafunc: <_pytest.python.Metafunc object at 0x7fdd3319f160>
+                      finish pytest_generate_tests --> [] [hook]
+                    finish pytest_pycollect_makeitem --> [<Function 'test_help_message'>] [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __weakref__
+                        collector: <Instance '()'>
+                        obj: <attribute '__weakref__' of 'TestConfigurationLoader' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: fs
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.fs at 0x7fdd3318aae8>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __dict__
+                        collector: <Instance '()'>
+                        obj: <attribute '__dict__' of 'TestConfigurationLoader' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: test_inheritance
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.test_inheritance at 0x7fdd3318abf8>
+                      pytest_generate_tests [hook]
+                          metafunc: <_pytest.python.Metafunc object at 0x7fdd3319f470>
+                      finish pytest_generate_tests --> [] [hook]
+                    finish pytest_pycollect_makeitem --> [<Function 'test_inheritance'>] [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __module__
+                        collector: <Instance '()'>
+                        obj: chicken_turtle_util.test.test_configuration
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: test_parsing
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.test_parsing at 0x7fdd3318ac80>
+                      pytest_generate_tests [hook]
+                          metafunc: <_pytest.python.Metafunc object at 0x7fdd3318b668>
+                      finish pytest_generate_tests --> [] [hook]
+                    finish pytest_pycollect_makeitem --> [<Function 'test_parsing'>] [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __doc__
+                        collector: <Instance '()'>
+                        obj: None
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: loader
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.loader at 0x7fdd3318ab70>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: directory_name
+                        collector: <Instance '()'>
+                        obj: <function TestConfigurationLoader.directory_name at 0x7fdd3318a9d8>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __new__
+                        collector: <Instance '()'>
+                        obj: <built-in method __new__ of type object at 0x7fdd39851c40>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __reduce_ex__
+                        collector: <Instance '()'>
+                        obj: <method '__reduce_ex__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __subclasshook__
+                        collector: <Instance '()'>
+                        obj: <method '__subclasshook__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __setattr__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__setattr__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __repr__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__repr__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __hash__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__hash__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __str__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__str__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __ge__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__ge__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __lt__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__lt__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __class__
+                        collector: <Instance '()'>
+                        obj: <attribute '__class__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __format__
+                        collector: <Instance '()'>
+                        obj: <method '__format__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __sizeof__
+                        collector: <Instance '()'>
+                        obj: <method '__sizeof__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __reduce__
+                        collector: <Instance '()'>
+                        obj: <method '__reduce__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __dir__
+                        collector: <Instance '()'>
+                        obj: <method '__dir__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __getattribute__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__getattribute__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __delattr__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__delattr__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __gt__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__gt__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __ne__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__ne__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __eq__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__eq__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __le__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__le__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                    pytest_pycollect_makeitem [hook]
+                        name: __init__
+                        collector: <Instance '()'>
+                        obj: <slot wrapper '__init__' of 'object' objects>
+                    finish pytest_pycollect_makeitem --> None [hook]
+                  finish pytest_make_collect_report --> <CollectReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()' lenresult=4 outcome='passed'> [hook]
+                matchnodes [<Function 'test_inheritance'>] [] [collection]
+                  matchnodes finished ->  1 nodes [collection]
+                  pytest_collectreport [hook]
+                      report: <CollectReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()' lenresult=4 outcome='passed'>
+                  finish pytest_collectreport --> [] [hook]
+                matchnodes finished ->  1 nodes [collection]
+                pytest_collectreport [hook]
+                    report: <CollectReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader' lenresult=1 outcome='passed'>
+                finish pytest_collectreport --> [] [hook]
+              matchnodes finished ->  1 nodes [collection]
+              pytest_collectreport [hook]
+                  report: <CollectReport 'chicken_turtle_util/test/test_configuration.py' lenresult=1 outcome='passed'>
+              finish pytest_collectreport --> [] [hook]
+            matchnodes finished ->  1 nodes [collection]
+        finish pytest_make_collect_report --> <CollectReport '' lenresult=1 outcome='passed'> [hook]
+        pytest_collectreport [hook]
+            report: <CollectReport '' lenresult=1 outcome='passed'>
+        finish pytest_collectreport --> [] [hook]
+    genitems <Function 'test_inheritance'> [collection]
+      pytest_itemcollected [hook]
+          item: <Function 'test_inheritance'>
+      finish pytest_itemcollected --> [] [hook]
+      pytest_collection_modifyitems [hook]
+          config: <_pytest.config.Config object at 0x7fdd35659a90>
+          items: [<Function 'test_inheritance'>]
+          session: <Session 'chicken_turtle_util'>
+      finish pytest_collection_modifyitems --> [] [hook]
+      pytest_collection_finish [hook]
+          session: <Session 'chicken_turtle_util'>
+      finish pytest_collection_finish --> [] [hook]
+    finish pytest_collection --> [<Function 'test_inheritance'>] [hook]
+    pytest_runtestloop [hook]
+        session: <Session 'chicken_turtle_util'>
+      pytest_runtest_protocol [hook]
+          nextitem: None
+          item: <Function 'test_inheritance'>
+        pytest_runtest_logstart [hook]
+            nodeid: chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance
+            location: ('chicken_turtle_util/test/test_configuration.py', 97, 'TestConfigurationLoader.test_inheritance')
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <Function 'test_inheritance'>
+        find_module called for: execnet._version [assertion]
+        pytest_runtest_makereport [hook]
+            call: <CallInfo when='setup' exception: 'FG' object has no attribute '__mro__'>
+            item: <Function 'test_inheritance'>
+        finish pytest_runtest_makereport --> <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='setup' outcome='failed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='setup' outcome='failed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='setup' outcome='failed'>
+          finish pytest_report_teststatus --> ('error', 'E', 'ERROR') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_exception_interact [hook]
+            call: <CallInfo when='setup' exception: 'FG' object has no attribute '__mro__'>
+            report: <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='setup' outcome='failed'>
+            node: <Function 'test_inheritance'>
+        finish pytest_exception_interact --> [] [hook]
+        pytest_runtest_teardown [hook]
+            nextitem: None
+            item: <Function 'test_inheritance'>
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            call: <CallInfo when='teardown' result: []>
+            item: <Function 'test_inheritance'>
+        finish pytest_runtest_makereport --> <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance' when='teardown' outcome='passed'>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+    finish pytest_runtestloop --> True [hook]
+    pytest_sessionfinish [hook]
+        session: <Session 'chicken_turtle_util'>
+        exitstatus: 1
+    cache-write cache/lastfailed: {'chicken_turtle_util/test/test_configuration.py::TestConfigurationLoader::()::test_inheritance': True} [cache]
+      pytest_terminal_summary [hook]
+          terminalreporter: <_pytest.terminal.TerminalReporter object at 0x7fdd3436e438>
+      finish pytest_terminal_summary --> [] [hook]
+    finish pytest_sessionfinish --> [] [hook]
+    pytest_unconfigure [hook]
+        config: <_pytest.config.Config object at 0x7fdd35659a90>
+    finish pytest_unconfigure --> [] [hook]
+  finish [config:tmpdir]

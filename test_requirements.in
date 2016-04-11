@@ -6,3 +6,4 @@ coverage-pth
 pytest-mock
 pytest-localserver
 pytest-capturelog
+plumbum

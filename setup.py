@@ -37,9 +37,9 @@ setup(
                        'Programming Language :: Python :: Implementation :: CPython',
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
-    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v2.0.4.tar.gz',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
                           'cli': ['click'],
+                          'configuration': ['pyxdg'],
                           'data_frame': ['numpy', 'pandas'],
                           'debug': ['psutil'],
                           'dev': ['sphinx-rtd-theme', 'sphinx', 'numpydoc'],
@@ -54,7 +54,8 @@ setup(
                                       'coverage-pth',
                                       'pytest-mock',
                                       'pytest-localserver',
-                                      'pytest-capturelog']},
+                                      'pytest-capturelog',
+                                      'plumbum']},
     'install_requires': [],
     'keywords': 'development util library',
     'license': 'LGPL3',
@@ -118,6 +119,25 @@ setup(
                         '-  `Documentation <http://pythonhosted.org/chicken_turtle_util/>`__\n'
                         '-  `PyPI <https://pypi.python.org/pypi/chicken_turtle_util/>`__\n'
                         '-  `GitHub <https://github.com/timdiels/chicken_turtle_util/>`__\n'
+                        '\n'
+                        'Changelist\n'
+                        '----------\n'
+                        '\n'
+                        '.. todo: add to overview ### v2.1.0 (to be released) - Added\n'
+                        'cli.ConfigurationMixin: application context mixin for loading a\n'
+                        'configuration - Added configuration.ConfigurationLoader: loads a single\n'
+                        'configuration from one or more files - cli.Context: ``cli_options()``\n'
+                        'replaced by ``command()``, which is more flexible - Removed cli.command.\n'
+                        'Use cli.Context.command() instead - Added ``path.write``: create or\n'
+                        'overwrite file with contents - Added ``path.read``: get file contents -\n'
+                        'Added ``test.temp_dir_cwd``: pytest fixture that sets current working\n'
+                        'directory to a temporary directory - Added ``dict.assign``: assign one\n'
+                        'dict to the other through mutations\n'
+                        '\n'
+                        'v2.0.4\n'
+                        '~~~~~~\n'
+                        '\n'
+                        'No changelist\n'
                         '\n'
                         'Developer guide\n'
                         '---------------\n'
@@ -322,8 +342,8 @@ setup(
                         "``module.np``, but it isn't mentioned in ``help(module)`` or Sphinx\n"
                         'documentation.\n',
     'name': 'chicken_turtle_util',
-    'package_data': {},
-    'packages': ['chicken_turtle_util', 'chicken_turtle_util.test'],
+    'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
+    'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '2.0.4'}
+    'version': '0.0.0'}
 )

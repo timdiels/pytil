@@ -1,4 +1,3 @@
 recursive-include docs *
 recursive-exclude docs/build *
-recursive-include doc *
 include README.md
