@@ -1,5 +1,6 @@
 project = dict(
     name='chicken_turtle_util',
+    package_name='chicken_turtle_util',
     human_friendly_name='Chicken Turtle Util',
     description="Python 3 utility library",
     author='Tim Diels',

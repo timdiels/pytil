@@ -244,3 +244,45 @@ def ConfigurationMixin(create_configuration, help_message):
         
     return _ConfigurationMixin
     
+    
+class OutputDirectoryMixin(Context):
+    
+    '''
+    Application Context mixin, allows user to specify an output directory
+    
+    CLI options added:
+    
+    --output-directory
+        Directory to write output files to.
+    '''
+    
+    def __init__(self, output_directory, **kwargs):
+        super().__init__(**kwargs)
+        self._output_directory = Path(output_directory)
+    
+    @property
+    def output_directory(self):
+        '''
+        Get directory to write output files to
+        
+        This directory exists and is writable (at time of application
+        invocation).
+        
+        Returns
+        -------
+        pathlib.Path
+        '''
+        return self._output_directory
+    
+    @classmethod
+    def command(class_, *args, **kwargs):
+        return compose(
+            super(OutputDirectoryMixin, class_).command(*args, **kwargs),
+            option(
+                '--output-directory',
+                type=click.Path(file_okay=False, writable=True, exists=True, resolve_path=True),
+                help='Directory to write output files to.'
+            )
+        )
+    
+    

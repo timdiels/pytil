@@ -23,6 +23,7 @@ from chicken_turtle_util import cli
 from click.testing import CliRunner
 import click
 from pathlib import Path
+import pytest
 
 class TestNoContext(object):
     
@@ -173,4 +174,45 @@ class TestMixins(object):
         # Given help message must be part of command help message
         result = CliRunner().invoke(main, ['--help'])
         assert help_message in result.output
+    
+    class TestOutputDirectory(object):
+        
+        @pytest.fixture
+        def output_dir(self):
+            return Path('my_output_dir')
+            
+        @pytest.fixture
+        def main(self, output_dir):
+            class MyAppContext(cli.OutputDirectoryMixin, cli.Context):
+                pass
+                
+            @MyAppContext.command()
+            def main(context):
+                assert context.output_directory.absolute() == output_dir.absolute()
+                
+            return main
+        
+        def test_missing_dir(self, temp_dir_cwd, main, output_dir):
+            '''When dir is missing, error'''
+            result = CliRunner().invoke(main, ['--output-directory', str(output_dir)])
+            assert result.exception
+            assert 'not exist' in result.output
+            
+        def test_not_writable_dir(self, temp_dir_cwd, main, output_dir):
+            '''When dir is not writable, error'''
+            output_dir = Path('my_output_dir')
+            output_dir.mkdir(mode=0o555) # anything but write rights
+            
+            result = CliRunner().invoke(main, ['--output-directory', str(output_dir)])
+            assert result.exception, result.output
+            assert 'not writable' in result.output
+        
+        def test_happy_days(self, temp_dir_cwd, main, output_dir):
+            '''When dir exists and is writable, Context.output_directory has its path'''
+            output_dir = Path('my_output_dir')
+            output_dir.mkdir()
+            
+            result = CliRunner().invoke(main, ['--output-directory', str(output_dir)])
+            print(result.exception)
+            assert not result.exception, result.output
     

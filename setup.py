@@ -355,6 +355,7 @@ setup(
                         "it isn't mentioned in help(module) or Sphinx documentation.\n",
     'name': 'chicken_turtle_util',
     'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
+    'package_name': 'chicken_turtle_util',
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
     'version': '0.0.0'}
