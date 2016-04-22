@@ -38,7 +38,7 @@ setup(
                        'Programming Language :: Python :: Implementation :: Stackless'],
     'description': 'Python 3 utility library',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
-                          'cli': ['click'],
+                          'cli': ['click', 'pyxdg'],
                           'configuration': ['pyxdg'],
                           'data_frame': ['numpy', 'pandas'],
                           'debug': ['psutil'],
@@ -140,6 +140,8 @@ setup(
                         '-  cli.Context: cli\\_options() replaced by command(), which is more\n'
                         '   flexible\n'
                         '-  Removed cli.command. Use cli.Context.command() instead\n'
+                        '-  Added cli.DataDirectoryMixin: application context mixin, provides\n'
+                        '   data directory according to XDG standards\n'
                         '-  Added \\`path.write\\`: create or overwrite file with contents\n'
                         '-  Added \\`path.read\\`: get file contents\n'
                         '-  Added \\`path.remove\\`: remove file or directory (recursively), unless\n'
@@ -357,6 +359,7 @@ setup(
     'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
     'package_name': 'chicken_turtle_util',
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
+    'pre_commit_no_ignore': [],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
     'version': '0.0.0'}
 )

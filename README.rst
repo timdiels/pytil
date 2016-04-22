@@ -63,6 +63,8 @@ v2.1.0 (to be released)
 - Added configuration.ConfigurationLoader: loads a single configuration from one or more files
 - cli.Context: `cli_options()` replaced by `command()`, which is more flexible
 - Removed cli.command. Use cli.Context.command() instead
+- Added cli.DataDirectoryMixin: application context mixin, provides data
+  directory according to XDG standards
 - Added `path.write`: create or overwrite file with contents
 - Added `path.read`: get file contents
 - Added `path.remove`: remove file or directory (recursively), unless it's missing

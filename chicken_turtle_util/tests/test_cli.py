@@ -24,6 +24,7 @@ from click.testing import CliRunner
 import click
 from pathlib import Path
 import pytest
+import xdg
 
 class TestNoContext(object):
     
@@ -216,3 +217,16 @@ class TestMixins(object):
             print(result.exception)
             assert not result.exception, result.output
     
+    def test_data_directory(self, temp_dir_cwd, mocker):
+        mocker.patch('xdg.BaseDirectory.xdg_data_home', str(Path.cwd().absolute()))
+        
+        class MyAppContext(cli.DataDirectoryMixin('my_app'), cli.Context):
+            pass
+                
+        @MyAppContext.command()
+        def main(context):
+            assert context.data_directory.absolute() == Path('my_app').absolute()
+            return main
+        
+        result = CliRunner().invoke(main)
+        assert not result.exception

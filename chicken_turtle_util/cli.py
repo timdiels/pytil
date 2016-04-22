@@ -26,6 +26,7 @@ from functools import partial, wraps
 from chicken_turtle_util.function import compose
 from pathlib import Path
 import click 
+import xdg
 
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
@@ -285,4 +286,67 @@ class OutputDirectoryMixin(Context):
             )
         )
     
+# TODO rm
+# def DefaultsConfigurationMixin(package_name, directory_name):
+#     
+#     '''
+#     Application context mixin, read CLI defaults from `cli.conf`
+#     
+#     See `ConfigurationLoader` for details on the configuration format and file
+#     locations. The defaults must appear as options in the ``[cli]`` section.
+#     
+#     Parameters
+#     ----------
+#     package_name
+#         See `ConfigurationLoader`
+#     directory_name
+#         See `ConfigurationLoader`
+#     '''
+# 
+#     class _DefaultsConfigurationMixin(Context):
+#         
+#         @classmethod
+#         def command(class_, *args, **kwargs):
+#             context_settings = kwargs.get('context_settings', {})
+#             
+#             config = ConfigurationLoader(package_name, directory_name, 'cli')
+#             defaults = config.load()['cli']
+#             assert 'default_map' not in context_settings, 'Mixin conflict: kwargs["context_settings"]["default_map"] already set'
+#             context_settings['default_map'] = defaults
+#             
+#             epilog = 'The above defaults reflect your current configuration. These defaults can be changed in a cli.conf configuration file.\n'
+#             if 'epilog' in context_settings:
+#                 epilog += '\n' + context_settings['epilog']
+#             epilog += '\n' + config.cli_help_message('CLI defaults, specified in a [cli] section.')
+#             context_settings['epilog'] = epilog
+#             
+#             super(_DefaultsConfigurationMixin, class_).command(*args, **kwargs)    
+#                 
+
+def DataDirectoryMixin(directory_name):
+ 
+    '''
+    Application context mixin, provides context.data_directory
     
+    Data directory is taken from XDG data home. A user can change this using the
+    XDG_DATA_HOME env variable.
+    
+    Parameters
+    ----------
+    directory_name : str
+        Subdirectory to use inside XDG data home. This should be your
+        application name in all lowercase with spaces replaced by underscores.
+    '''
+    
+    class _DataDirectoryMixin(Context):
+        
+        @property
+        def data_directory(self):
+            '''
+            Get data root directory
+            
+            Only data that needs to be persistent should be stored here.
+            '''
+            return Path(xdg.BaseDirectory.xdg_data_home) / directory_name
+        
+    return _DataDirectoryMixin   
