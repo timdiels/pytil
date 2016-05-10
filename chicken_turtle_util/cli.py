@@ -349,4 +349,32 @@ def DataDirectoryMixin(directory_name):
             '''
             return Path(xdg.BaseDirectory.xdg_data_home) / directory_name
         
-    return _DataDirectoryMixin   
+    return _DataDirectoryMixin
+
+def CacheDirectoryMixin(directory_name):
+ 
+    '''
+    Application context mixin, provides context.cache_directory
+    
+    Data directory is taken from XDG cache home. A user can change this using the
+    XDG_CACHE_HOME env variable.
+    
+    Parameters
+    ----------
+    directory_name : str
+        Subdirectory to use inside XDG cache home. This should be your
+        application name in all lowercase with spaces replaced by underscores.
+    '''
+    
+    class _CacheDirectoryMixin(Context):
+        
+        @property
+        def cache_directory(self):
+            '''
+            Get cache root directory
+            
+            Only non-persistent data that is reused between runs should be stored here.
+            '''
+            return Path(xdg.BaseDirectory.xdg_cache_home) / directory_name
+        
+    return _CacheDirectoryMixin  
