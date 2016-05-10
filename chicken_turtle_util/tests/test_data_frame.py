@@ -80,9 +80,9 @@ class TestSplitArrayLike(object):
         
     def test_split_a_b(self, df, df_split_a_b):
         '''When split on 'a' and 'b', correct split'''
-        result = split_array_like(df, ('a', 'b'))
         assert split_array_like(df, ('a', 'b')).equals(df_split_a_b) # Note: test should allow index to differ
         assert split_array_like(df, iter(('a', 'b'))).equals(df_split_a_b)
+        assert split_array_like(df.drop('check', axis=1)).equals(df_split_a_b.drop('check', axis=1))
     
     def test_split_a(self, df, df_split_a):
         '''When split on 'a', correct split'''

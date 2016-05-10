@@ -46,7 +46,7 @@ def replace_na_with_none(df):
     '''
     return df.where(pd.notnull(df), None)
 
-def split_array_like(df, columns):
+def split_array_like(df, columns=None):
     '''
     Split cells with array_like values along row axis.
     
@@ -56,8 +56,8 @@ def split_array_like(df, columns):
     ----------
     df : pandas.DataFrame
         Data frame ``df[columns]`` should have cell values of type `np.array_like`.
-    columns : iterable(str) or str
-        Columns (or column) whose values to split.
+    columns : iterable(str) or str or None
+        Columns (or column) whose values to split. If None, `df.columns` is used.
         
     Returns
     -------
@@ -88,7 +88,9 @@ def split_array_like(df, columns):
     #TODO could add option to keep_index by using reset_index and eventually set_index. index names trickery: MultiIndex.names, Index.name. Both can be None. If Index.name can be None in which case it translates to 'index' or if that already exists, it translates to 'level_0'. If MultiIndex.names is None, it translates to level_0,... level_N
     dtypes = df.dtypes
     
-    if isinstance(columns, str):
+    if columns is None:
+        columns = df.columns
+    elif isinstance(columns, str):
         columns = [columns]
         
     for column in columns:
