@@ -78,7 +78,7 @@ class ConfigurationLoader(object):
         self._paths = [x / directory_name / '{}.conf'.format(configuration_name) for x in dirs]
                 
     # Note: this docstring is also used to describe ConfigurationMixin's API (doc coupling)
-    def load(self, path):
+    def load(self, path=None):
         '''
         Load configuration (from configuration files)
         

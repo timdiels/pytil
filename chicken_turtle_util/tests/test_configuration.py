@@ -190,6 +190,8 @@ class TestConfigurationLoader(object):
             '''
             configuration = loader.load(None)
             assert configuration == {}  # did not raise and empty result
+            configuration = loader.load()
+            assert configuration == {}  # did not raise and empty result
         
         def test_missing(self, loader):
             '''
