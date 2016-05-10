@@ -51,6 +51,7 @@ setup(
                           'http': ['requests'],
                           'pymysql': ['pymysql'],
                           'pyqt': [],
+                          'sqlalchemy': ['sqlparse'],
                           'test': [   'pytest',
                                       'pytest-xdist',
                                       'pytest-env',

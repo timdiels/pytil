@@ -21,18 +21,15 @@ Test chicken_turtle_util.sqlalchemy
 
 from chicken_turtle_util.sqlalchemy import pretty_sql
 
-# Note: we don't expect too much atm. Code for pprint sql must exist somewhere already, we should go look for that
 expected = '''
-SELECT meh, *
-FROM (
-SELECT magic
-FROM table
-) as t1
+SELECT meh,
+       *
+FROM
+  (SELECT magic
+   FROM TABLE) AS t1
 UNION
-(
-SELECT magic2
-FROM TABLE
-) t2
+  (SELECT magic2
+   FROM TABLE) t2
 INNER JOIN table_thing t3 ON t2.id = t3.id
 WHERE t3.thing = 5
 GROUP BY t3.meh
@@ -41,4 +38,5 @@ GROUP BY t3.meh
 def test_pretty_sql():
     input_ = expected.replace('\n', ' ').replace('  ', ' ')
     actual = pretty_sql(input_)
+    print(actual)
     assert actual == expected

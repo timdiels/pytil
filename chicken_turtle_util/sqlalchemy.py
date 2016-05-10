@@ -21,6 +21,7 @@ sqlalchemy utilities
 
 from chicken_turtle_util import logging as logging_
 import logging
+import sqlparse
     
 def log_sql():
     '''
@@ -28,24 +29,18 @@ def log_sql():
     '''
     return logging_.set_level('sqlalchemy.engine', logging.INFO)
         
-def pretty_sql(statement): #TODO replace with proper pretty print that parses sql, take it from other library and just make note of it, don't actually add it here
+def pretty_sql(statement):
     '''
     Pretty format sql
     
     Parameters
     ----------
-    statement : str or sql expression or Query or anything whose str() returns SQL
-        The SQL statement to print
+    statement : hasattr('__str__')
+        anything whose str() returns SQL
+        
+    Returns
+    -------
+    str
+        Pretty formatted SQL
     '''
-    replacements = (
-        ('INNER JOIN', '\nINNER JOIN'),
-        ('FROM', '\nFROM'),
-        ('GROUP', '\nGROUP'),
-        ('WHERE', '\nWHERE'),
-        ('UNION ', '\nUNION\n'),
-        ('(', '(\n'),
-        (')', '\n)')
-    )
-    for from_, to in replacements:
-        statement = statement.replace(from_, to)
-    return '\n'.join(line for line in map(str.strip, statement.splitlines()) if line)
+    return sqlparse.format(str(statement), reindent=True, keyword_case='upper')
