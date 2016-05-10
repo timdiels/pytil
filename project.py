@@ -54,5 +54,9 @@ project = dict(
         Programming Language :: Python :: Implementation
         Programming Language :: Python :: Implementation :: CPython
         Programming Language :: Python :: Implementation :: Stackless
+        Topic :: Utilities
+        Topic :: Software Development
+        Topic :: Software Development :: Libraries
+        Topic :: Software Development :: Libraries :: Python Modules
     ''',
 )
