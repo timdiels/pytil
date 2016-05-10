@@ -24,8 +24,6 @@ from pathlib import Path
 import requests
 import re
 
-URL_MAX_LENGTH = 2000  # http://stackoverflow.com/a/417184/1031434
-
 # Based on http://stackoverflow.com/a/16696317/1031434
 def download(url, destination):
     '''
