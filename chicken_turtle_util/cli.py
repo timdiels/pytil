@@ -40,7 +40,7 @@ password_option = partial(option, prompt=True, hide_input=True, show_default=Fal
 class Context(object):
     
     '''
-    CLI Application Context
+    CLI application context
     
     The application context is meant to be passed around to spread what
     would otherwise be global variables or singletons, e.g. a database
