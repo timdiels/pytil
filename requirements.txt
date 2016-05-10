@@ -1,27 +1,27 @@
+psutil==4.1.0
 pytest==2.9.0
+sphinx-rtd-theme==0.1.9
+sphinx==1.3.6
 pytest-xdist==1.14
 pytest-env==0.6.0
 pytest-cov==2.2.1
 coverage-pth==0.0.1
 pytest-mock==0.11.0
 pytest-localserver==0.3.5
-click==6.3
-pyxdg==0.25
 requests==2.9.1
-numpy==1.10.4
-scipy==0.17.0
-scikit-learn==0.17.1
-pandas==0.18.0
-psutil==4.1.0
 pymysql==0.7.2
+numpy==1.10.4
+pandas==0.18.0
+click==6.3
+more-itertools==2.2
+pyxdg==0.25
+sqlparse==0.1.19
+scipy==0.17.0
+numpydoc==0.6.0
 pytest-capturelog==0.7
 plumbum==1.6.1.post0
-sqlparse==0.1.19
-sphinx-rtd-theme==0.1.9
+scikit-learn==0.17.1
 collections-extended==0.7.0
-sphinx==1.3.6
-more-itertools==2.2
-numpydoc==0.6.0
 alabaster==0.7.7          # via sphinx
 apipkg==1.4               # via execnet
 babel==2.2.0              # via sphinx
