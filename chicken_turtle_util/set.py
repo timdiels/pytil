@@ -33,7 +33,7 @@ def _locate_bin(bins, n):
 # Original implementation by http://stackoverflow.com/users/699305/alexis
 # at http://stackoverflow.com/a/9453249/1031434
 # Modified slightly 
-def merge_by_overlap(sets): #TODO in DBG make a NamedSet(set) hidden in some module that has names property and merges its names with other `NamedSet`s when merging the set. Preferably find a way to call it metadata instead of names MetaSet or something 
+def merge_by_overlap(sets):
     '''
     Of a list of sets, merge those that overlap, in place.
     
