@@ -74,7 +74,9 @@ def remove(path):
     elif path.is_dir():
         shutil.rmtree(str(path))
     else:
-        path.unlink()     
+        path.unlink()
+        
+# Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
 # Finish adding when needed: docstring is done. If implement properly, remove the note. Test it.
 # # https://github.com/cakepietoast/checksumdir/blob/master/checksumdir/__init__.py
