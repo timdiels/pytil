@@ -42,17 +42,14 @@ class Set(set):
         
         Returns
         -------
-        [(added :: frozenset, removed :: frozenset) -> None]
+        [(added :: frozenset, removed :: frozenset) -> bool or None]
             List of change listeners. `added` are the items that were added,
             `removed` contains the items that were removed. Note: Items can be
-            added and removed from a set in a single operation.
+            added and removed from a set in a single operation. When a listener
+            raises, the change is rolled back without further notification.
         '''
         return self._change_listeners
     
-    def _notify_changed(self, added, removed):
-        for listener in self._change_listeners:
-            listener(added=added, removed=removed)
-           
     @contextmanager
     def _notify_if_changed(self):
         if self._watching:
@@ -66,7 +63,15 @@ class Set(set):
                 added = self - original
                 removed = original - self
                 if added or removed:
-                    self._notify_changed(frozenset(added), frozenset(removed))
+                    added = frozenset(added)
+                    removed = frozenset(removed)
+                    for listener in self._change_listeners:
+                        try:
+                            listener(added=added, removed=removed)
+                        except Exception as ex:
+                            self -= added
+                            self |= removed
+                            raise ex
             finally:
                 self._watching = False
          
@@ -122,3 +127,4 @@ class Set(set):
         with self._notify_if_changed():
             super().clear()
 
+# Potential future additions http://code.activestate.com/recipes/306864-list-and-dictionary-observer/

@@ -188,4 +188,27 @@ class TestSet(object):
         assert set_ == set()
         listener.assert_called_once_with(added=frozenset(), removed=frozenset({1, 2}))
         listener.reset_mock()
-
+        
+    def test_rollback(self, set_, listener):
+        '''
+        When a listener returns False, rollback the change and don't notify any other listeners
+        '''
+        # setup
+        set_.add(1)
+        listener.reset_mock()
+        
+        def on_changed(added, removed):
+            raise Exception()
+        set_.change_listeners.insert(0, on_changed)
+        
+        # test add
+        with pytest.raises(Exception):
+            set_.add(5)
+        assert set_ == {1}
+        listener.assert_not_called()
+        
+        # test remove
+        with pytest.raises(Exception):
+            set_.remove(1)
+        assert set_ == {1}
+        listener.assert_not_called()
