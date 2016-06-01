@@ -71,6 +71,15 @@ class TestRemove(object):
         path_.remove(path)
         assert not path.exists()
         
+    def test_force(self, path):
+        path.mkdir()
+        child = path / 'file'
+        child.touch()
+        child.chmod(0o000)
+        path.chmod(0o000)
+        path_.remove(path, force=True)
+        assert not path.exists()
+        
 class TestChmod(object):
     
     @pytest.fixture

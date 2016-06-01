@@ -60,7 +60,7 @@ def read(path):
     with path.open('r') as f:
         return f.read()
     
-def remove(path):
+def remove(path, force=False): #TODO test the force
     '''
     Remove file or directory (recursively), unless it's missing
     
@@ -68,13 +68,18 @@ def remove(path):
     ----------
     path : Path
         path to remove
+    force : bool
+        If True, will remove read-only files and directories (as if first doing chmod +w)
     '''
     if not path.exists():
         return
-    elif path.is_dir():
-        shutil.rmtree(str(path))
     else:
-        path.unlink()
+        if force:
+            chmod(path, 0o700, '+', recursive=True)
+        if path.is_dir():
+            shutil.rmtree(str(path))
+        else:
+            path.unlink()
         
 def chmod(path, mode, operator='=', recursive=False):
     '''
