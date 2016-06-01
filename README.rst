@@ -68,6 +68,7 @@ v2.1.0 (to be released)
 - Added `path.write`: create or overwrite file with contents
 - Added `path.read`: get file contents
 - Added `path.remove`: remove file or directory (recursively), unless it's missing
+- Added `path.chmod`: change file or directory mode bits (optionally recursively)
 - Added `test.temp_dir_cwd`: pytest fixture that sets current working directory to a temporary directory
 - Added `dict.assign`: assign one dict to the other through mutations
 

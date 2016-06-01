@@ -22,6 +22,7 @@ Test utilities
 import pytest
 import os
 from pathlib import Path
+from chicken_turtle_util import path as path_
 
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):
@@ -31,4 +32,9 @@ def temp_dir_cwd(tmpdir):
     original_cwd = Path.cwd()
     os.chdir(str(tmpdir))
     yield tmpdir
+    
+    # ensure the user has full permissions on temp dir (so that pytest can remove it later)
+    path_.chmod(Path(str(tmpdir)), 0o700, '+', recursive=True)
+    
+    #
     os.chdir(str(original_cwd))

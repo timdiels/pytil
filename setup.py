@@ -151,6 +151,8 @@ setup(
                         '-  Added \\`path.read\\`: get file contents\n'
                         '-  Added \\`path.remove\\`: remove file or directory (recursively), unless\n'
                         "   it's missing\n"
+                        '-  Added \\`path.chmod\\`: change file or directory mode bits (optionally\n'
+                        '   recursively)\n'
                         '-  Added \\`test.temp\\_dir\\_cwd\\`: pytest fixture that sets current\n'
                         '   working directory to a temporary directory\n'
                         '-  Added \\`dict.assign\\`: assign one dict to the other through mutations\n'
@@ -362,9 +364,7 @@ setup(
                         "it isn't mentioned in help(module) or Sphinx documentation.\n",
     'name': 'chicken_turtle_util',
     'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
-    'package_name': 'chicken_turtle_util',
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
-    'pre_commit_no_ignore': [],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
     'version': '0.0.0'}
 )

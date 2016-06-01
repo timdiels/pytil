@@ -76,6 +76,49 @@ def remove(path):
     else:
         path.unlink()
         
+def chmod(path, mode, operator='=', recursive=False):
+    '''
+    Change file mode bits
+    
+    When recursively chmodding a directory, executable bits in `mode` are
+    ignored when applying to a regular file. E.g. ``chmod(path, mode=0o777,
+    recursive=True)`` would apply ``mode=0o666`` to regular files.
+    
+    Parameters
+    ----------
+    path : Path
+        path to chmod
+    mode : int
+        Mode bits to apply, e.g. ``0o777``.
+    operator : '+' or '-' or '='
+        How to apply the mode bits to the file. If '=', assign mode, if '+', add to current
+        mode, if '-', subtract from current mode.
+    recursive : bool
+        Whether to chmod recursively. If recursive, applies modes in a top-down
+        fashion, like the chmod command.
+    '''
+    if mode > 0o777 and operator != '=':
+        raise ValueError('Special bits (i.e. >0o777) only supported when using "=" operator')
+    
+    # first chmod path
+    if operator == '+':
+        mode_ = path.stat().st_mode | mode
+    elif operator == '-':
+        mode_ = path.stat().st_mode & ~mode
+    else:
+        mode_ = mode
+    path.chmod(mode_)
+    
+    # then its children
+    if recursive and path.is_dir():
+        for dir_, dirs, files in os.walk(str(path)):
+            print(dir_, files)
+            dir_ = Path(dir_)
+            for child in dirs:
+                chmod((dir_ / child), mode, operator)
+            for file in files:
+                chmod((dir_ / file), mode & 0o777666, operator)
+        
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
 # Finish adding when needed: docstring is done. If implement properly, remove the note. Test it.

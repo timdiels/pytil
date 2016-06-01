@@ -21,6 +21,7 @@ Test chicken_turtle_util.path
 
 from chicken_turtle_util import path as path_
 from pathlib import Path
+from contextlib import contextmanager
 import pytest
 
 @pytest.fixture
@@ -70,3 +71,148 @@ class TestRemove(object):
         path_.remove(path)
         assert not path.exists()
         
+class TestChmod(object):
+    
+    @pytest.fixture
+    def root(self):
+        root = Path('root_dir')
+        root.mkdir()
+        return root
+    
+    @pytest.fixture
+    def child_dir(self, root):
+        child = root / 'child_dir'
+        child.mkdir()
+        return child
+    
+    @pytest.fixture
+    def child_file(self, root):
+        child = root / 'child_file'
+        child.touch()
+        return child
+    
+    @pytest.fixture
+    def grand_child(self, child_dir):
+        child = child_dir / 'grand_child'
+        child.touch()
+        return child
+    
+    @contextmanager
+    def unchanged(self, *paths):
+        paths = {path: path.stat().st_mode for path in paths}
+        yield
+        paths_new = {path: path.stat().st_mode for path in paths}
+        assert paths == paths_new
+        
+    def assert_mode(self, path, mode):
+        actual = path.stat().st_mode & 0o777
+        assert actual == mode, '{:o} != {:o}'.format(actual, mode)
+
+    @pytest.mark.parametrize('recursive', (False, True))
+    def test_file_assign(self, path, recursive):
+        path.touch()
+        path_.chmod(path, mode=0o777, recursive=recursive)
+        self.assert_mode(path, 0o777)
+        path_.chmod(path, mode=0o751, recursive=recursive)
+        self.assert_mode(path, 0o751)
+    
+    @pytest.mark.parametrize('recursive', (False, True))    
+    def test_file_add(self, path, recursive):
+        path.touch()
+        path.chmod(0o000)
+        path_.chmod(path, 0o111, '+', recursive=recursive)
+        self.assert_mode(path, 0o111)
+        path_.chmod(path, 0o100, '+', recursive=recursive)
+        self.assert_mode(path, 0o111)
+        path_.chmod(path, 0o751, '+', recursive=recursive)
+        self.assert_mode(path, 0o751)
+        
+    @pytest.mark.parametrize('recursive', (False, True))
+    def test_file_subtract(self, path, recursive):
+        path.touch()
+        path.chmod(0o777)
+        path_.chmod(path, 0o111, '-', recursive=recursive)
+        self.assert_mode(path, 0o666)
+        path_.chmod(path, 0o751, '-', recursive=recursive)
+        self.assert_mode(path, 0o026)
+        
+    def test_dir_assign(self, root, child_dir, child_file, grand_child):
+        with self.unchanged(child_dir, child_file, grand_child):
+            path_.chmod(root, mode=0o777)
+            self.assert_mode(root, 0o777)
+            path_.chmod(root, mode=0o751)
+            self.assert_mode(root, 0o751)
+            
+    def test_dir_add(self, root, child_dir, child_file, grand_child):
+        with self.unchanged(child_dir, child_file, grand_child):
+            root.chmod(0o000)
+            path_.chmod(root, 0o111, '+')
+            self.assert_mode(root, 0o111)
+            path_.chmod(root, 0o100, '+')
+            self.assert_mode(root, 0o111)
+            path_.chmod(root, 0o751, '+')
+            self.assert_mode(root, 0o751)
+            
+    def test_dir_subtract(self, root, child_dir, child_file, grand_child):
+        with self.unchanged(child_dir, child_file, grand_child):
+            root.chmod(mode=0o777)
+            path_.chmod(root, 0o011, '-')
+            self.assert_mode(root, 0o766)
+            path_.chmod(root, 0o271, '-')
+            self.assert_mode(root, 0o506)
+            
+    def test_dir_assign_recursive(self, root, child_dir, child_file, grand_child):
+        path_.chmod(root, mode=0o777, recursive=True)
+        self.assert_mode(root, 0o777)
+        self.assert_mode(child_dir, 0o777)
+        self.assert_mode(child_file, 0o666)
+        self.assert_mode(grand_child, 0o666)
+        
+        path_.chmod(root, mode=0o751, recursive=True)
+        self.assert_mode(root, 0o751)
+        self.assert_mode(child_dir, 0o751)
+        self.assert_mode(child_file, 0o640)
+        self.assert_mode(grand_child, 0o640)
+            
+    def test_dir_add_recursive(self, root, child_dir, child_file, grand_child):
+        grand_child.chmod(0o000)
+        child_dir.chmod(0o000)
+        child_file.chmod(0o000)
+        root.chmod(0o000)
+        
+        path_.chmod(root, 0o511, '+', recursive=True)
+        self.assert_mode(root, 0o511)
+        self.assert_mode(child_dir, 0o511)
+        self.assert_mode(child_file, 0o400)
+        self.assert_mode(grand_child, 0o400)
+        
+        path_.chmod(root, 0o500, '+', recursive=True)
+        self.assert_mode(root, 0o511)
+        self.assert_mode(child_dir, 0o511)
+        self.assert_mode(child_file, 0o400)
+        self.assert_mode(grand_child, 0o400)
+        
+        path_.chmod(root, 0o751, '+', recursive=True)
+        self.assert_mode(root, 0o751)
+        self.assert_mode(child_dir, 0o751)
+        self.assert_mode(child_file, 0o640)
+        self.assert_mode(grand_child, 0o640)
+            
+    def test_dir_subtract_recursive(self, root, child_dir, child_file, grand_child):
+        root.chmod(mode=0o777)
+        child_dir.chmod(0o777)
+        child_file.chmod(0o777)
+        grand_child.chmod(0o777)
+        
+        path_.chmod(root, 0o222, '-', recursive=True)
+        self.assert_mode(root, 0o555)
+        self.assert_mode(child_dir, 0o555)
+        self.assert_mode(child_file, 0o555)
+        self.assert_mode(grand_child, 0o555)
+        
+        path_.chmod(root, 0o047, '-', recursive=True)
+        self.assert_mode(root, 0o510)
+        self.assert_mode(child_dir, 0o510)
+        self.assert_mode(child_file, 0o511)
+        self.assert_mode(grand_child, 0o511)
+            
