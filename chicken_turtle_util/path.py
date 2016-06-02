@@ -99,7 +99,6 @@ def remove(path, force=False): #TODO test the force
                         dir_.rmdir()  # raises dir not empty
                         
                     # wait and go again
-                    print('sleep')
                     time.sleep(.1)
                     children = list(dir_.iterdir())
                 
@@ -144,7 +143,6 @@ def chmod(path, mode, operator='=', recursive=False):
     # then its children
     if recursive and path.is_dir():
         for dir_, dirs, files in os.walk(str(path)):
-            print(dir_, files)
             dir_ = Path(dir_)
             for child in dirs:
                 chmod((dir_ / child), mode, operator)
