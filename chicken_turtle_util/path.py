@@ -20,7 +20,7 @@ Path utilities
 '''
 
 from pathlib import Path
-import shutil
+import time
 import os
 
 #: The file system root to use (used for testing)
@@ -64,6 +64,9 @@ def remove(path, force=False): #TODO test the force
     '''
     Remove file or directory (recursively), unless it's missing
     
+    On NFS file systems, if a directory contains .nfs* temporary files
+    (sometimes created when deleting a file), it waits for them to go away.
+    
     Parameters
     ----------
     path : Path
@@ -77,7 +80,31 @@ def remove(path, force=False): #TODO test the force
         if force:
             chmod(path, 0o700, '+', recursive=True)
         if path.is_dir():
-            shutil.rmtree(str(path))
+            # Note: shutil.rmtree did not handle NFS well
+            
+            # First remove all files
+            for dir_, _, files in os.walk(str(path), topdown=False): # bottom-up walk
+                for file in files:
+                    (Path(dir_) / file).unlink()
+                    
+            # Now remove all dirs, being careful of any lingering .nfs* files
+            for dir_, _, _ in os.walk(str(path), topdown=False): # bottom-up walk
+                dir_ = Path(dir_)
+                
+                # wait for .nfs* files
+                children = list(dir_.iterdir())
+                while children:
+                    # only wait for nfs temporary files
+                    if any(not child.name.startswith('.nfs') for child in children):
+                        dir_.rmdir()  # raises dir not empty
+                        
+                    # wait and go again
+                    print('sleep')
+                    time.sleep(.1)
+                    children = list(dir_.iterdir())
+                
+                # rm
+                dir_.rmdir()
         else:
             path.unlink()
         
