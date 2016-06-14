@@ -32,3 +32,12 @@ class UserException(Exception):
     
     #XXX note: if you miss message, use ex.args[0]
     
+class InvalidOperationError(Exception):
+    '''
+    When an operation is illegal/invalid (in the current state), regardless of
+    what arguments you throw at it.
+    
+    An operation is a method/function call, the getting or setting of an attribute.
+
+    When the issue is with an argument, use ValueError, not this.
+    '''
