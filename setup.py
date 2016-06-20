@@ -42,7 +42,8 @@ setup(
                        'Topic :: Software Development :: Libraries :: Python Modules'],
     'description': 'Python 3 utility library',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
-                          'cli': ['click', 'pyxdg'],
+                          'application': ['click', 'pyxdg'],
+                          'cli': ['click'],
                           'configuration': ['pyxdg'],
                           'data_frame': ['numpy', 'pandas'],
                           'debug': ['psutil'],
@@ -147,6 +148,8 @@ setup(
                         '   the current state).\n'
                         '-  Added \\`cli.ConfigurationMixin\\`: application context mixin for\n'
                         '   loading a configuration\n'
+                        '-  Added \\`cli.ConfigurationsMixin\\`: application context mixin for\n'
+                        '   loading multiple configurations\n'
                         '-  Added \\`configuration.ConfigurationLoader\\`: loads a single\n'
                         '   configuration from one or more files\n'
                         '-  \\`cli.Context\\`: cli\\_options() replaced by command(), which is more\n'

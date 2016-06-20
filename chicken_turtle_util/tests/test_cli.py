@@ -24,7 +24,7 @@ from click.testing import CliRunner
 import click
 from pathlib import Path
 import pytest
-import xdg
+from textwrap import dedent
 
 class TestNoContext(object):
     
@@ -174,6 +174,60 @@ class TestMixins(object):
         
         # Given help message must be part of command help message
         result = CliRunner().invoke(main, ['--help'])
+        assert help_message in result.output
+        
+    def test_configurations(self, mocker, tmpdir):
+        help_messages = {
+            'main': 'Epic main help message', 
+            'test': 'Epic test help message'
+        }
+        help_message = '''\
+        Configuration files
+        -------------------
+        main
+            Epic main help message
+        test
+            Epic test help message
+        '''.rstrip().replace(' '*8, ' '*2)
+        print(help_message)
+        tmpdir = Path(str(tmpdir))
+        config_path = tmpdir / 'mah.conf'
+        
+        class MyAppContext(cli.ConfigurationsMixin(help_messages), cli.Context):
+            pass
+        
+        context_ = [None]
+        @MyAppContext.command()
+        def main(context):
+            context_[0] = context
+        
+        # When missing file, raise
+        result = CliRunner().invoke(main, ['--configuration', 'main', str(tmpdir / 'missing.conf')])
+        assert result.exception
+        assert 'missing.conf' in result.output
+        assert 'does not exist' in result.output
+        
+        # When file present, all is well
+        config_path.touch()
+        result = CliRunner().invoke(main, ['--configuration', 'main', str(config_path)])
+        assert not result.exception, result.output
+        assert context_[0]._configuration_paths == {'main': config_path}
+        
+        # Multiple config args
+        result = CliRunner().invoke(main, ['--configuration', 'main', str(config_path), '--configuration', 'test', str(config_path)])
+        assert not result.exception, result.output
+        assert context_[0]._configuration_paths == {'main': config_path, 'test': config_path}
+        
+        # When unknown configuration name, raise
+        config_path.touch()
+        result = CliRunner().invoke(main, ['--configuration', 'other', str(config_path)])
+        assert result.exception
+        assert 'other' in result.output
+        assert 'Invalid value for "--configuration"' in result.output
+        
+        # Given help message must be part of command help message
+        result = CliRunner().invoke(main, ['--help'])
+        print(result.output)
         assert help_message in result.output
     
     class TestOutputDirectory(object):

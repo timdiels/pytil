@@ -1,39 +1,40 @@
-pytest==2.9.0
+sqlparse==0.1.19
+click==6.6
+sphinx-rtd-theme==0.1.9
+pytest==2.9.2
 pytest-xdist==1.14
 pytest-env==0.6.0
 pytest-cov==2.2.1
 coverage-pth==0.0.1
-pytest-mock==0.11.0
-click==6.3
+pytest-mock==1.1
+numpy==1.11.0
 pyxdg==0.25
-pymysql==0.7.2
-requests==2.9.1
+pytest-localserver==0.3.5
+pymysql==0.7.4
+pytest-capturelog==0.7
+plumbum==1.6.1.post0
+Sphinx==1.4.4             # via sphinx-rtd-theme
+numpydoc==0.6.0
+requests==2.10.0
 more-itertools==2.2
-numpy==1.10.4
-scipy==0.17.0
+psutil==4.3.0
+scipy==0.17.1
 scikit-learn==0.17.1
 collections-extended==0.7.0
-sphinx-rtd-theme==0.1.9
-pytest-localserver==0.3.5
-pytest-capturelog==0.7
-sphinx==1.3.6
-numpydoc==0.6.0
-sqlparse==0.1.19
-plumbum==1.6.1.post0
-pandas==0.18.0
-psutil==4.1.0
-alabaster==0.7.7          # via sphinx
+pandas==0.18.1
+alabaster==0.7.8          # via sphinx
 apipkg==1.4               # via execnet
-babel==2.2.0              # via sphinx
-coverage==4.0.3           # via coverage-pth, pytest-cov
+babel==2.3.4              # via sphinx
+coverage==4.1             # via coverage-pth, pytest-cov
 docutils==0.12            # via sphinx
 execnet==1.4.1            # via pytest-xdist
+imagesize==0.7.1          # via sphinx
 Jinja2==2.8               # via sphinx
 MarkupSafe==0.23          # via jinja2
 py==1.4.31                # via pytest, pytest-capturelog, pytest-xdist
 Pygments==2.1.3           # via sphinx
-python-dateutil==2.5.1    # via pandas
-pytz==2016.2              # via babel, pandas
+python-dateutil==2.5.3    # via pandas
+pytz==2016.4              # via babel, pandas
 six==1.10.0               # via python-dateutil, sphinx
 snowballstemmer==1.2.1    # via sphinx
-werkzeug==0.11.5          # via pytest-localserver
+werkzeug==0.11.10         # via pytest-localserver

@@ -27,6 +27,7 @@ from chicken_turtle_util.function import compose
 from pathlib import Path
 import click 
 import xdg
+from textwrap import dedent, TextWrapper
 
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
@@ -192,7 +193,7 @@ def ConfigurationMixin(create_configuration, help_message):
     
     CLI options added:
     
-    --configuration
+    --configuration path
         Configuration file or directory.
     
     Parameters
@@ -245,6 +246,83 @@ def ConfigurationMixin(create_configuration, help_message):
         
     return _ConfigurationMixin
     
+def ConfigurationsMixin(help_messages):
+    '''
+    Application Context mixin for loading multiple configurations
+    
+    CLI options added:
+    
+    --configuration name path
+        Configuration file or directory.
+        
+    Attributes added:
+    
+    _configuration_paths : {configuration_name :: str => Path}
+        User provided custom location for each configuration
+    
+    Parameters
+    ----------
+    help_messages : {configuration_name :: str => help_message :: str}
+        String to include in any command's help message that uses this Context
+        
+    See also
+    --------
+    configuration.ConfigurationLoader: loads and parses configurations
+    
+    Examples
+    --------
+    ::
+        class MyContext(ConfigurationsMixin({'main': 'Configure ...', 'test': 'Configure testing'):
+            def __init__(self, **kwargs)
+                super().__init__.(**kwargs)
+                self._configuration_custom_paths  # is now available, allowing you to load configuration with e.g. `ConfigurationLoader`s
+    '''
+    
+    class _ConfigurationsMixin(Context):
+        
+        def __init__(self, configuration, **kwargs):
+            super().__init__(**kwargs)
+            self.__configuration_paths = dict((name, Path(path)) for name, path in configuration)
+            
+        @property
+        def _configuration_paths(self):
+            '''
+            User provided custom location for each configuration
+            '''
+            return self.__configuration_paths
+        
+        @classmethod
+        def command(class_, *args, **kwargs):
+            def modify_command(command):
+                if not command.epilog:
+                    command.epilog = ''
+                message = dedent('''\
+                    \b
+                    Configuration files
+                    -------------------
+                ''')
+                wrapper = TextWrapper(initial_indent='    ', subsequent_indent='    ')
+                message += '\n'.join(name + '\n' + wrapper.fill(description) for name, description in sorted(help_messages.items()))
+                command.epilog += '\n' + message
+                return command
+            
+            choice_type = click.Choice(help_messages.keys())
+            choice_type.name = 'name'
+            
+            return compose(
+                modify_command,
+                super(_ConfigurationsMixin, class_).command(*args, **kwargs),
+                option(
+                    '--configuration',
+                    nargs=2,
+                    multiple=True,
+                    type=(choice_type, click.Path(exists=True)),
+                    required=False,
+                    help='Configuration file or directory.' 
+                )
+            )
+            
+    return _ConfigurationsMixin
     
 class OutputDirectoryMixin(Context):
     

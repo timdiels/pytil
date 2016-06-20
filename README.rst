@@ -70,6 +70,7 @@ v2.1.0 (to be released)
   illegal/invalid, regardless of the arguments you throw at it (in the current
   state).
 - Added `cli.ConfigurationMixin`: application context mixin for loading a configuration
+- Added `cli.ConfigurationsMixin`: application context mixin for loading multiple configurations
 - Added `configuration.ConfigurationLoader`: loads a single configuration from one or more files
 - `cli.Context`: `cli_options()` replaced by `command()`, which is more flexible
 - Removed `cli.command`. Use ``cli.Context.command()`` instead
