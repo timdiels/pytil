@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-pymysql utilities
+pymysql utilities. Contains only `patch`, patches pymysql to be compatible with numpy and others.
 '''
 
 import pymysql

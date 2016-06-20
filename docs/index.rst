@@ -6,7 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   API Reference <api/chicken_turtle_util>
+   user_documentation
+   developer_documentation
 
 
 Indices and tables

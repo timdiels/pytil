@@ -18,7 +18,7 @@
 # TODO there's also a config.py file, merge or remove it. Whut?
 
 '''
-Configuration loaders
+Configuration loaders, currently only from configuration files
 '''
 
 from xdg.BaseDirectory import xdg_config_dirs #TODO add to requirements, and rm from requirements in DBG

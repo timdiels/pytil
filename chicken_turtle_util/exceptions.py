@@ -16,7 +16,15 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Exception classes
+Exception classes: `UserException` and `InvalidOperationError`.
+
+If you miss the ability to pass args to any of these exceptions, note that you actually can. For example:
+
+>>> ex = Exception(1, 2, 3)
+>>> ex.args
+(1, 2, 3)
+
+You can only use positional arguments though.
 '''
 
 class UserException(Exception):
@@ -30,7 +38,8 @@ class UserException(Exception):
         User-friendly message
     '''
     
-    #XXX note: if you miss message, use ex.args[0]
+    def __init__(self, message, *args):
+        super().__init__(message, *args)
     
 class InvalidOperationError(Exception):
     '''

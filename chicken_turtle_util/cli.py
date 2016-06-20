@@ -16,9 +16,9 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Command line interface (CLI) utilities:
+Utilities to build a Command line interface (CLI)
 
-- Click options with better defaults
+- `click` options with better defaults
 - mixins to build a CLI application context
 '''
 
@@ -40,11 +40,11 @@ password_option = partial(option, prompt=True, hide_input=True, show_default=Fal
 class Context(object):
     
     '''
-    CLI application context
+    Application context
     
-    The application context is meant to be passed around to spread what
-    would otherwise be global variables or singletons, e.g. a database
-    connection pool or a file cache.
+    The application context is meant to be passed around to spread application-
+    global objects, e.g. a database connection pool or a file cache. (These would
+    otherwise be completely global.)
     
     Usage example::
     

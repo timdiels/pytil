@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Logging utilities
+Logging utilities. Contains only `set_level`, temporarily changes log level.
 '''
 
 from contextlib import contextmanager
@@ -33,6 +33,11 @@ def set_level(logger, level):
         Logger name
     level
         Log level to set
+        
+    Examples
+    --------
+    >>> with set_level('sqlalchemy.engine', logging.INFO):
+    ...     pass # sqlalchemy log level is set to INFO in this block
     '''
     if isinstance(logger, str):
         logger = logging.getLogger(logger)

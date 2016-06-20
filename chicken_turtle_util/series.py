@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Utilities for working with `pandas.Series`
+Utilities for working with `pandas.Series`. Contains only `invert`, swaps series' index with its values
 '''
 
 def invert(series):

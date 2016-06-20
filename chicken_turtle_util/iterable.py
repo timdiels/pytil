@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Utilities for working with iterables
+Utility functions for working with iterables. `sliding_window`, ...
 
 See also
 --------

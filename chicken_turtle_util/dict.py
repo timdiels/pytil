@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-dict utilities
+`dict` utilities
 '''
 
 from collections import defaultdict

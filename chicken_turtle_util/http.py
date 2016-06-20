@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-HTTP utilities
+HTTP utilities. Contains only `download`, download a http resource.
 '''
 
 from urllib.parse import urlparse
@@ -27,7 +27,7 @@ import re
 # Based on http://stackoverflow.com/a/16696317/1031434
 def download(url, destination):
     '''
-    Download an HTTP resource
+    Download an HTTP resource to a file
     
     Parameters
     ----------

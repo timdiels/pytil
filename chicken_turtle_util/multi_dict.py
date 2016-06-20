@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-multi-dict utilities
+multi-dict utilities. Multi-dicts can map keys to multiple values.
 
 A multi-dict (or multi map) is a dict that maps each key to one or more values.
 '''

@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Test utilities
+Test utilities. Contains `temp_dir_cwd`, pytest fixture that cd's to temporary directory
 '''
 
 import pytest

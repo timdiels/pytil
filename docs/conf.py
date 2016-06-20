@@ -40,9 +40,10 @@ extensions = [
 ]
 
 numpydoc_show_class_members = False  # setting this to True breaks autosummary and not having autosummary breaks numpydoc
+autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
-#templates_path = ['_templates']
+templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -85,7 +86,7 @@ language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['build']
+exclude_patterns = ['build', '_templates']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

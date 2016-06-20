@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Observable collections
+Observable collections. Only contains `Set` currently.
 '''
 
 from contextlib import contextmanager

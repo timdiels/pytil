@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Path utilities
+Extensions to pathlib.
 '''
 
 from pathlib import Path

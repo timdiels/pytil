@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Debug utilities
+Debug utilities. Contains `pretty_memory_info`, formats a memory usage message
 '''
 
 import os

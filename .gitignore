@@ -1,7 +1,6 @@
 build
 docs/build
 .settings
-docs/api
 .testmondata
 .tmontmp
 .coverage
@@ -18,4 +17,3 @@ venv
 *.pyc
 __pycache__
 *.egg-info
-

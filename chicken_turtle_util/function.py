@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Function utilities
+Function manipulation, like functools. Contains only `compose`, compose functions.
 '''
 
 from functools import reduce as reduce

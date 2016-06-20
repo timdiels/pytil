@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Various algorithms
+Various algorithms, e.g. `multi_way_partitioning` to greedily divide weighted items equally across bins.
 '''
 
 from sklearn.utils.extmath import cartesian
@@ -29,6 +29,8 @@ def spread_points_in_hypercube(point_count, dimension_count):
     points is approximately maximal.
     
     Euclidean distance is used.
+    
+    .. note:: Current implementation simply puts the points in a hypergrid
     
     Parameters
     ----------

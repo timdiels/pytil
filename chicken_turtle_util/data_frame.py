@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Utilities for working with `pandas.DataFrame`
+Extensions to `pandas.DataFrame`
 '''
 
 import pandas as pd

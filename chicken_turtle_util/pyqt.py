@@ -21,6 +21,7 @@ PyQt5 extensions
 
 import contextlib
 
+#TODO consider removing, can't think of a good use for this anymore
 @contextlib.contextmanager
 def block_signals(qobject):
     '''

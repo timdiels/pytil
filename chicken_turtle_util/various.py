@@ -16,7 +16,9 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Various utilities
+Contains `Object`, an `object` which does not raise when constructed with args
+
+Utilities that don't fit in any other package.
 '''
 
 URL_MAX_LENGTH = 2000  # http://stackoverflow.com/a/417184/1031434

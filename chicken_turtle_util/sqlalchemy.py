@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-sqlalchemy utilities
+sqlalchemy utilities. Contains pretty sql formatting and temporarily enabling sqlalchemy logging
 '''
 
 from chicken_turtle_util import logging as logging_
@@ -26,6 +26,11 @@ import sqlparse
 def log_sql():
     '''
     Temporarily log SQL statements
+    
+    Examples
+    --------
+    >>> with log_sql():
+    ...     pass # sqlalchemy log level is set to INFO in this block 
     '''
     return logging_.set_level('sqlalchemy.engine', logging.INFO)
         

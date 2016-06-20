@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Set utilities
+Set utilities. Contains only `merge_by_overlap`, merges overlapping sets in place.
 '''
 
 def _locate_bin(bins, n):
