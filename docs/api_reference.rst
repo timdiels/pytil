@@ -18,6 +18,7 @@ Modules
     :toctree: api
 
     algorithms
+    application
     cli
     configuration
     data_frame
@@ -51,6 +52,19 @@ Module contents overview
     spread_points_in_hypercube
     multi_way_partitioning
     
+.. rubric:: application
+.. currentmodule:: chicken_turtle_util.application
+.. autosummary::
+    :nosignatures:
+    
+    Context
+    BasicsMixin
+    DatabaseMixin
+    ConfigurationMixin
+    OutputDirectoryMixin
+    DataDirectoryMixin
+    CacheDirectoryMixin
+    
 .. rubric:: cli
 .. currentmodule:: chicken_turtle_util.cli
 .. autosummary::
@@ -59,13 +73,6 @@ Module contents overview
     option
     argument
     password_option
-    Context
-    BasicsMixin
-    DatabaseMixin
-    ConfigurationMixin
-    OutputDirectoryMixin
-    DataDirectoryMixin
-    CacheDirectoryMixin
     
 .. rubric:: configuration
 .. currentmodule:: chicken_turtle_util.configuration

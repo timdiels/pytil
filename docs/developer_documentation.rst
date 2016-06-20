@@ -12,9 +12,16 @@ Coding guidelines
   the Parameters section.
 - When using someone else's code or idea, give credit in a comment in the
   source file, not in the documentation.
-- When having changed things, be sure to update renames/additions/removals in
-  api_reference.rst and the relevant modules in docs/api. If you added a
-  module, first call ct-mkdoc so it generates a stub for you.
+  
+Commit checklist
+----------------
+
+Do not forget any of these steps before committing:
+
+- Tests adjusted to match what you changed (preferably test-driven)
+- API has docstrings and guidelines are followed
+- docs/api_reference.rst updated
+- docs/api/... updated
 
 Project decisions
 -----------------

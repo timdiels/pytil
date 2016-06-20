@@ -43,6 +43,7 @@ Features
 - `path`: `pathlib.Path` utilities, including an equivalent of `shutil.rmtree`
   which reliably works on NFS.
 
+- `application`: Mixins for building application (context) classes
 - `function.compose`: Compose functions
 - `http.download`: Download http resource (using `requests`) and save to file name suggested by HTTP server
 - `iterable.sliding_window`: Iterate using a sliding window
@@ -53,7 +54,7 @@ Features
   more files spread across /etc and XDG config directories.
 - `set.merge_by_overlap`: Of a list of sets, merge those that overlap, in place
 - `logging.set_level`: Context manager to temporarily change log level of logger
-- `cli`: extensions to `click <http://click.pocoo.org/>`_ for building CLI applications
+- `cli`: extensions to `click <http://click.pocoo.org/>`_
 - `pyqt.block_signals`: Context manager to temporarily turn on `QObject.blockSignals`
 - `sqlalchemy.log_sql`: Context manager to temporarily log sql statements emitted by `sqlalchemy <http://www.sqlalchemy.org/>`_
 - `various.Object`: Like `object`, but does not raise given args to `__init__`
@@ -66,15 +67,16 @@ Changelist
 v2.1.0 (to be released)
 -----------------------
 
+- Moved all `Context` related objects from `cli` to `application`.
 - Added `exceptions.InvalidOperationError`: raise when an operation is
   illegal/invalid, regardless of the arguments you throw at it (in the current
   state).
-- Added `cli.ConfigurationMixin`: application context mixin for loading a configuration
-- Added `cli.ConfigurationsMixin`: application context mixin for loading multiple configurations
+- Added `application.ConfigurationMixin`: application context mixin for loading a configuration
+- Added `application.ConfigurationsMixin`: application context mixin for loading multiple configurations
 - Added `configuration.ConfigurationLoader`: loads a single configuration from one or more files
-- `cli.Context`: `cli_options()` replaced by `command()`, which is more flexible
-- Removed `cli.command`. Use ``cli.Context.command()`` instead
-- Added `cli.DataDirectoryMixin`: application context mixin, provides data
+- `application.Context`: `cli_options()` replaced by `command()`, which is more flexible
+- Removed `application.command`. Use ``cli.Context.command()`` instead
+- Added `application.DataDirectoryMixin`: application context mixin, provides data
   directory according to XDG standards
 - Added `path.write`: create or overwrite file with contents
 - Added `path.read`: get file contents

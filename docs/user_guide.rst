@@ -14,7 +14,7 @@ If you are not familiar with pip, see `pip's quickstart guide
 Application contexts
 --------------------
 
-.. currentmodule:: chicken_turtle_util.cli
+.. currentmodule:: chicken_turtle_util.application
 
 Every application, regardless of its type of interface, eventually develops an
 `Application` or `ApplicationContext` class to store its application-global
@@ -31,9 +31,9 @@ called `mixins`_, to build your own. For example :class:`DatabaseMixin` add
 `context.configuration`. You can do this as follows::
 
     from my_application import Database, Configuration
-    from chicken_turtle_util import cli
-    DatabaseMixin = cli.DatabaseMixin(Database)
-    ConfigurationMixin = cli.ConfigurationMixin(Configuration, 'Config X: /example/location/app_specific_path.conf')
+    from chicken_turtle_util import application as app
+    DatabaseMixin = app.DatabaseMixin(Database)
+    ConfigurationMixin = app.ConfigurationMixin(Configuration, 'Config X: /example/location/app_specific_path.conf')
     class MyApplicationContext(DatabaseMixin, ConfigurationMixin, Context):
         pass
 
@@ -103,12 +103,12 @@ Now, for a complete example::
 
     # main.py
     import click
-    from chicken_turtle_util import cli
+    from chicken_turtle_util import application as app
 
     # version of your application, BasicsMixin uses it in its --version option
     __version__ = '1.0.0'
 
-    class Context(cli.BasicsMixin(__version__), cli.Context):
+    class Context(app.BasicsMixin(__version__), app.Context):
 
         # You don't have to put everything in mixins, you can also add it
         # directly
