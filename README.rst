@@ -84,6 +84,8 @@ v2.1.0 (to be released)
 - Added `path.chmod`: change file or directory mode bits (optionally recursively)
 - Added `test.temp_dir_cwd`: pytest fixture that sets current working directory to a temporary directory
 - Added `dict.assign`: assign one dict to the other through mutations
+- Added `inspect.function_call_repr`: Get `repr` of a function call
+- Added `inspect.function_call_args`: Get function call arguments as a single dict
 
 v2.0.4
 ------

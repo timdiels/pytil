@@ -50,6 +50,7 @@ setup(
                           'dev': ['sphinx-rtd-theme', 'sphinx', 'numpydoc'],
                           'dict': ['more-itertools'],
                           'http': ['requests'],
+                          'inspect': [],
                           'pymysql': ['pymysql'],
                           'pyqt': [],
                           'sqlalchemy': ['sqlparse'],
@@ -167,6 +168,9 @@ setup(
                         '-  Added \\`test.temp\\_dir\\_cwd\\`: pytest fixture that sets current\n'
                         '   working directory to a temporary directory\n'
                         '-  Added \\`dict.assign\\`: assign one dict to the other through mutations\n'
+                        '-  Added \\`inspect.function\\_call\\_repr\\`: Get repr of a function call\n'
+                        '-  Added \\`inspect.function\\_call\\_args\\`: Get function call arguments\n'
+                        '   as a single dict\n'
                         '\n'
                         'v2.0.4\n'
                         '------\n'

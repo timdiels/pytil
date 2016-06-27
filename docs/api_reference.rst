@@ -27,6 +27,7 @@ Modules
     exceptions
     function
     http
+    inspect
     iterable
     logging
     multi_dict
@@ -127,6 +128,15 @@ Module contents overview
     :nosignatures:
     
     download
+
+.. rubric:: inspect
+.. currentmodule:: chicken_turtle_util.inspect
+.. autosummary::
+    :nosignatures:
+    
+    call_args
+    call_repr
+    get_call_repr
     
 .. rubric:: iterable
 .. currentmodule:: chicken_turtle_util.iterable
