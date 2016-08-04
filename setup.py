@@ -43,6 +43,7 @@ setup(
     'description': 'Python 3 utility library',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
                           'application': ['click', 'pyxdg'],
+                          'asyncio': [],
                           'cli': ['click'],
                           'configuration': ['pyxdg'],
                           'data_frame': ['numpy', 'pandas'],
