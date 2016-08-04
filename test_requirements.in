@@ -7,3 +7,6 @@ pytest-mock
 pytest-localserver
 pytest-capturelog
 plumbum
+
+# performanc comparisons require this
+networkx
