@@ -47,8 +47,8 @@ class ConfigurationLoader(object):
     
     Configuration values are treated as strings. Empty strings are allowed.
     Inline comments can be started with '#' and ';'. The 'default' section
-    provides defaults for other sections. `ExtendedInterpolation <https://docs.p
-    ython.org/3/library/configparser.html#configparser.ExtendedInterpolation>`_
+    provides defaults for other sections. `ExtendedInterpolation 
+    <https://docs.python.org/3/library/configparser.html#configparser.ExtendedInterpolation>`_
     is used. Option names have '-' and ' ' replaced with '_'; section names do
     not, but as that may change in the future, we recommend using all underscore
     section names only.
