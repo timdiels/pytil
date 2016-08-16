@@ -17,6 +17,12 @@
 
 '''
 Extensions to `pandas.DataFrame`
+
+.. warning::
+
+   Module contents have only been tested on `DataFrame`\ s with an `Index`,
+   `DataFrame`\ s using a `MultiIndex` may not work with this module's
+   functions.
 '''
 
 import pandas as pd
@@ -104,3 +110,155 @@ def split_array_like(df, columns=None):
      
     return df
 
+def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False, return_reason=False):
+    '''
+    Get whether 2 data frames are equal
+    
+    Parameters
+    ----------
+    df1, df2 : pd.DataFrame
+        Data frames to compare
+    ignore_order : {int}
+        Axi in which to ignore order
+    ignore_index : bool
+        If True, ignore index values and name, but unless ``0 in ignore_order``
+        still take into account the row order
+    ignore_columns : bool
+        If True, ignore columns values and name, but unless ``1 in ignore_order``
+        still take into account the column order
+    return_reason : bool
+        If True, `equals` returns a tuple containing the reason, else `equals`
+        only returns a bool indicating equality (or equivalence rather)
+        
+    Returns
+    -------
+    equal : bool
+        Whether they're equal (after ignoring according to the parameters)
+    reason : str or None
+        If equal, ``None``, otherwise short explanation of why the data frames
+        aren't equal. Omitted if not `return_reason`.
+    
+        
+    Examples
+    --------
+    >>> from chicken_turtle_util import data_frame as df_
+    >>> import pandas as pd
+    >>> df = pd.DataFrame([
+    ...        [1, 2, 3],
+    ...        [4, 5, 6],
+    ...        [7, 8, 9]
+    ...    ],
+    ...    index=pd.Index(('i1', 'i2', 'i3'), name='index1'),
+    ...    columns=pd.Index(('c1', 'c2', 'c3'), name='columns1')
+    ... )
+    >>> df
+    columns1  c1  c2  c3
+    index1              
+    i1         1   2   3
+    i2         4   5   6
+    i3         7   8   9
+    >>> df2 = df.reindex(('i3', 'i1', 'i2'), columns=('c2', 'c1', 'c3'))
+    >>> df2
+    columns1  c2  c1  c3
+    index1              
+    i3         8   7   9
+    i1         2   1   3
+    i2         5   4   6
+    >>> df_.equals(df, df2)
+    False
+    >>> df_.equals(df, df2, ignore_order=(0,1))
+    True
+    >>> df2 = df.copy()
+    >>> df2.index = [1,2,3]
+    >>> df2
+    columns1  c1  c2  c3
+    1          1   2   3
+    2          4   5   6
+    3          7   8   9
+    >>> df_.equals(df, df2)
+    False
+    >>> df_.equals(df, df2, ignore_index=True)
+    True
+    >>> df2 = df.reindex(('i3', 'i1', 'i2'))
+    >>> df2
+    columns1  c1  c2  c3
+    index1              
+    i3         7   8   9
+    i1         1   2   3
+    i2         4   5   6
+    >>> df_.equals(df, df2, ignore_index=True)  # does not ignore row order!
+    False
+    >>> df_.equals(df, df2, ignore_order={0})
+    True
+    >>> df2 = df.copy()
+    >>> df2.index.name = 'other'
+    >>> df_.equals(df, df2)  # df.index.name must match as well, same goes for df.columns.name
+    False
+    '''
+    result = _equals(df1, df2, ignore_order, ignore_index, ignore_columns)
+    if return_reason:
+        return result
+    else:
+        return result[0]
+    
+def _equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False):
+    if ignore_order - {0,1}:
+        raise ValueError('invalid ignore_order, valid axi are 0 and 1, got: {!r}'.format(ignore_order))
+    
+    dfs = [df1.copy(), df2.copy()]
+    
+    empty_count = sum(df.empty for df in dfs)
+    if empty_count == 2:
+        return True, None
+    if empty_count:
+        return False, 'Either empty, but not both'
+    
+    # If shape differs, never equal
+    if df1.shape != df2.shape:
+        return False, 'Shape differs'
+    
+    # Compare index names and reset index
+    if ignore_index:
+        for df in dfs:
+            df.reset_index(drop=True, inplace=True)
+    else:
+        if dfs[0].index.name != dfs[1].index.name:
+            return False, 'Index name differs: {!r} != {!r}'.format(dfs[0].index.name, dfs[1].index.name)
+        for df in dfs:
+            df.index.name = _unique_element(df.columns)
+            df.reset_index(inplace=True)
+    
+    # Compare columns names and reset columns
+    if not ignore_columns:
+        if dfs[0].columns.name != dfs[1].columns.name:
+            return False, 'Columns name differs: {!r} != {!r}'.format(dfs[0].columns.name, dfs[1].columns.name)
+        for df in dfs:
+            df.loc[len(df)] = df.columns  # index has already been reset, so len(df) is not in index yet
+    for df in dfs:
+        df.columns = range(len(df.columns))
+    
+    # Continue with just the values
+    values = np.array([df.values for df in dfs])
+    values = np.frompyfunc(lambda x: '({!r})({!r})'.format(x, type(x)), 1, 1)(values)
+    
+    # If ignore columns, sort columns by values
+    if 1 in ignore_order:
+        values.sort(axis=2)
+    
+    # If ignore rows, sort rows by values
+    if 0 in ignore_order:
+        values.sort(axis=1)
+        
+    # If values (which may include index and column values) differ, return False
+    if not np.array_equal(values[0], values[1]):
+        return False, 'Values, index values and/or column values differ:\n{}\n\n{}'.format(values[0], values[1])
+    
+    return True, None
+
+def _unique_element(index):
+    '''
+    Get a unique element not yet in the given pd.Index
+    
+    Deterministic. Inputs with different ordering lead to the same return value.
+    '''
+    return ''.join(map(str, index.sort_values())) + '_index'

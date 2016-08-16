@@ -87,6 +87,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    equals
     replace_na_with_none
     split_array_like
     
