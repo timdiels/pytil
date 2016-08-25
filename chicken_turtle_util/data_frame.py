@@ -110,9 +110,11 @@ def split_array_like(df, columns=None):
      
     return df
 
-def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False, return_reason=False):
+def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False, all_close=False, return_reason=False):
     '''
     Get whether 2 data frames are equal
+    
+    ``NaN``\ s are considered equal, which is analog to `pandas.DataFrame.equals`.
     
     Parameters
     ----------
@@ -126,6 +128,9 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
     ignore_columns : bool
         If True, ignore columns values and name, but unless ``1 in ignore_order``
         still take into account the column order
+    all_close : bool
+        If False, values must match exactly, if True, floats are compared as if
+        compared with `np.isclose`.
     return_reason : bool
         If True, `equals` returns a tuple containing the reason, else `equals`
         only returns a bool indicating equality (or equivalence rather)
@@ -195,13 +200,20 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
     >>> df_.equals(df, df2)  # df.index.name must match as well, same goes for df.columns.name
     False
     '''
-    result = _equals(df1, df2, ignore_order, ignore_index, ignore_columns)
+    result = _equals(df1, df2, ignore_order, ignore_index, ignore_columns, all_close)
     if return_reason:
         return result
     else:
         return result[0]
     
-def _equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False):
+def _array_equal(arr1, arr2, equal_nan=False):
+    if equal_nan:
+        return ((arr1 == arr2) | ((arr1 != arr1) & (arr2 != arr2))).all()
+    else:
+        return np.array_equal(arr1, arr2)
+
+#TODO refactor by axis
+def _equals(df1, df2, ignore_order, ignore_index, ignore_columns, all_close): #TODO test all_close
     if ignore_order - {0,1}:
         raise ValueError('invalid ignore_order, valid axi are 0 and 1, got: {!r}'.format(ignore_order))
     
@@ -214,51 +226,77 @@ def _equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fal
         return False, 'Either empty, but not both'
     
     # If shape differs, never equal
-    if df1.shape != df2.shape:
+    if dfs[0].shape != dfs[1].shape:
         return False, 'Shape differs'
     
-    # Compare index names and reset index
-    if ignore_index:
-        for df in dfs:
-            df.reset_index(drop=True, inplace=True)
-    else:
+    # If dtypes differ, never equal
+    if (dfs[0].dtypes != dfs[1].dtypes).any():
+        return False, 'dtypes differ: {!r} != {!r}'.format(dfs[0].dtypes, dfs[1].dtypes)
+    
+    # Compare index and columns names
+    if not ignore_index:
         if dfs[0].index.name != dfs[1].index.name:
             return False, 'Index name differs: {!r} != {!r}'.format(dfs[0].index.name, dfs[1].index.name)
-        for df in dfs:
-            df.index.name = _unique_element(df.columns)
-            df.reset_index(inplace=True)
-    
-    # Compare columns names and reset columns
     if not ignore_columns:
         if dfs[0].columns.name != dfs[1].columns.name:
             return False, 'Columns name differs: {!r} != {!r}'.format(dfs[0].columns.name, dfs[1].columns.name)
-        for df in dfs:
-            df.loc[len(df)] = df.columns  # index has already been reset, so len(df) is not in index yet
-    for df in dfs:
-        df.columns = range(len(df.columns))
     
-    # Continue with just the values
-    values = np.array([df.values for df in dfs])
-    values = np.frompyfunc(lambda x: '({!r})({!r})'.format(x, type(x)), 1, 1)(values)
-    
-    # If ignore columns, sort columns by values
-    if 1 in ignore_order:
-        values.sort(axis=2)
-    
-    # If ignore rows, sort rows by values
-    if 0 in ignore_order:
-        values.sort(axis=1)
+    #
+    for i, df in enumerate(dfs):
+        # If row order ignored, sort rows by values
+        if 0 in ignore_order:
+            _ignore_row_order(df, not ignore_index)
+                
+        # If column order ignored, sort columns by values
+        if 1 in ignore_order:
+            df = df.transpose()
+            _ignore_row_order(df, not ignore_columns)
+            df = df.transpose()
+            dfs[i] = df
         
-    # If values (which may include index and column values) differ, return False
-    if not np.array_equal(values[0], values[1]):
-        return False, 'Values, index values and/or column values differ:\n{}\n\n{}'.format(values[0], values[1])
+        # If index / columns ignored, reset respectively
+        if ignore_index:
+            df.reset_index(drop=True, inplace=True)
+        if ignore_columns:
+            df.columns = range(len(df.columns))
+    
+    # Compare index values of both axi
+    for axis_name, ignore, indices in [('Index', ignore_index, [df.index for df in dfs]), ('Columns', ignore_columns, [df.columns for df in dfs])]:
+        if ignore:
+            continue
+        if all_close and all(index.dtype == float for index in indices):
+            equal = np.allclose(indices[0].values, indices[1].values, equal_nan=True)
+        else:
+            equal = indices[0].equals(indices[1])
+        if not equal:
+            return False, '{} values differ'.format(axis_name)
+    
+    # Compare values: floats
+    values = [df.values for df in dfs]
+    is_float = np.frompyfunc(lambda x: isinstance(x, float), 1, 1)
+    float_values = [vals[is_float(vals).astype(bool)] for vals in values]
+    if all_close:
+        equal = np.allclose(*float_values, equal_nan=True)
+    else:
+        equal = _array_equal(*float_values, equal_nan=True)
+    if not equal:
+        return False, 'Float values differ:\n{}\n\n{}'.format(*float_values)
+     
+    # Compare values: other
+    other_values = [vals[~is_float(vals).astype(bool)] for vals in values]
+    if not (other_values[0] == other_values[1]).all():
+        return False, 'Non-float values differ:\n{}\n\n{}'.format(*other_values)
     
     return True, None
 
-def _unique_element(index):
-    '''
-    Get a unique element not yet in the given pd.Index
-    
-    Deterministic. Inputs with different ordering lead to the same return value.
-    '''
-    return ''.join(map(str, index.sort_values())) + '_index'
+def _ignore_row_order(df, include_index):
+    columns = df.columns
+    df.columns = range(len(columns)) # reset columns as sort_values needs unique column labels
+    if include_index:
+        index_name = object()  # a unique name, object() only equals itself
+        df.index.name = index_name
+        df.reset_index(inplace=True)
+    df.sort_values(by=df.columns.tolist(), inplace=True)
+    if include_index:
+        df.set_index(index_name, inplace=True)
+    df.columns = columns

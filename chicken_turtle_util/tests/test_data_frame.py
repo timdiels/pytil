@@ -166,7 +166,7 @@ class TestEquals(object):
     
     @pytest.fixture
     def df1(self):
-        return pd.DataFrame(
+        return pd.DataFrame( #TODO also test with a mix of float and objects, e.g. simply construct object(). Stick them in the middle of some cols and rows, don't fill the whole col or row with it
             [
                 [1, 6, 7, 4],
                 [5, 6, 7, 8],
@@ -174,7 +174,8 @@ class TestEquals(object):
                 [9, 6, 7, 12]
             ],
             index=pd.Index(('i1', 'i2', 'i3', 'i3'), name='index1'),
-            columns=pd.Index(('c1', 'c2', 'c3', 'c3'), name='columns1')
+            columns=pd.Index(('c1', 'c2', 'c3', 'c3'), name='columns1'),
+            dtype=float
         )
         
     def transformed1(self, df, single_valued, single_valued_index, single_valued_columns):
@@ -215,6 +216,14 @@ class TestEquals(object):
             df_.equals(df1, df1, ignore_order=value)
         assert 'ignore_order' in str(ex.value)
         assert str(value) in str(ex.value)
+        
+    def test_all_close(self, df1):
+        '''
+        When all_close=True, compare floats in an np.isclose manner
+        '''
+        df2 = df1 + 1e-9 #TODO try 8
+        assert df_.equals(df1, df2, all_close=True)
+        #TODO also cover all_close on index and columns if they're float
         
     @pytest.mark.parametrize('emptiness, transformed1_args, transformed2_args, equals_args, expected', EqualsTestCases().cases())
     def test_other(self, df1, emptiness, transformed1_args, transformed2_args, equals_args, expected):
