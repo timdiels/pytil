@@ -92,122 +92,58 @@ class TestSplitArrayLike(object):
         assert split_array_like(df, 'a').equals(df_split_a)
         assert split_array_like(df, ('a',)).equals(df_split_a)
 
-class EqualsTestCases(object):
-    
-    def _get_expected(self, emptiness, transformed1_args, transformed2_args, equals_args):
-        # When both empty, always equal
-        if all(emptiness):
-            return True
-        
-        # When one empty, never equal
-        if any(emptiness):
-            return False
-        
-        # When equals(df, df, ...), return True
-        if not any(transformed2_args.values()):
-            return True
-        
-        # When a row/column dropped, return False
-        if transformed2_args['drop_row'] or transformed2_args['drop_column']:
-            return False
-        
-        # When types differ, return False
-        if transformed2_args['string_values']:
-            return False
-        
-        # ignore order iff relevant axis in ignore_order
-        if transformed2_args['reorder_index'] and 0 not in equals_args['ignore_order']:
-            # and can notice the reordering
-            index_order_differs = not equals_args['ignore_index'] and not transformed1_args['single_valued_index']
-            values_order_differs = not transformed1_args['single_valued']
-            if index_order_differs or values_order_differs:
-                return False
-        if transformed2_args['reorder_columns'] and 1 not in equals_args['ignore_order']:
-            # and can notice the reordering
-            columns_order_differs = not equals_args['ignore_columns'] and not transformed1_args['single_valued_columns']
-            values_order_differs = not transformed1_args['single_valued']
-            if columns_order_differs or values_order_differs:
-                return False
-        
-        # only ignore index values and name iff ignore_index
-        if transformed2_args['reset_index'] and not equals_args['ignore_index']:
-            return False
-        
-        # only ignore columns values and name iff ignore_columns
-        if transformed2_args['reset_columns'] and not equals_args['ignore_columns']:
-            return False
-        
-        # else, return True
-        return True
-    
-    #TODO add NaN handling, default nan!=nan, but add option which treat nan==nan. Also nan in indices
-    def cases(self):
-        '''
-        All possible inputs and outputs for df1
-        '''
-        bools = [True, False]
-        ignore_orders = [set(), {0}, {1}, {0,1}]
-        for emptiness in product(bools, bools):  # if left: use empty df, else use df1; if right: use empty df, else use df2 
-            for equals_args in product(ignore_orders, bools, bools):
-                equals_args = dict(zip(['ignore_order', 'ignore_index', 'ignore_columns'], equals_args))
-                equals_args['return_reason'] = True
-                if not any(emptiness):
-                    for transformed1_args in product(*([bools] * 3)):
-                        transformed1_args = dict(zip(['single_valued', 'single_valued_index', 'single_valued_columns'], transformed1_args))
-                        for transformed2_args in product(*([bools] * 7)):
-                            transformed2_args = dict(zip(['reset_index', 'reset_columns', 'reorder_index', 'reorder_columns', 'string_values', 'drop_row', 'drop_column'], transformed2_args))
-                            expected = self._get_expected(emptiness, transformed1_args, transformed2_args, equals_args)
-                            yield emptiness, transformed1_args, transformed2_args, equals_args, expected
-                else:
-                    expected = self._get_expected(emptiness, None, None, equals_args)
-                    yield emptiness, None, None, equals_args, expected
-    
 class TestEquals(object):
     
     @pytest.fixture
     def df1(self):
-        return pd.DataFrame( #TODO also test with a mix of float and objects, e.g. simply construct object(). Stick them in the middle of some cols and rows, don't fill the whole col or row with it
+        '''
+        df with in values, and both indices we have: np.nan, float, object, str,
+        other and duplicate rows/columns
+        
+        Indices and values are not orderable, but they are copyable and a copy equals the original.
+        '''
+            
+        return pd.DataFrame(
             [
-                [1, 6, 7, 4],
-                [5, 6, 7, 8],
-                [5, 6, 7, 8],
-                [9, 6, 7, 12]
+                [np.nan, 5, 5.0, 2.0],
+                [5.0, 5, 5, 5],
+                [5, 5, 5.0, 5],
+                ['str', 5.0, 5, df_._Object(3)]
             ],
-            index=pd.Index(('i1', 'i2', 'i3', 'i3'), name='index1'),
-            columns=pd.Index(('c1', 'c2', 'c3', 'c3'), name='columns1'),
-            dtype=float
+            index=pd.Index((df_._Object(4), 2.0, 2, 'i3'), name='index1'),
+            columns=pd.Index((1.0, df_._Object(5), 1, 'c3'), name='columns1'),
         )
         
-    def transformed1(self, df, single_valued, single_valued_index, single_valued_columns):
+    def assert_(self, df1, df2, expected, **equals_args):
+        dfs = [df1, df2]
+        dfs_orig = [df.copy() for df in dfs]
+        actual = df_.equals(*dfs, return_reason=True, **equals_args)
+        for df, df_orig in zip(dfs, dfs_orig):  # input unchanged
+            assert df.equals(df_orig)
+            assert df.index.name == df_orig.index.name
+            assert df.columns.name == df_orig.columns.name
+        assert actual[0] == expected, actual[1]
+        
+    def transform_floats(self, df):
         df = df.copy()
-        if single_valued:
-            df = pd.DataFrame(np.ones_like(df.values), index=df.index, columns=df.columns)
-        if single_valued_index:
-            df.index = pd.Index(np.ones_like(df.index.values), name=df.index.name)
-        if single_valued_columns:
-            df.columns = pd.Index(np.ones_like(df.columns.values), name=df.columns.name)
+        df = self._transform_floats(df)
+        df.index = self._transform_floats(df.index)
+        df.columns = self._transform_floats(df.columns)
         return df
         
-    def transformed2(self, df, reset_index, reset_columns, reorder_index, reorder_columns, string_values, drop_row, drop_column):
-        # Note: `df` should be a 4x4
-        df = df.copy()
-        if reorder_index:
-            df = df.reset_index().reindex((2, 0, 1, 3)).set_index('index1')
-        if reorder_columns:
-            df = df.transpose().reset_index().reindex((1, 2, 0, 3)).set_index('columns1').transpose()
-        if reset_index:
-            df = df.reset_index(drop=True)
-        if reset_columns:
-            df.columns = range(len(df.columns))
-        if string_values:
-            df = df.applymap(str)
-        if drop_row:
-            df = df.iloc[[0, 1, 3]]
-        if drop_column:
-            df = df.iloc[:,[0,1,3]]
-        return df
+    def _transform_floats(self, x):
+        def transform(x):
+            return x+1e-8 if isinstance(x, float) else x
+        if isinstance(x, pd.DataFrame):
+            return x.applymap(transform)
+        if isinstance(x, pd.Index):
+            values = x.map(transform)
+            return pd.Index(values, name=x.name)
+        assert False
         
-    @pytest.mark.parametrize('value', ({-1}, {2}, {3}, {1.1}, {0,1,2}))
+    invalid_axi = ({-1}, {2}, {3}, {1.1}, {0,1,2})
+    
+    @pytest.mark.parametrize('value', invalid_axi)
     def test_ignore_order_invalid(self, df1, value):
         '''
         When other value than 0 or 1 in ignore_order, raise ValueError
@@ -217,43 +153,134 @@ class TestEquals(object):
         assert 'ignore_order' in str(ex.value)
         assert str(value) in str(ex.value)
         
-    def test_all_close(self, df1):
+    @pytest.mark.parametrize('value', invalid_axi)
+    def test_ignore_indices_invalid(self, df1, value):
         '''
-        When all_close=True, compare floats in an np.isclose manner
+        When other value than 0 or 1 in ignore_indices, raise ValueError
         '''
-        df2 = df1 + 1e-9 #TODO try 8
-        assert df_.equals(df1, df2, all_close=True)
-        #TODO also cover all_close on index and columns if they're float
+        with pytest.raises(ValueError) as ex:
+            df_.equals(df1, df1, ignore_indices=value)
+        assert 'ignore_indices' in str(ex.value)
+        assert str(value) in str(ex.value)
         
-    @pytest.mark.parametrize('emptiness, transformed1_args, transformed2_args, equals_args, expected', EqualsTestCases().cases())
-    def test_other(self, df1, emptiness, transformed1_args, transformed2_args, equals_args, expected):
-        if any(emptiness):
-            if emptiness[1]:
-                df2 = pd.DataFrame()
-            else:
-                df2 = df1
-            if emptiness[0]:
-                df1 = pd.DataFrame()
-        else:
-            df1 = self.transformed1(df1, **transformed1_args)
-            df2 = self.transformed2(df1, **transformed2_args)
-        df1_orig = df1.copy()
-        df2_orig = df2.copy()
-        actual = df_.equals(df1, df2, **equals_args)
-        assert df1.equals(df1_orig)
-        assert df1.index.name == df1_orig.index.name
-        assert df1.columns.name == df1_orig.columns.name
-        assert df2.equals(df2_orig)
-        assert df2.index.name == df2_orig.index.name
-        assert df2.columns.name == df2_orig.columns.name
-        assert actual[0] == expected, actual[1]
+    def test_trivial(self, df1):
+        '''
+        When equals(df, df), return True
+        
+        Even when df contains mix of NaN, object, ... in values and indices, as
+        well as duplicates (this also applies to the other tests that expect dfs
+        to equal)
+        '''
+        self.assert_(df1, df1, True)
     
     def test_return_reason(self, df1):
         '''
         When not return_reason, return only a bool
         '''
         assert df_.equals(df1, df1)
+        
+    def test_emptiness(self):
+        '''
+        When:
+        
+        - both empty, return True.
+        - either empty, but not both, return False.
+        '''
+        df = pd.DataFrame([[1]])
+        empty = pd.DataFrame()
+        self.assert_(df, empty, False)
+        self.assert_(empty, df, False)
+        self.assert_(empty.copy(), empty, True)
+        
+    def test_shape(self):
+        '''
+        When both non-empty but shape differs, return False
+        '''
+        self.assert_(pd.DataFrame([[1]]), pd.DataFrame([[1, 2]]), False)
+        self.assert_(pd.DataFrame([[1]]), pd.DataFrame([[1], [2]]), False)
+        
+    def test_all_close(self, df1):
+        '''
+        When all_close=True, compare floats in an np.isclose manner
+        '''
+        df2 = self.transform_floats(df1)
+        self.assert_(df1, df2, True, all_close=True)
+        self.assert_(df1, df2, False)
 
+    @pytest.mark.parametrize('ignore_indices, change', product(({0}, {1}, {0,1}), ('name', 'values')))
+    def test_ignore_indices(self, df1, ignore_indices, change):
+        '''
+        When ignore_indices, ignore respective index's name and values
+        '''
+        # create df2
+        df2 = df1.copy()
+        if 0 in ignore_indices:
+            if change == 'name':
+                df2.index.name = 'other'
+            else:
+                df2 = df2.reset_index(drop=True)
+        if 1 in ignore_indices:
+            if change == 'name':
+                df2.columns.name = 'other2'
+            else:
+                df2.columns = range(len(df2.columns))
+            
+        # assert
+        self.assert_(df1, df2, True, ignore_indices=ignore_indices)
+        self.assert_(df1, df2, False)
+        if ignore_indices == {0,1}:
+            self.assert_(df1, df2, False, ignore_indices={0})
+            self.assert_(df1, df2, False, ignore_indices={1})
+        
+    @pytest.mark.parametrize('ignore_order, reorder, all_close', product(
+        ({0}, {1}, {0,1}),
+        ('index', 'values'),  # whether to reorder the index or the values; the other is set to all 6 so you can no longer tell the difference
+        [False, True]  # also test that all_close keeps functioning
+    ))
+    def test_ignore_order(self, df1, ignore_order, reorder, all_close):
+        '''
+        When ignore order, ignore a difference in order of tuples of (axis label, axis
+        values)
+        
+        When not ignoring, detect the difference
+        '''
+        # create df2
+        if all_close:
+            df2 = self.transform_floats(df1)
+        else:
+            df2 = df1.copy()
+            
+        # reorder rows/columns
+        if 0 in ignore_order:
+            df2 = df2.reset_index().reindex([0, 3, 2, 1]).set_index('index1')
+        if 1 in ignore_order:
+            df2 = df2.transpose().reset_index().reindex([0, 3, 2, 1]).set_index('columns1').transpose()
+        
+        # make reordered values or indices indistinguishable
+        if reorder == 'values':
+            if 0 in ignore_order:
+                df1.index = df1.index.putmask([False, True, False, True], 6)
+                df2.index = df2.index.putmask([False, True, False, True], 6)
+            if 1 in ignore_order:
+                df1.columns = df1.columns.putmask([False, True, False, True], 6)
+                df2.columns = df2.columns.putmask([False, True, False, True], 6)
+        elif reorder == 'index':
+            if 0 in ignore_order:
+                df1.iloc[[1,3]] = 6
+                df2.iloc[[1,3]] = 6
+            if 1 in ignore_order:
+                df1.iloc[:,[1,3]] = 6
+                df2.iloc[:,[1,3]] = 6
+        else:
+            assert False
+            
+        # assert
+        self.assert_(df1, df2, True, ignore_order=ignore_order, all_close=all_close)
+        self.assert_(df1, df2, False, all_close=all_close)
+        if ignore_order == {0,1}:
+            self.assert_(df1, df2, False, ignore_order={0}, all_close=all_close)
+            self.assert_(df1, df2, False, ignore_order={1}, all_close=all_close)
+        
 # TODO
 '''
 XXX test with MultiIndex indices. Then remove warning from data_frame

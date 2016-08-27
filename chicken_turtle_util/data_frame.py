@@ -25,8 +25,14 @@ Extensions to `pandas.DataFrame`
    functions.
 '''
 
+#TODO there is no guarantee that inplace=True offers better performance, stop using it unless it's actually handy http://stackoverflow.com/questions/22532302/pandas-peculiar-performance-drop-for-inplace-rename-after-dropna
+
 import pandas as pd
 import numpy as np
+import logging
+ma = np.ma
+
+logger = logging.getLogger(__name__)
 
 def replace_na_with_none(df):
     '''
@@ -110,11 +116,11 @@ def split_array_like(df, columns=None):
      
     return df
 
-def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=False, all_close=False, return_reason=False):
+def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, return_reason=False):
     '''
     Get whether 2 data frames are equal
     
-    ``NaN``\ s are considered equal, which is analog to `pandas.DataFrame.equals`.
+    ``NaN``\ s are considered equal (to be consistent with `pandas.DataFrame.equals`).
     
     Parameters
     ----------
@@ -122,12 +128,9 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
         Data frames to compare
     ignore_order : {int}
         Axi in which to ignore order
-    ignore_index : bool
-        If True, ignore index values and name, but unless ``0 in ignore_order``
-        still take into account the row order
-    ignore_columns : bool
-        If True, ignore columns values and name, but unless ``1 in ignore_order``
-        still take into account the column order
+    ignore_indices : {int}
+        Axi of which to ignore the index. E.g. ``{1}`` allows differences in
+        ``df.columns.name`` and `df.columns.equals(df2.columns)``.
     all_close : bool
         If False, values must match exactly, if True, floats are compared as if
         compared with `np.isclose`.
@@ -143,6 +146,12 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
         If equal, ``None``, otherwise short explanation of why the data frames
         aren't equal. Omitted if not `return_reason`.
     
+    Notes
+    -----
+    All values (including those of indices) must be copyable and `__eq__` must
+    be such that a copy must equal its original. A value must equal itself
+    unless it's `np.nan`. They needn't be orderable or hashable. By consequence,
+    this is not an efficient operation.
         
     Examples
     --------
@@ -182,7 +191,7 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
     3          7   8   9
     >>> df_.equals(df, df2)
     False
-    >>> df_.equals(df, df2, ignore_index=True)
+    >>> df_.equals(df, df2, ignore_indices={0})
     True
     >>> df2 = df.reindex(('i3', 'i1', 'i2'))
     >>> df2
@@ -191,7 +200,7 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
     i3         7   8   9
     i1         1   2   3
     i2         4   5   6
-    >>> df_.equals(df, df2, ignore_index=True)  # does not ignore row order!
+    >>> df_.equals(df, df2, ignore_indices={0})  # does not ignore row order!
     False
     >>> df_.equals(df, df2, ignore_order={0})
     True
@@ -200,103 +209,192 @@ def equals(df1, df2, ignore_order=set(), ignore_index=False, ignore_columns=Fals
     >>> df_.equals(df, df2)  # df.index.name must match as well, same goes for df.columns.name
     False
     '''
-    result = _equals(df1, df2, ignore_order, ignore_index, ignore_columns, all_close)
+    result = _equals(df1, df2, ignore_order, ignore_indices, all_close)
     if return_reason:
         return result
     else:
         return result[0]
-    
-def _array_equal(arr1, arr2, equal_nan=False):
-    if equal_nan:
-        return ((arr1 == arr2) | ((arr1 != arr1) & (arr2 != arr2))).all()
-    else:
-        return np.array_equal(arr1, arr2)
 
-#TODO refactor by axis
-def _equals(df1, df2, ignore_order, ignore_index, ignore_columns, all_close): #TODO test all_close
+def _equals(df1, df2, ignore_order, ignore_indices, all_close):
     if ignore_order - {0,1}:
         raise ValueError('invalid ignore_order, valid axi are 0 and 1, got: {!r}'.format(ignore_order))
     
-    dfs = [df1.copy(), df2.copy()]
+    if ignore_indices - {0,1}:
+        raise ValueError('invalid ignore_indices, valid axi are 0 and 1, got: {!r}'.format(ignore_indices))
     
-    empty_count = sum(df.empty for df in dfs)
-    if empty_count == 2:
+    dfs = [df1.copy(), df2.copy()]
+    logger.debug(df1)
+    logger.debug(df2)
+    
+    # If both empty, return True right away
+    if dfs[0].empty and dfs[1].empty:
         return True, None
-    if empty_count:
-        return False, 'Either empty, but not both'
     
     # If shape differs, never equal
     if dfs[0].shape != dfs[1].shape:
         return False, 'Shape differs'
     
-    # If dtypes differ, never equal
-    if (dfs[0].dtypes != dfs[1].dtypes).any():
-        return False, 'dtypes differ: {!r} != {!r}'.format(dfs[0].dtypes, dfs[1].dtypes)
-    
     # Compare index and columns names
-    if not ignore_index:
+    if 0 not in ignore_indices:
         if dfs[0].index.name != dfs[1].index.name:
             return False, 'Index name differs: {!r} != {!r}'.format(dfs[0].index.name, dfs[1].index.name)
-    if not ignore_columns:
+    if 1 not in ignore_indices:
         if dfs[0].columns.name != dfs[1].columns.name:
             return False, 'Columns name differs: {!r} != {!r}'.format(dfs[0].columns.name, dfs[1].columns.name)
     
-    #
-    for i, df in enumerate(dfs):
-        # If row order ignored, sort rows by values
-        if 0 in ignore_order:
-            _ignore_row_order(df, not ignore_index)
-                
-        # If column order ignored, sort columns by values
-        if 1 in ignore_order:
-            df = df.transpose()
-            _ignore_row_order(df, not ignore_columns)
-            df = df.transpose()
-            dfs[i] = df
-        
-        # If index / columns ignored, reset respectively
-        if ignore_index:
-            df.reset_index(drop=True, inplace=True)
-        if ignore_columns:
-            df.columns = range(len(df.columns))
+    # Add non-ignored indices to values
+    for df in dfs:
+        if 1 not in ignore_indices:
+            df.loc[_Object(1)] = df.columns
+        if 0 not in ignore_indices:
+            df[_Object(0)] = df.index
     
-    # Compare index values of both axi
-    for axis_name, ignore, indices in [('Index', ignore_index, [df.index for df in dfs]), ('Columns', ignore_columns, [df.columns for df in dfs])]:
-        if ignore:
-            continue
-        if all_close and all(index.dtype == float for index in indices):
-            equal = np.allclose(indices[0].values, indices[1].values, equal_nan=True)
-        else:
-            equal = indices[0].equals(indices[1])
-        if not equal:
-            return False, '{} values differ'.format(axis_name)
-    
-    # Compare values: floats
-    values = [df.values for df in dfs]
-    is_float = np.frompyfunc(lambda x: isinstance(x, float), 1, 1)
-    float_values = [vals[is_float(vals).astype(bool)] for vals in values]
-    if all_close:
-        equal = np.allclose(*float_values, equal_nan=True)
-    else:
-        equal = _array_equal(*float_values, equal_nan=True)
-    if not equal:
-        return False, 'Float values differ:\n{}\n\n{}'.format(*float_values)
+    # Compare just the values
+    if not _2d_array_equals([df.values for df in dfs], ignore_order, all_close):
+        return False, 'Either of df.index, df.columns, df.values differ'
      
-    # Compare values: other
-    other_values = [vals[~is_float(vals).astype(bool)] for vals in values]
-    if not (other_values[0] == other_values[1]).all():
-        return False, 'Non-float values differ:\n{}\n\n{}'.format(*other_values)
-    
     return True, None
 
-def _ignore_row_order(df, include_index):
-    columns = df.columns
-    df.columns = range(len(columns)) # reset columns as sort_values needs unique column labels
-    if include_index:
-        index_name = object()  # a unique name, object() only equals itself
-        df.index.name = index_name
-        df.reset_index(inplace=True)
-    df.sort_values(by=df.columns.tolist(), inplace=True)
-    if include_index:
-        df.set_index(index_name, inplace=True)
-    df.columns = columns
+class _Object(object):
+    
+    '''
+    object that equals those with same id
+    '''
+            
+    def __init__(self, id_):
+        self._id = id_
+        
+    def __repr__(self):
+        return '_Object({})'.format(self._id)
+    
+    def __eq__(self, other):
+        return isinstance(other, _Object) and self._id == other._id
+    
+    def __hash__(self):
+        return hash(self._id)
+    
+def _2d_array_equals(arrays, ignore_order, all_close):
+    #XXX can further optimise by using better numpy routines Maybe able to optimise at an algorithmic level first though
+    # e.g. nditer has more efficient ways. There's also Cython of course
+    if not ignore_order:
+        for value1, value2 in zip(*[values.ravel() for values in arrays]):
+            if not _value_equals(value1, value2, all_close=all_close):
+                logger.debug(value1, value2)
+                return False
+    else:
+        # Compare along each axis 
+        for axis in (0, 1):
+            if axis not in ignore_order:
+                continue # only check along the other axis
+            
+            values1 = arrays[0]
+            values2 = arrays[1]
+            if axis == 1:
+                values1 = values1.transpose()
+                values2 = values2.transpose()
+            values1 = np.require(values1, requirements='C')
+            values2 = ma.asarray(values2, order='C')
+                
+            # Note: c-contiguous stores in memory as: row 1, row 2, ...
+            for row1 in values1:
+                logger.debug('row1 =', row1)
+                if not _try_mask_first_row(row1, values2, all_close, len(ignore_order) == 2):
+                    return False
+    return True
+
+def _try_mask_first_row(row, values, all_close, ignore_order):
+    '''
+    mask first row in 2d array
+    
+    values : 2d masked array
+        Each row is either fully masked or not masked at all
+    ignore_order : bool
+        Ignore column order
+    
+    Return whether masked a row. If False, masked nothing.
+    '''
+    for row2 in values:
+        logger.debug('row2 =', row2)
+        mask = ma.getmaskarray(row2)
+        assert mask.sum() in (0, len(mask))  # sanity check: all or none masked
+        if mask[0]: # Note: at this point row2's mask is either all False or all True
+            continue
+        
+        # mask each value of row1 in row2
+        if _try_mask_row(row, row2, all_close, ignore_order):
+            logger.debug('match row1')
+            return True
+    # row did not match
+    logger.debug('nomatch row1')
+    return False
+    
+def _try_mask_row(row1, row2, all_close, ignore_order):
+    '''
+    if each value in row1 matches a value in row2, mask row2
+    
+    row1
+        1d array
+    row2
+        1d masked array whose mask is all False
+    ignore_order : bool
+        Ignore column order
+    all_close : bool
+        compare with np.isclose instead of ==
+        
+    Return whether masked the row
+    '''
+    if ignore_order:
+        for value1 in row1:
+            if not _try_mask_first_value(value1, row2, all_close):
+                logger.debug('nomatch', value1)
+                row2.mask = ma.nomask
+                return False
+            else:
+                logger.debug('match', value1)
+    else:
+        for value1, value2 in zip(row1, row2):
+            if not _value_equals(value1, value2, all_close):
+                logger.debug('nomatch', value1)
+                return False
+        row2[:] = ma.masked
+    assert row2.mask.all()  # sanity check
+    return True
+
+def _try_mask_first_value(value, row, all_close):
+    '''
+    mask first value in row
+    
+    value1 : any
+    row : 1d masked array
+    all_close : bool
+        compare with np.isclose instead of ==
+        
+    Return whether masked a value
+    '''
+    # Compare value to row
+    for i, value2 in enumerate(row):
+        if _value_equals(value, value2, all_close):
+            row[i] = ma.masked
+            return True
+    return False
+    
+def _value_equals(value1, value2, all_close):
+    '''
+    Get whether 2 values are equal
+    
+    value1, value2 : any
+    all_close : bool
+        compare with np.isclose instead of ==
+    '''
+    logger.debug(value1, value2)
+    are_floats = np.can_cast(type(value1), float) and np.can_cast(type(value2), float)
+    if all_close and are_floats:
+        logger.debug('float close')
+        return np.isclose(value1, value2, equal_nan=True)
+    else:
+        if are_floats:
+            logger.debug('float eq')
+            return value1 == value2 or (value1 != value1 and value2 != value2)
+        else:
+            logger.debug('eq')
+            return value1 == value2
