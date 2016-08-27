@@ -92,8 +92,24 @@ class TestSplitArrayLike(object):
         assert split_array_like(df, 'a').equals(df_split_a)
         assert split_array_like(df, ('a',)).equals(df_split_a)
 
-class TestEquals(object):
+class _Object(object):
+
+    '''
+    object that equals those with same id
+    '''
+            
+    def __init__(self, id_):
+        self._id = id_
+        
+    def __repr__(self):
+        return '_Object({})'.format(self._id)
     
+    def __eq__(self, other):
+        return isinstance(other, _Object) and self._id == other._id
+
+class TestEquals(object):
+        
+    #TODO test may be too strict on the indices: they must be orderable (e.g. there's no __lt__ to compare int and str) and hashable. So perhaps test with either all str or all numeric
     @pytest.fixture
     def df1(self):
         '''
@@ -107,10 +123,10 @@ class TestEquals(object):
                 [np.nan, 5, 5.0, 2.0],
                 [5.0, 5, 5, 5],
                 [5, 5, 5.0, 5],
-                ['str', 5.0, 5, df_._Object(3)]
+                ['str', 5.0, 5, _Object(3)]
             ],
-            index=pd.Index((df_._Object(4), 2.0, 2, 'i3'), name='index1'),
-            columns=pd.Index((1.0, df_._Object(5), 1, 'c3'), name='columns1'),
+            index=pd.Index((4, 2.0, 2, 'i3'), name='index1'),
+            columns=pd.Index((1.0, 5, 1, 'c3'), name='columns1'),
         )
         
     def assert_(self, df1, df2, expected, **equals_args):

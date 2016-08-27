@@ -151,8 +151,9 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
     -----
     All values (including those of indices) must be copyable and `__eq__` must
     be such that a copy must equal its original. A value must equal itself
-    unless it's `np.nan`. They needn't be orderable or hashable. By consequence,
-    this is not an efficient operation.
+    unless it's `np.nan`. Values needn't be orderable or hashable (however
+    pandas requires index values to be orderable and hashable). By consequence,
+    this is not an efficient function, but it is flexible.
         
     Examples
     --------
@@ -244,35 +245,23 @@ def _equals(df1, df2, ignore_order, ignore_indices, all_close):
             return False, 'Columns name differs: {!r} != {!r}'.format(dfs[0].columns.name, dfs[1].columns.name)
     
     # Add non-ignored indices to values
+    arrays = []
     for df in dfs:
+        values = df.values
         if 1 not in ignore_indices:
-            df.loc[_Object(1)] = df.columns
+            values = np.vstack([df.columns.values, values])
         if 0 not in ignore_indices:
-            df[_Object(0)] = df.index
+            index_values = df.index.values
+            if 1 not in ignore_indices:
+                index_values = np.hstack([np.nan, index_values])
+            values = np.column_stack([index_values, values])
+        arrays.append(values)
     
     # Compare just the values
-    if not _2d_array_equals([df.values for df in dfs], ignore_order, all_close):
+    if not _2d_array_equals(arrays, ignore_order, all_close):
         return False, 'Either of df.index, df.columns, df.values differ'
      
     return True, None
-
-class _Object(object):
-    
-    '''
-    object that equals those with same id
-    '''
-            
-    def __init__(self, id_):
-        self._id = id_
-        
-    def __repr__(self):
-        return '_Object({})'.format(self._id)
-    
-    def __eq__(self, other):
-        return isinstance(other, _Object) and self._id == other._id
-    
-    def __hash__(self):
-        return hash(self._id)
     
 def _2d_array_equals(arrays, ignore_order, all_close):
     #XXX can further optimise by using better numpy routines Maybe able to optimise at an algorithmic level first though
