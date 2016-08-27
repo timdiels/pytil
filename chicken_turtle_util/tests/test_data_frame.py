@@ -102,7 +102,6 @@ class TestEquals(object):
         
         Indices and values are not orderable, but they are copyable and a copy equals the original.
         '''
-            
         return pd.DataFrame(
             [
                 [np.nan, 5, 5.0, 2.0],
@@ -142,6 +141,7 @@ class TestEquals(object):
         assert False
         
     invalid_axi = ({-1}, {2}, {3}, {1.1}, {0,1,2})
+    axi = (set(), {0}, {1}, {0,1})
     
     @pytest.mark.parametrize('value', invalid_axi)
     def test_ignore_order_invalid(self, df1, value):
@@ -281,6 +281,15 @@ class TestEquals(object):
             self.assert_(df1, df2, False, ignore_order={0}, all_close=all_close)
             self.assert_(df1, df2, False, ignore_order={1}, all_close=all_close)
         
+    @pytest.mark.parametrize('ignore_order, all_close', product(axi, [False, True]))
+    def test_nan_equals_none(self, df1, ignore_order, all_close):
+        '''
+        NaN and None values are considered equal
+        '''
+        df2 = df1.copy()
+        df1.iloc[0,0] = np.nan
+        df2.iloc[0,0] = None
+        self.assert_(df1, df2, True, ignore_order=ignore_order, all_close=all_close)
 # TODO
 '''
 XXX test with MultiIndex indices. Then remove warning from data_frame

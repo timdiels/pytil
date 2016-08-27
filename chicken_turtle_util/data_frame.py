@@ -120,7 +120,8 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
     '''
     Get whether 2 data frames are equal
     
-    ``NaN``\ s are considered equal (to be consistent with `pandas.DataFrame.equals`).
+    ``NaN``\ s are considered equal (to be consistent with
+    `pandas.DataFrame.equals`). ``None`` is considered equal to ``NaN``.
     
     Parameters
     ----------
@@ -387,6 +388,12 @@ def _value_equals(value1, value2, all_close):
         compare with np.isclose instead of ==
     '''
     logger.debug(value1, value2)
+    
+    if value1 is None:
+        value1 = np.nan
+    if value2 is None:
+        value2 = np.nan
+    
     are_floats = np.can_cast(type(value1), float) and np.can_cast(type(value2), float)
     if all_close and are_floats:
         logger.debug('float close')
