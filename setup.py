@@ -42,7 +42,7 @@ setup(
                        'Topic :: Software Development :: Libraries :: Python Modules'],
     'description': 'Python 3 utility library',
     'extras_require': {   'algorithms': ['numpy', 'scipy', 'scikit-learn', 'collections-extended'],
-                          'application': ['click', 'pyxdg'],
+                          'application': ['click'],
                           'asyncio': [],
                           'cli': ['click'],
                           'configuration': ['pyxdg'],

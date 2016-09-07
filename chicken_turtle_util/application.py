@@ -23,7 +23,6 @@ from chicken_turtle_util import cli
 from chicken_turtle_util.function import compose
 import click
 from functools import wraps
-import xdg
 from textwrap import dedent, TextWrapper
 from pathlib import Path
 
@@ -389,59 +388,3 @@ class OutputDirectoryMixin(Context):
 #             
 #             super(_DefaultsConfigurationMixin, class_).command(*args, **kwargs)    
 #                 
-
-def DataDirectoryMixin(directory_name):
- 
-    '''
-    Application context mixin, provides context.data_directory
-    
-    Data directory is taken from XDG data home. A user can change this using the
-    XDG_DATA_HOME env variable.
-    
-    Parameters
-    ----------
-    directory_name : str
-        Subdirectory to use inside XDG data home. This should be your
-        application name in all lowercase with spaces replaced by underscores.
-    '''
-    
-    class _DataDirectoryMixin(Context):
-        
-        @property
-        def data_directory(self):
-            '''
-            Get data root directory
-            
-            Only data that needs to be persistent should be stored here.
-            '''
-            return Path(xdg.BaseDirectory.xdg_data_home) / directory_name
-        
-    return _DataDirectoryMixin
-
-def CacheDirectoryMixin(directory_name):
- 
-    '''
-    Application context mixin, provides context.cache_directory
-    
-    Data directory is taken from XDG cache home. A user can change this using the
-    XDG_CACHE_HOME env variable.
-    
-    Parameters
-    ----------
-    directory_name : str
-        Subdirectory to use inside XDG cache home. This should be your
-        application name in all lowercase with spaces replaced by underscores.
-    '''
-    
-    class _CacheDirectoryMixin(Context):
-        
-        @property
-        def cache_directory(self):
-            '''
-            Get cache root directory
-            
-            Only non-persistent data that is reused between runs should be stored here.
-            '''
-            return Path(xdg.BaseDirectory.xdg_cache_home) / directory_name
-        
-    return _CacheDirectoryMixin  

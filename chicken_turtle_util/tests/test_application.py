@@ -234,31 +234,3 @@ class TestMixins(object):
             result = CliRunner().invoke(main, ['--output-directory', str(output_dir)])
             print(result.exception)
             assert not result.exception, result.output
-    
-    def test_data_directory(self, temp_dir_cwd, mocker):
-        mocker.patch('xdg.BaseDirectory.xdg_data_home', str(Path.cwd().absolute()))
-        
-        class MyAppContext(app.DataDirectoryMixin('my_app'), app.Context):
-            pass
-                
-        @MyAppContext.command()
-        def main(context):
-            assert context.data_directory.absolute() == Path('my_app').absolute()
-            return main
-        
-        result = CliRunner().invoke(main)
-        assert not result.exception
-        
-    def test_cache_directory(self, temp_dir_cwd, mocker):
-        mocker.patch('xdg.BaseDirectory.xdg_cache_home', str(Path.cwd().absolute()))
-        
-        class MyAppContext(app.CacheDirectoryMixin('my_app'), app.Context):
-            pass
-                
-        @MyAppContext.command()
-        def main(context):
-            assert context.cache_directory.absolute() == Path('my_app').absolute()
-            return main
-        
-        result = CliRunner().invoke(main)
-        assert not result.exception

@@ -63,8 +63,6 @@ Module contents overview
     DatabaseMixin
     ConfigurationMixin
     OutputDirectoryMixin
-    DataDirectoryMixin
-    CacheDirectoryMixin
     
 .. rubric:: cli
 .. currentmodule:: chicken_turtle_util.cli
