@@ -49,8 +49,9 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
-    spread_points_in_hypercube
     multi_way_partitioning
+    spread_points_in_hypercube
+    toset_from_tosets
     
 .. rubric:: cli
 .. currentmodule:: chicken_turtle_util.cli

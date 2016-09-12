@@ -20,7 +20,9 @@ Various algorithms, e.g. `multi_way_partitioning` to greedily divide weighted it
 '''
 
 from sklearn.utils.extmath import cartesian
-from collections_extended import bag, frozenbag
+from collections_extended import bag, frozenbag, setlist
+from chicken_turtle_util.iterable import sliding_window
+import networkx as nx
 import numpy as np
 
 def spread_points_in_hypercube(point_count, dimension_count):
@@ -116,4 +118,40 @@ def multi_way_partitioning(items, bin_count):
         bin_.add(item, weight)
     return bag(frozenbag(bin_.items) for bin_ in bins)
     
-
+# Note: Currently unused. Test and polish before using it
+# Note: a deterministic variant of this could be built with https://pypi.python.org/pypi/toposort/1.0
+def toset_from_tosets(*tosets):  # Note: a setlist is perfect representation of a toset as it's totally ordered and it's a set, i.e. a toset
+    '''
+    Create totally ordered set (toset) from tosets.
+    
+    These tosets, when merged, form a partially ordered set. The linear
+    extension of this poset, a toset, is returned.
+    
+    Parameters
+    ----------
+    tosets : iterable of setlist
+        Tosets to merge
+        
+    Raises
+    ------
+    ValueError
+        If the tosets (derived from the lists) contradict each other. E.g. 
+        ``[a, b]`` and ``[b, c, a]`` contradict each other.
+        
+    Returns
+    -------
+    setlist
+        Totally ordered set
+    '''
+    # Construct directed graph with: a <-- b iff a < b and adjacent in a list
+    graph = nx.DiGraph()
+    for toset in tosets:
+        graph.add_nodes_from(toset)
+        graph.add_edges_from(sliding_window(reversed(toset)))
+    
+    # No cycles allowed
+    if not nx.is_directed_acyclic_graph(graph): #TODO could rely on NetworkXUnfeasible https://networkx.github.io/documentation/networkx-1.9/reference/generated/networkx.algorithms.dag.topological_sort.html
+        raise ValueError('Given tosets contradict each other')  # each cycle is a contradiction, e.g. a > b > c > a
+    
+    # Topological sort
+    return setlist(nx.topological_sort(graph, reverse=True))
