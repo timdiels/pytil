@@ -127,6 +127,8 @@ def toset_from_tosets(*tosets):  # Note: a setlist is perfect representation of 
     These tosets, when merged, form a partially ordered set. The linear
     extension of this poset, a toset, is returned.
     
+    .. warning:: untested
+    
     Parameters
     ----------
     tosets : iterable of setlist
