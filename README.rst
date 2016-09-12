@@ -1,13 +1,9 @@
-Chicken Turtle Util (CTU) provides an API of various Python utility functions.
+Chicken Turtle Util (CTU) is a broad scoped Python utility library.
 
-Chicken Turtle Util is alpha. None of the interface is stable (yet), meaning it
-may change in the future.
-
-Chicken Turtle Util offers a variety of features, as such we kept most
-dependencies optional.  When using a module, add/install its dependencies,
-listed in its corresponding ``*_requirements.in`` file found in the root of the
-project; e.g.  `cli_requirements.in`__ lists the dependencies of
-`chicken_turtle_util.cli`.
+Most dependencies are optional and grouped by module.  When using a module,
+add/install its dependencies, listed in its corresponding ``*_requirements.in``
+file found in the root of the project; e.g.  `cli_requirements.in`__ lists the
+dependencies of `chicken_turtle_util.cli`.
 
 .. __: https://github.com/timdiels/chicken_turtle_util/blob/master/cli_requirements.in
 
@@ -17,52 +13,25 @@ Links
 - `PyPI <https://pypi.python.org/pypi/chicken_turtle_util/>`_
 - `GitHub <https://github.com/timdiels/chicken_turtle_util/>`_
 
-Features
-========
+API stability
+=============
+While all features are documented and tested, the API is changed frequently.
+When doing so, the `major version <semver_>`_ is bumped and a changelog is kept
+to help upgrade. Fixes will not be backported. It is recommended to pin the
+major version in your setup.py, e.g. for 2.x.y::
 
-- `algorithms.spread_points_in_hypercube`:
+    install_requires = ['chicken_turtle_util>=2.0.0,<3.0.0', ...]
 
-  Place `n` points in a unit hypercube such that the minimum distance between
-  points is approximately maximal
+If you see something you like but need long term stability (e.g. if low
+maintenance cost is required), request to have it moved to a stable library
+(one with fewer major releases) by `opening an issue`_.
 
-- `algorithms.multi_way_partitioning`: Greedily divide weighted items equally
-  across bins (multi-way partition problem)       
+.. _opening an issue: https://github.com/timdiels/chicken_turtle_util/issues
 
-- `data_frame` and `series`: `pandas <http://pandas.pydata.org/>`_ utility functions
-
-  - `data_frame.replace_na_with_none`: Replace `NaN` values in `DataFrame` with `None`
-  - `data_frame.split_array_like`: Split cells with `array_like` values along row axis.
-  - `series.invert`: Swap index with values of series
-
-- `dict`: dictionary utilities:
-
-  - `invert`: Invert dict by swapping each value with its key
-  - `DefaultDict`: Like `collections.defaultdict`, but its value factory function takes a key argument, e.g. ``DefaultDict(lambda key: MyClass(key))``
-  - `pretty_print_head`: Pretty print the 'first' lines of a dict
-
-- `path`: `pathlib.Path` utilities, including an equivalent of `shutil.rmtree`
-  which reliably works on NFS.
-
-- `application`: Mixins for building application (context) classes
-- `function.compose`: Compose functions
-- `http.download`: Download http resource (using `requests`) and save to file name suggested by HTTP server
-- `iterable.sliding_window`: Iterate using a sliding window
-- `iterable.partition`: Split iterable into partitions
-- `iterable.is_sorted`: Get whether iterable is sorted ascendingly
-- `iterable.flatten`: Flatten shallowly zero or more times
-- `configuration.ConfigurationLoader`: loads a single configuration from one or
-  more files spread across /etc and XDG config directories.
-- `set.merge_by_overlap`: Of a list of sets, merge those that overlap, in place
-- `logging.set_level`: Context manager to temporarily change log level of logger
-- `cli`: extensions to `click <http://click.pocoo.org/>`_
-- `pyqt.block_signals`: Context manager to temporarily turn on `QObject.blockSignals`
-- `sqlalchemy.log_sql`: Context manager to temporarily log sql statements emitted by `sqlalchemy <http://www.sqlalchemy.org/>`_
-- `various.Object`: Like `object`, but does not raise given args to `__init__`
-
-Changelist
+Changelog
 ==========
 
-.. todo: add to overview
+`Semantic versioning <semver_>`_ is used (starting with v2.1.0).
 
 v2.1.0 (to be released)
 -----------------------
@@ -90,3 +59,5 @@ v2.1.0 (to be released)
 v2.0.4
 ------
 No changelist
+
+.. _semver: http://semver.org/spec/v2.0.0.html

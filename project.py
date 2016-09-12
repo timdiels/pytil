@@ -12,7 +12,7 @@ project = dict(
     license='LGPL3',
  
     # What does your project relate to?
-    keywords='development util library',
+    keywords='development util library utility utilities',
     
     # Package indices to release to using `ct-release`
     # These names refer to those defined in ~/.pypirc.
@@ -26,7 +26,7 @@ project = dict(
     classifiers='''
         Natural Language :: English
         Intended Audience :: Developers
-        Development Status :: 3 - Alpha
+        Development Status :: 4 - Beta
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         Operating System :: POSIX

@@ -5,10 +5,31 @@ from setuptools import setup
 setup(
     **{   'author': 'Tim Diels',
     'author_email': 'timdiels.m@gmail.com',
-    'classifiers': [   'Development Status :: 3 - Alpha',
+    'classifiers': [   'Development Status :: 4 - Beta',
                        'Intended Audience :: Developers',
                        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
                        'Natural Language :: English',
+                       'Operating System :: Android',
+                       'Operating System :: BeOS',
+                       'Operating System :: MacOS',
+                       'Operating System :: MacOS :: MacOS 9',
+                       'Operating System :: MacOS :: MacOS X',
+                       'Operating System :: Microsoft',
+                       'Operating System :: Microsoft :: MS-DOS',
+                       'Operating System :: Microsoft :: Windows',
+                       'Operating System :: Microsoft :: Windows :: Windows 3.1 or Earlier',
+                       'Operating System :: Microsoft :: Windows :: Windows 7',
+                       'Operating System :: Microsoft :: Windows :: Windows 95/98/2000',
+                       'Operating System :: Microsoft :: Windows :: Windows CE',
+                       'Operating System :: Microsoft :: Windows :: Windows NT/2000',
+                       'Operating System :: Microsoft :: Windows :: Windows Server 2003',
+                       'Operating System :: Microsoft :: Windows :: Windows Server 2008',
+                       'Operating System :: Microsoft :: Windows :: Windows Vista',
+                       'Operating System :: Microsoft :: Windows :: Windows XP',
+                       'Operating System :: OS Independent',
+                       'Operating System :: OS/2',
+                       'Operating System :: Other OS',
+                       'Operating System :: PDA Systems',
                        'Operating System :: POSIX',
                        'Operating System :: POSIX :: AIX',
                        'Operating System :: POSIX :: BSD',
@@ -23,7 +44,9 @@ setup(
                        'Operating System :: POSIX :: Other',
                        'Operating System :: POSIX :: SCO',
                        'Operating System :: POSIX :: SunOS/Solaris',
+                       'Operating System :: PalmOS',
                        'Operating System :: Unix',
+                       'Operating System :: iOS',
                        'Programming Language :: Python',
                        'Programming Language :: Python :: 3',
                        'Programming Language :: Python :: 3 :: Only',
@@ -69,18 +92,13 @@ setup(
                                       'pytest-mock',
                                       'pytest-xdist']},
     'install_requires': [],
-    'keywords': 'development util library',
+    'keywords': 'development util library utility utilities',
     'license': 'LGPL3',
-    'long_description': 'Chicken Turtle Util (CTU) provides an API of various Python utility\n'
-                        'functions.\n'
+    'long_description': 'Chicken Turtle Util (CTU) is a broad scoped Python utility library.\n'
                         '\n'
-                        'Chicken Turtle Util is alpha. None of the interface is stable (yet),\n'
-                        'meaning it may change in the future.\n'
-                        '\n'
-                        'Chicken Turtle Util offers a variety of features, as such we kept most\n'
-                        'dependencies optional. When using a module, add/install its\n'
-                        'dependencies, listed in its corresponding ``*_requirements.in`` file\n'
-                        'found in the root of the project; e.g.\n'
+                        'Most dependencies are optional and grouped by module. When using a\n'
+                        'module, add/install its dependencies, listed in its corresponding\n'
+                        '``*_requirements.in`` file found in the root of the project; e.g.\n'
                         '`cli\\_requirements.in '
                         '<https://github.com/timdiels/chicken_turtle_util/blob/master/cli_requirements.in>`__\n'
                         'lists the dependencies of chicken\\_turtle\\_util.cli.\n'
@@ -92,59 +110,27 @@ setup(
                         '-  `PyPI <https://pypi.python.org/pypi/chicken_turtle_util/>`__\n'
                         '-  `GitHub <https://github.com/timdiels/chicken_turtle_util/>`__\n'
                         '\n'
-                        'Features\n'
-                        '========\n'
+                        'API stability\n'
+                        '=============\n'
                         '\n'
-                        '-  \\`algorithms.spread\\_points\\_in\\_hypercube\\`:\n'
+                        'While all features are documented and tested, the API is changed\n'
+                        'frequently. When doing so, the `major version <semver_>`__ is bumped and\n'
+                        'a changelog is kept to help upgrade. Fixes will not be backported. It is\n'
+                        'recommended to pin the major version in your setup.py, e.g. for 2.x.y:\n'
                         '\n'
-                        '   Place n points in a unit hypercube such that the minimum distance\n'
-                        '   between points is approximately maximal\n'
+                        '::\n'
                         '\n'
-                        '-  \\`algorithms.multi\\_way\\_partitioning\\`: Greedily divide weighted\n'
-                        '   items equally across bins (multi-way partition problem)\n'
-                        '-  data\\_frame and \\`series\\`: `pandas <http://pandas.pydata.org/>`__\n'
-                        '   utility functions\n'
+                        "    install_requires = ['chicken_turtle_util>=2.0.0,<3.0.0', ...]\n"
                         '\n'
-                        '   -  \\`data\\_frame.replace\\_na\\_with\\_none\\`: Replace NaN values in\n'
-                        '      DataFrame with None\n'
-                        '   -  \\`data\\_frame.split\\_array\\_like\\`: Split cells with array\\_like\n'
-                        '      values along row axis.\n'
-                        '   -  \\`series.invert\\`: Swap index with values of series\n'
+                        'If you see something you like but need long term stability (e.g. if low\n'
+                        'maintenance cost is required), request to have it moved to a stable\n'
+                        'library (one with fewer major releases) by `opening an\n'
+                        'issue <https://github.com/timdiels/chicken_turtle_util/issues>`__.\n'
                         '\n'
-                        '-  \\`dict\\`: dictionary utilities:\n'
+                        'Changelog\n'
+                        '=========\n'
                         '\n'
-                        '   -  \\`invert\\`: Invert dict by swapping each value with its key\n'
-                        '   -  \\`DefaultDict\\`: Like collections.defaultdict, but its value\n'
-                        '      factory function takes a key argument, e.g.\n'
-                        '      ``DefaultDict(lambda key: MyClass(key))``\n'
-                        "   -  \\`pretty\\_print\\_head\\`: Pretty print the 'first' lines of a dict\n"
-                        '\n'
-                        '-  \\`path\\`: pathlib.Path utilities, including an equivalent of\n'
-                        '   shutil.rmtree which reliably works on NFS.\n'
-                        '-  \\`application\\`: Mixins for building application (context) classes\n'
-                        '-  \\`function.compose\\`: Compose functions\n'
-                        '-  \\`http.download\\`: Download http resource (using requests) and save\n'
-                        '   to file name suggested by HTTP server\n'
-                        '-  \\`iterable.sliding\\_window\\`: Iterate using a sliding window\n'
-                        '-  \\`iterable.partition\\`: Split iterable into partitions\n'
-                        '-  \\`iterable.is\\_sorted\\`: Get whether iterable is sorted ascendingly\n'
-                        '-  \\`iterable.flatten\\`: Flatten shallowly zero or more times\n'
-                        '-  \\`configuration.ConfigurationLoader\\`: loads a single configuration\n'
-                        '   from one or more files spread across /etc and XDG config directories.\n'
-                        '-  \\`set.merge\\_by\\_overlap\\`: Of a list of sets, merge those that\n'
-                        '   overlap, in place\n'
-                        '-  \\`logging.set\\_level\\`: Context manager to temporarily change log\n'
-                        '   level of logger\n'
-                        '-  \\`cli\\`: extensions to `click <http://click.pocoo.org/>`__\n'
-                        '-  \\`pyqt.block\\_signals\\`: Context manager to temporarily turn on\n'
-                        '   QObject.blockSignals\n'
-                        '-  \\`sqlalchemy.log\\_sql\\`: Context manager to temporarily log sql\n'
-                        '   statements emitted by `sqlalchemy <http://www.sqlalchemy.org/>`__\n'
-                        '-  \\`various.Object\\`: Like object, but does not raise given args to\n'
-                        '   \\_\\_init\\_\\_\n'
-                        '\n'
-                        'Changelist\n'
-                        '==========\n'
+                        '`Semantic versioning <semver_>`__ is used (starting with v2.1.0).\n'
                         '\n'
                         'v2.1.0 (to be released)\n'
                         '-----------------------\n'
