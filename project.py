@@ -29,6 +29,29 @@ project = dict(
         Development Status :: 4 - Beta
         Topic :: Software Development
         Topic :: Software Development :: Libraries
+        Operating System :: Android
+        Operating System :: BeOS
+        Operating System :: iOS
+        Operating System :: MacOS
+        Operating System :: MacOS :: MacOS 9
+        Operating System :: MacOS :: MacOS X
+        Operating System :: Microsoft
+        Operating System :: Microsoft :: MS-DOS
+        Operating System :: Microsoft :: Windows
+        Operating System :: Microsoft :: Windows :: Windows 3.1 or Earlier
+        Operating System :: Microsoft :: Windows :: Windows 7
+        Operating System :: Microsoft :: Windows :: Windows 95/98/2000
+        Operating System :: Microsoft :: Windows :: Windows CE
+        Operating System :: Microsoft :: Windows :: Windows NT/2000
+        Operating System :: Microsoft :: Windows :: Windows Server 2003
+        Operating System :: Microsoft :: Windows :: Windows Server 2008
+        Operating System :: Microsoft :: Windows :: Windows Vista
+        Operating System :: Microsoft :: Windows :: Windows XP
+        Operating System :: OS/2
+        Operating System :: OS Independent
+        Operating System :: Other OS
+        Operating System :: PalmOS
+        Operating System :: PDA Systems
         Operating System :: POSIX
         Operating System :: POSIX :: AIX
         Operating System :: POSIX :: BSD
