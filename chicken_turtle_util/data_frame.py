@@ -269,7 +269,7 @@ def _2d_array_equals(arrays, ignore_order, all_close):
     if not ignore_order:
         for value1, value2 in zip(*[values.ravel() for values in arrays]):
             if not _value_equals(value1, value2, all_close=all_close):
-                logger.debug(value1, value2)
+                logger.debug('{} {}'.format(value1, value2))
                 return False
     else:
         # Compare along each axis 
@@ -287,7 +287,7 @@ def _2d_array_equals(arrays, ignore_order, all_close):
                 
             # Note: c-contiguous stores in memory as: row 1, row 2, ...
             for row1 in values1:
-                logger.debug('row1 =', row1)
+                logger.debug('row1 = {}'.format(row1))
                 if not _try_mask_first_row(row1, values2, all_close, len(ignore_order) == 2):
                     return False
     return True
@@ -304,7 +304,7 @@ def _try_mask_first_row(row, values, all_close, ignore_order):
     Return whether masked a row. If False, masked nothing.
     '''
     for row2 in values:
-        logger.debug('row2 =', row2)
+        logger.debug('row2 = {}'.format(row2))
         mask = ma.getmaskarray(row2)
         assert mask.sum() in (0, len(mask))  # sanity check: all or none masked
         if mask[0]: # Note: at this point row2's mask is either all False or all True
@@ -336,15 +336,15 @@ def _try_mask_row(row1, row2, all_close, ignore_order):
     if ignore_order:
         for value1 in row1:
             if not _try_mask_first_value(value1, row2, all_close):
-                logger.debug('nomatch', value1)
+                logger.debug('nomatch {}'.format(value1))
                 row2.mask = ma.nomask
                 return False
             else:
-                logger.debug('match', value1)
+                logger.debug('match {}'.format(value1))
     else:
         for value1, value2 in zip(row1, row2):
             if not _value_equals(value1, value2, all_close):
-                logger.debug('nomatch', value1)
+                logger.debug('nomatch {}'.format(value1))
                 return False
         row2[:] = ma.masked
     assert row2.mask.all()  # sanity check
@@ -376,7 +376,7 @@ def _value_equals(value1, value2, all_close):
     all_close : bool
         compare with np.isclose instead of ==
     '''
-    logger.debug(value1, value2)
+    logger.debug('{} {}'.format(value1, value2))
     
     if value1 is None:
         value1 = np.nan
