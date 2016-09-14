@@ -24,7 +24,11 @@ from contextlib import suppress
 
 def patch():
     '''
-    Patch pymysql for better compatibility with other libraries (e.g. NumPy)
+    Patch bugs and add encoders for other data types to pymysql
+    
+    Applied patches:
+    
+    - if numpy is installed, add an encoder for np.int64
     '''
     with suppress(ImportError):
         import numpy as np
