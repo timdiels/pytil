@@ -132,7 +132,7 @@ class TestEquals(object):
     def assert_(self, df1, df2, expected, **equals_args):
         dfs = [df1, df2]
         dfs_orig = [df.copy() for df in dfs]
-        actual = df_.equals(*dfs, return_reason=True, **equals_args)
+        actual = df_.equals(*dfs, _return_reason=True, **equals_args)
         for df, df_orig in zip(dfs, dfs_orig):  # input unchanged
             assert df.equals(df_orig)
             assert df.index.name == df_orig.index.name

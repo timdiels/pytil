@@ -116,7 +116,7 @@ def split_array_like(df, columns=None):
      
     return df
 
-def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, return_reason=False):
+def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, _return_reason=False):
     '''
     Get whether 2 data frames are equal
     
@@ -135,9 +135,10 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
     all_close : bool
         If False, values must match exactly, if True, floats are compared as if
         compared with `np.isclose`.
-    return_reason : bool
-        If True, `equals` returns a tuple containing the reason, else `equals`
-        only returns a bool indicating equality (or equivalence rather)
+    _return_reason : bool
+        Internal. If True, `equals` returns a tuple containing the reason, else
+        `equals` only returns a bool indicating equality (or equivalence
+        rather).
         
     Returns
     -------
@@ -212,7 +213,7 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
     False
     '''
     result = _equals(df1, df2, ignore_order, ignore_indices, all_close)
-    if return_reason:
+    if _return_reason:
         return result
     else:
         return result[0]
