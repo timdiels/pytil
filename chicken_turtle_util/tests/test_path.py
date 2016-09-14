@@ -22,6 +22,8 @@ Test chicken_turtle_util.path
 from chicken_turtle_util import path as path_
 from pathlib import Path
 from contextlib import contextmanager
+import plumbum as pb
+import hashlib
 import pytest
 
 @pytest.fixture
@@ -251,3 +253,108 @@ class TestChmod(object):
         self.assert_mode(child_file, 0o511)
         self.assert_mode(grand_child, 0o511)
             
+def test_digest_file(path, contents):
+    '''
+    When file, digest only its contents
+    '''
+    path_.write(path, contents)
+    hash_ = hashlib.sha512()
+    hash_.update(contents.encode())
+    assert path_.digest(path).hexdigest() == hash_.hexdigest()
+    
+class TestDigestDirectory(object):
+    
+    @pytest.fixture
+    def root(self, contents):
+        '''
+        Directory tree with its root at 'root'
+        '''
+        Path('root').mkdir()
+        Path('root/subdir1').mkdir()
+        Path('root/emptydir').mkdir(mode=0o600)
+        Path('root/subdir1/emptydir').mkdir()
+        path_.write(Path('root/file'), contents, 0o600)
+        Path('root/emptyfile').touch()
+        path_.write(Path('root/subdir1/subfile'), contents*2)
+        return Path('root')
+    
+    @pytest.fixture
+    def original(self, root):
+        return path_.digest(root).hexdigest()
+        
+    def test_empty_directory_remove(self, root, original):
+        '''
+        When empty directory removed, hash changes
+        '''
+        (root / 'emptydir').rmdir()
+        current = path_.digest(root).hexdigest()
+        assert original != current
+    
+    def test_file_remove(self, root, original):
+        '''
+        When file removed, hash changes
+        '''
+        (root / 'file').unlink()
+        current = path_.digest(root).hexdigest()
+        assert original != current
+            
+    def test_file_move(self, root, original):
+        '''
+        When file moves, hash changes
+        '''
+        (root / 'file').rename(root / 'subdir1/file')
+        current = path_.digest(root).hexdigest()
+        assert original != current
+        
+    def test_directory_move(self, root, original):
+        '''
+        When directory moves, hash changes
+        '''
+        (root / 'emptydir').rename(root / 'subdir1/emptydir')
+        current = path_.digest(root).hexdigest()
+        assert original != current
+        
+    def test_file_content(self, root, original, contents):
+        '''
+        When file content changes, hash changes
+        '''
+        path_.write(root / 'file', contents * 3)
+        current = path_.digest(root).hexdigest()
+        assert original != current
+        
+    def test_no_root_name(self, root, original):
+        '''
+        When root directory renamed, hash unchanged
+        '''
+        root.rename('notroot')
+        current = path_.digest(Path('notroot')).hexdigest()
+        assert original == current
+        
+    def test_no_root_location(self, root, original):
+        '''
+        When root directory moved, hash unchanged
+        '''
+        Path('subdir').mkdir()
+        root.rename('subdir/root')
+        current = path_.digest(Path('subdir/root')).hexdigest()
+        assert original == current
+        
+    def test_no_cwd(self, root, original):
+        '''
+        When current working directory changes, hash unchanged
+        '''
+        root = root.absolute()
+        Path('cwd').mkdir()
+        with pb.local.cwd('cwd'):
+            current = path_.digest(root).hexdigest()
+            assert original == current
+    
+    def test_file_dir_stat(self, root, original):
+        '''
+        When file/dir stat() changes, hash unchanged
+        '''
+        (root / 'emptydir').chmod(0o404)
+        (root / 'file').chmod(0o404)
+        current = path_.digest(root).hexdigest()
+        assert original == current
+    

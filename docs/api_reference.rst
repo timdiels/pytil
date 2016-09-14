@@ -161,10 +161,11 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
-    write
+    chmod
+    digest
     read
     remove
-    chmod
+    write
     
 .. rubric:: pymysql
 .. currentmodule:: chicken_turtle_util.pymysql

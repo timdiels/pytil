@@ -22,6 +22,7 @@ Extensions to pathlib.
 from pathlib import Path
 import time
 import os
+import hashlib
 
 #: The file system root to use (used for testing)
 _root = Path('/')
@@ -158,43 +159,57 @@ def chmod(path, mode, operator='=', recursive=False):
         
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
-# Finish adding when needed: docstring is done. If implement properly, remove the note. Test it.
-# # https://github.com/cakepietoast/checksumdir/blob/master/checksumdir/__init__.py
-# # license: https://github.com/cakepietoast/checksumdir/blob/master/LICENSE.txt
-# # dependency: checksumdir
-# from checksumdir import dirhash
-# old = dirhash(str(path), 'sha512')
-# import hashlib
-# def digest(path):
-#     '''
-#     Get SHA512 checksum of file or directory
-#     
-#     See `checksumdir.dirhash` on how a directory's hash is calculated.
-#     
-#     .. note::
-#     
-#         The current implementation does not yet take into account the relative
-#         path (including file names) of files in a directory when hashing a
-#         directory.
-#     
-#     Parameters
-#     ----------
-#     path : pathlib.Path
-#         file or directory to hash
-#     
-#     Returns
-#     -------
-#     bytes
-#         digest of file or directory contents. If a directory, the digest takes
-#         into account the file contents of each of its descendants combined with
-#         their relative path, the directory name itself is ignored. File stat
-#         data is ignored.
-#     '''
-#     with path.open('rb') as f:
-#         hash_ = hashlib.sha512()
-#         while True:
-#             buffer = f.read(65536)
-#             hash_.update(buffer)
-#             if not buffer:
-#                 return hash_.digest()
+def digest(path):
+    '''
+    Get SHA512 checksum of file or directory
+     
+    Parameters
+    ----------
+    path : pathlib.Path
+        file or directory to hash
+     
+    Returns
+    -------
+    type_of(hashlib.sha512)
+        hash object of file/directory contents. File/directory stat data is
+        ignored. The directory digest covers file/directory contents and their
+        location relative to the directory being digested. The directory name
+        itself is ignored.
+    '''
+    hash_ = hashlib.sha512()
+    if path.is_dir():
+        for directory, directories, files in os.walk(str(path), topdown=True):
+            # Note:
+            # - directory: path to current directory in walk relative to current working direcotry
+            # - directories/files: dir/file names
             
+            # hash like:
+            #
+            #   relative-dir-path
+            #   (
+            #       (dir_name)
+            #       (dir_name2)
+            #   )
+            #   (
+            #       (file_name)(file_hash)
+            #       (file_name2)(file_hash2)
+            #   )
+            #   relative-dir-path2
+            #   ...
+            hash_.update(str(Path(directory).relative_to(path)).encode())
+            hash_.update(b'(')
+            for name in sorted(directories):
+                hash_.update(b'(' + name.encode() + b')')
+            hash_.update(b')(')
+            for name in sorted(files):
+                hash_.update(b'(' + name.encode() + b')')
+                hash_.update(b'(' + digest(Path(directory) / name).digest() + b')')
+            hash_.update(b')')
+    else:
+        with path.open('rb') as f:
+            while True:
+                buffer = f.read(65536)
+                if not buffer:
+                    break
+                hash_.update(buffer)
+    return hash_

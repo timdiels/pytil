@@ -7,11 +7,13 @@ chicken_turtle_util.path
    :nosignatures:
 
    chmod
+   digest
    read
    remove
    write
 
 .. autofunction:: chmod
+.. autofunction:: digest
 .. autofunction:: read
 .. autofunction:: remove
 .. autofunction:: write
