@@ -44,6 +44,44 @@ def invert(series):
     df.set_index(series.name, inplace=True)
     return df[df.columns[0]]
 
+def split(series):
+    '''
+    Split values
+    
+    The index is dropped, but this may change in the future.
+    
+    Parameters
+    ----------
+    series : pd.Series
+        Series with numpy array-like values.
+        
+    Returns
+    -------
+    pd.Series
+        Series with values split across rows.
+        
+    Examples
+    --------
+    >>> series = pd.Series([[1,2],[1,2],[3,4,5]])
+    >>> series
+    0       [1, 2]
+    1       [1, 2]
+    2    [3, 4, 5]
+    dtype: object
+    >>> split(series)
+    0    1
+    1    2
+    2    1
+    3    2
+    4    3
+    5    4
+    6    5
+    dtype: object
+    '''
+    s = df_.split_array_like(series.apply(list).to_frame('column'), 'column')['column']
+    s.name = series.name
+    return s
+
 def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False, _return_reason=False):
     '''
     Get whether 2 series are equal

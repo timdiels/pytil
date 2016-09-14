@@ -180,6 +180,7 @@ Module contents overview
     assert_equals
     equals
     invert
+    split
     
 .. rubric:: set
 .. currentmodule:: chicken_turtle_util.set

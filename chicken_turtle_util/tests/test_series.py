@@ -55,4 +55,11 @@ def test_assert_equals():
     with pytest.raises(AssertionError):
         series_.assert_equals(series1, series2, ignore_index=True, all_close=True)
         
+def test_split():
+    '''
+    Trivial test assuming the actual split is done by data_frame.split_array_like
+    '''
+    actual = series_.split(pd.Series([[1,2],[2,3,4],[]]))
+    expected = pd.Series([1,2,2,3,4])
+    series_.assert_equals(actual, expected, ignore_index=True)
     

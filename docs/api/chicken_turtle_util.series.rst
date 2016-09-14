@@ -9,7 +9,9 @@ chicken_turtle_util.series
    assert_equals
    equals
    invert
+   split
 
 .. autofunction:: assert_equals
 .. autofunction:: equals
 .. autofunction:: invert
+.. autofunction:: split
