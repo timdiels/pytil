@@ -33,7 +33,6 @@ Modules
     observable
     path
     pymysql
-    pyqt
     series
     set
     sqlalchemy
@@ -174,13 +173,6 @@ Module contents overview
     
     patch
 
-.. rubric:: pyqt
-.. currentmodule:: chicken_turtle_util.pyqt
-.. autosummary::
-    :nosignatures:
-    
-    block_signals
-    
 .. rubric:: series
 .. currentmodule:: chicken_turtle_util.series
 .. autosummary::
