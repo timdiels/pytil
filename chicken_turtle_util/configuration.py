@@ -21,7 +21,7 @@
 Configuration loaders, currently only from configuration files
 '''
 
-from xdg.BaseDirectory import xdg_config_dirs #TODO add to requirements, and rm from requirements in DBG
+from xdg.BaseDirectory import xdg_config_dirs
 from configparser import ConfigParser, ExtendedInterpolation
 from pkg_resources import resource_string
 from textwrap import dedent

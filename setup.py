@@ -64,7 +64,7 @@ setup(
                        'Topic :: Software Development :: Libraries :: Python Modules',
                        'Topic :: Utilities'],
     'description': 'Python 3 utility library',
-    'extras_require': {   'algorithms': ['collections-extended', 'networkx', 'numpy', 'scikit-learn'],
+    'extras_require': {   'algorithms': ['collections-extended', 'networkx', 'numpy', 'scikit-learn', 'scipy'],
                           'asyncio': [],
                           'cli': ['click'],
                           'configuration': ['pyxdg'],

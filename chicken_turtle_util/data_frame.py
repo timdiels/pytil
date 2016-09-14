@@ -58,7 +58,11 @@ def replace_na_with_none(df):
     '''
     return df.where(pd.notnull(df), None)
 
-def split_array_like(df, columns=None):
+# Note: if want to optimise further, could try: http://stackoverflow.com/questions/17116814/pandas-how-do-i-split-text-in-a-column-into-multiple-rows/17116976#17116976
+# Would be nice to have a generic way of splitting. I.e. by func (value -> parts)
+#TODO maintain the index (and columns as we already do, should be docced)
+#TODO also compare performance to trivial implementation: split=pd.concat(df.reset_index().[col].apply(pd.Series)); del df[col]; df=df.join(split) 
+def split_array_like(df, columns=None): #TODO rename TODO if it's not a big performance hit, just make them arraylike? We already indicated the column explicitly (sort of) so...
     '''
     Split cells with array_like values along row axis.
     
@@ -105,7 +109,7 @@ def split_array_like(df, columns=None):
     elif isinstance(columns, str):
         columns = [columns]
         
-    for column in columns:
+    for column in columns: #TODO pulling apart and working with values, ... constructing one new df at the end may be faster and use less memory
         expanded = np.repeat(df.values, df[column].apply(len).values, axis=0)
         expanded[:, df.columns.get_loc(column)] = np.concatenate(df[column].tolist())
         df = pd.DataFrame(expanded, columns=df.columns) # XXX can optimise to outside of loop perhaps

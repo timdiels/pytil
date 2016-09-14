@@ -306,10 +306,7 @@ class TestEquals(object):
         df1.iloc[0,0] = np.nan
         df2.iloc[0,0] = None
         self.assert_(df1, df2, True, ignore_order=ignore_order, all_close=all_close)
-# TODO
-'''
-XXX test with MultiIndex indices. Then remove warning from data_frame
-'''        
+        
 class TestAssertEquals(object):
     
     '''
