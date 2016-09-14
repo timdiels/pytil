@@ -37,7 +37,6 @@ Modules
     set
     sqlalchemy
     test
-    various
    
 
 Module contents overview
@@ -201,10 +200,3 @@ Module contents overview
     :nosignatures:
     
     temp_dir_cwd
-    
-.. rubric:: various
-.. currentmodule:: chicken_turtle_util.various
-.. autosummary::
-    :nosignatures:
-    
-    Object
