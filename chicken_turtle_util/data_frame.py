@@ -395,3 +395,22 @@ def _value_equals(value1, value2, all_close):
         else:
             logger.debug('eq')
             return value1 == value2
+
+def assert_equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, _return_reason=False):
+    '''
+    Assert 2 data frames are equal
+    
+    Like ``assert equals(df1, df2, ...)``, but with better hints at where the
+    data frames differ. See :func:`chicken_turtle_util.data_frame.equals` for
+    detailed parameter doc.
+    
+    Parameters
+    ----------
+    df1, df2 : pd.DataFrame
+    ignore_order : {int}
+    ignore_indices : {int}
+    all_close : bool
+    '''
+    equals_, reason = equals(df1, df2, ignore_order, ignore_indices, all_close, _return_reason=True)
+    assert equals_, '{}\n\n{}\n\n{}'.format(reason, df1.to_string(), df2.to_string())
+    

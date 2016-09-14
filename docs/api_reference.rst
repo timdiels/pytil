@@ -74,6 +74,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    assert_equals
     equals
     replace_na_with_none
     split_array_like

@@ -309,4 +309,34 @@ class TestEquals(object):
 # TODO
 '''
 XXX test with MultiIndex indices. Then remove warning from data_frame
-'''
+'''        
+class TestAssertEquals(object):
+    
+    '''
+    Trivial testing that assumes we forward to df_.equals
+    '''
+    
+    def test_happy_days(self):
+        '''
+        All args forwarded, raise assert iff not equal
+        '''
+        df1 = pd.DataFrame(
+            [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8]
+            ],
+            index=['i1', 'i2', 'i3'],
+            columns=['c1', 'c2', 'c3']
+        )
+        df2 = pd.DataFrame(
+            [
+                [3, 5, 4],
+                [0, 2 + 1e-8, 1],
+                [6, 8, 7]
+            ]
+        )
+        df_.assert_equals(df1, df2, ignore_order={0,1}, ignore_indices={0,1}, all_close=True)
+        
+        with pytest.raises(AssertionError):
+            df_.assert_equals(df1, df2, ignore_order={0,1}, all_close=True)
