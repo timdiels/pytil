@@ -124,8 +124,6 @@ Module contents overview
     :nosignatures:
     
     call_args
-    call_repr
-    get_call_repr
     
 .. rubric:: iterable
 .. currentmodule:: chicken_turtle_util.iterable

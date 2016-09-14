@@ -7,9 +7,5 @@ chicken_turtle_util.inspect
    :nosignatures:
 
    call_args
-   call_repr
-   get_call_repr
 
 .. autofunction:: call_args
-.. autofunction:: call_repr
-.. autofunction:: get_call_repr
