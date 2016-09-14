@@ -106,3 +106,21 @@ def _equals(series1, series2, ignore_order, ignore_index, all_close):
         _return_reason=True  #TODO the reasons will be about dataframes, this is confusing. May need to copy paste after all and do the analog for a series. Or add an internal param so it outputs series info (pick the former option)
     )
     
+def assert_equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False):
+    '''
+    Assert 2 series are equal
+    
+    Like ``assert equals(series1, series2, ...)``, but with better hints at
+    where the series differ. See :func:`chicken_turtle_util.series.equals` for
+    detailed parameter doc.
+    
+    Parameters
+    ----------
+    series1, series2 : pd.Series
+    ignore_order : bool
+    ignore_index : bool
+    all_close : bool
+    '''
+    equals_, reason = equals(series1, series2, ignore_order, ignore_index, all_close, _return_reason=True)
+    assert equals_, '{}\n\n{}\n\n{}'.format(reason, series1.to_string(), series2.to_string())
+    

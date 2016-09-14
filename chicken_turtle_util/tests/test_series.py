@@ -21,6 +21,7 @@ Test chicken_turtle_util.series
 
 from chicken_turtle_util import series as series_
 import pandas as pd
+import pytest
 
 def test_invert():
     index = pd.Index([4,5,6], name='index_name')
@@ -40,4 +41,18 @@ def test_equals():
     series2 = pd.Series([2, 1, 3+1e-8], index=[1,2,3])
     assert series_.equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
     assert not series_.equals(series1, series2, ignore_index=True, all_close=True)
+    
+def test_assert_equals():
+    '''
+    Trivial test assuming the actual equality check is forwarded to
+    series.equals
+    '''
+    series1 = pd.Series([1, 2, 3], index=['i1', 'i2', 'i3'])
+    series_.assert_equals(series1, series1)
+    
+    series2 = pd.Series([2, 1, 3+1e-8], index=[1,2,3])
+    series_.assert_equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
+    with pytest.raises(AssertionError):
+        series_.assert_equals(series1, series2, ignore_index=True, all_close=True)
+        
     

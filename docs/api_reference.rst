@@ -177,6 +177,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    assert_equals
     equals
     invert
     
