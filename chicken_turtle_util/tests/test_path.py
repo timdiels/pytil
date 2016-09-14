@@ -36,11 +36,37 @@ def contents():
 def use_tmp(temp_dir_cwd):
     pass
 
-def test_write(path, contents):
-    path_.write(path, contents)
+class TestWrite(object):
     
-    with path.open('r') as f:
-        assert f.read() == contents
+    def assert_mode(self, path, expected):
+        actual = path.stat().st_mode & 0o777
+        assert actual == expected, '{:o} != {:o}'.format(actual, expected)
+    
+    def test_happy_days(self, path, contents):
+        '''
+        When nothing special, write contents
+        '''
+        path_.write(path, contents)
+        with path.open('r') as f:
+            assert f.read() == contents
+        self.assert_mode(path, 0o644)  # open() creates files with this mode regardless of umask
+        
+    @pytest.mark.parametrize('mode', (0o777, 0o220, 0o404))
+    def test_mode(self, path, contents, mode):
+        '''
+        When mode given, mode is set and contents were written
+        
+        Even when mode is read-only for owner
+        '''
+        path_.write(path, contents, mode)
+        
+        # correct mode
+        self.assert_mode(path, mode)
+        
+        # correct contents
+        path.chmod(0o400)
+        with path.open('r') as f:
+            assert f.read() == contents
     
 def test_read(path, contents):
     with path.open('w') as f:

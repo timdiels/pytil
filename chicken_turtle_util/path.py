@@ -26,7 +26,7 @@ import os
 #: The file system root to use (used for testing)
 _root = Path('/')
 
-def write(path, contents):
+def write(path, contents, mode=None):
     '''
     Create or overwrite file with contents
     
@@ -38,10 +38,17 @@ def write(path, contents):
         Path to file to write to
     contents : str
         Contents to write to file
+    mode : int or None
+        If set, also chmod file
     '''
     os.makedirs(str(path.parent), exist_ok=True)
+    path.touch()
+    if mode is not None:
+        path.chmod(0o600)
     with path.open('w') as f:
         f.write(contents)
+    if mode is not None:
+        path.chmod(mode)
         
 def read(path):
     '''
