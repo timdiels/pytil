@@ -19,12 +19,25 @@
 Test chicken_turtle_util.series
 '''
 
-from chicken_turtle_util.series import invert
+from chicken_turtle_util import series as series_
 import pandas as pd
 
 def test_invert():
     index = pd.Index([4,5,6], name='index_name')
-    inverted = invert(pd.Series([1,2,3], index=index, name='named'))
+    inverted = series_.invert(pd.Series([1,2,3], index=index, name='named'))
     expected = pd.Series([4,5,6], index=[1,2,3], name='index_name')
     assert inverted.equals(expected)
     assert inverted.name == expected.name
+    
+def test_equals():
+    '''
+    Trivial test assuming the actual equality check is forwarded to
+    data_frame.equals
+    '''
+    series1 = pd.Series([1, 2, 3], index=['i1', 'i2', 'i3'])
+    assert series_.equals(series1, series1)
+    
+    series2 = pd.Series([2, 1, 3+1e-8], index=[1,2,3])
+    assert series_.equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
+    assert not series_.equals(series1, series2, ignore_index=True, all_close=True)
+    

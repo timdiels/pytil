@@ -177,6 +177,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    equals
     invert
     
 .. rubric:: set

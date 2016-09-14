@@ -19,6 +19,8 @@
 Utilities for working with `pandas.Series`. Contains only `invert`, swaps series' index with its values
 '''
 
+import chicken_turtle_util.data_frame as df_
+
 def invert(series):
     '''
     Swap index with values of series
@@ -42,3 +44,65 @@ def invert(series):
     df.set_index(series.name, inplace=True)
     return df[df.columns[0]]
 
+def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False, _return_reason=False):
+    '''
+    Get whether 2 series are equal
+    
+    ``NaN``\ s are considered equal (which is consistent with
+    `pandas.Series.equals`). ``None`` is considered equal to ``NaN``.
+    
+    Parameters
+    ----------
+    series1, series2 : pd.Series
+        Series to compare
+    ignore_order : bool
+        Ignore order of values (and index)
+    ignore_index : bool
+        Ignore index values and name.
+    all_close : bool
+        If False, values must match exactly, if True, floats are compared as if
+        compared with `np.isclose`.
+    _return_reason : bool
+        Internal. If True, `equals` returns a tuple containing the reason, else
+        `equals` only returns a bool indicating equality (or equivalence
+        rather).
+        
+    Returns
+    -------
+    equal : bool
+        Whether they're equal (after ignoring according to the parameters)
+    reason : str or None
+        If equal, ``None``, otherwise short explanation of why the data frames
+        aren't equal. Omitted if not `_return_reason`.
+    
+    See also
+    --------
+    data_frame.equals : Get whether 2 data frames are equal
+    
+    Notes
+    -----
+    All values (including those of indices) must be copyable and `__eq__` must
+    be such that a copy must equal its original. A value must equal itself
+    unless it's `np.nan`. Values needn't be orderable or hashable (however
+    pandas requires index values to be orderable and hashable). By consequence,
+    this is not an efficient function, but it is flexible.
+    '''
+    result = _equals(series1, series2, ignore_order, ignore_index, all_close)
+    if _return_reason:
+        return result
+    else:
+        return result[0]
+        
+def _equals(series1, series2, ignore_order, ignore_index, all_close):
+    if not ignore_index:
+        if series1.name != series2.name:
+            return False, 'Series name differs: {!r} != {!r}'.format(series1.name, series2.name)
+    return df_.equals(
+        series1.to_frame(), 
+        series2.to_frame(),
+        ignore_order={0} if ignore_order else set(),
+        ignore_indices={0} if ignore_index else set(),
+        all_close=all_close,
+        _return_reason=True  #TODO the reasons will be about dataframes, this is confusing. May need to copy paste after all and do the analog for a series. Or add an internal param so it outputs series info (pick the former option)
+    )
+    
