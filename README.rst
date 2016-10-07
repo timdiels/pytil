@@ -31,30 +31,48 @@ maintenance cost is required), request to have it moved to a stable library
 Changelog
 ==========
 
-`Semantic versioning <semver_>`_ is used (starting with v2.1.0).
+`Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
-v2.1.0 (to be released)
------------------------
+v3.0.0
+------
 
-- Moved all `Context` related objects from `cli` to `application`.
-- Added `exceptions.InvalidOperationError`: raise when an operation is
-  illegal/invalid, regardless of the arguments you throw at it (in the current
-  state).
-- Added `application.ConfigurationMixin`: application context mixin for loading a configuration
-- Added `application.ConfigurationsMixin`: application context mixin for loading multiple configurations
-- Added `configuration.ConfigurationLoader`: loads a single configuration from one or more files
-- `application.Context`: `cli_options()` replaced by `command()`, which is more flexible
-- Removed `application.command`. Use ``cli.Context.command()`` instead
-- Added `application.DataDirectoryMixin`: application context mixin, provides data
-  directory according to XDG standards
-- Added `path.write`: create or overwrite file with contents
-- Added `path.read`: get file contents
-- Added `path.remove`: remove file or directory (recursively), unless it's missing
-- Added `path.chmod`: change file or directory mode bits (optionally recursively)
-- Added `test.temp_dir_cwd`: pytest fixture that sets current working directory to a temporary directory
-- Added `dict.assign`: assign one dict to the other through mutations
-- Added `inspect.function_call_repr`: Get `repr` of a function call
-- Added `inspect.function_call_args`: Get function call arguments as a single dict
+- Removed: 
+
+  - `cli.Context`, `cli.BasicsMixin`, `cli.DatabaseMixin`,
+    `cli.OutputDirectoryMixin`
+  - `pyqt` module
+  - `URL_MAX_LENGTH`
+  - `various` module: `Object`, `PATH_MAX_LENGTH`
+
+- Enhanced:
+
+  - `data_frame.split_array_like`: `columns` defaults to ``df.columns``
+  - `sqlalchemy.pretty_sql`: much better formatting
+
+- Added:
+
+  - `algorithms.toset_from_tosets`: Create totally ordered set (toset) from
+    tosets
+  - `configuration.ConfigurationLoader`: loads a single configuration from one
+    or more files directory according to XDG standards
+  - `data_frame.assert_equals`: Assert 2 data frames are equal
+  - `data_frame.equals`: Get whether 2 data frames are equal
+  - `dict.assign`: assign one dict to the other through mutations
+  - `exceptions.InvalidOperationError`: raise when an operation is
+    illegal/invalid, regardless of the arguments you throw at it (in the
+    current state).
+  - `inspect.call_args`: Get function call arguments as a single dict
+  - `observable.Set`: set which can be observed for changes
+  - `path.chmod`: change file or directory mode bits (optionally recursively)
+  - `path.digest`: Get SHA512 checksum of file or directory
+  - `path.read`: get file contents
+  - `path.remove`: remove file or directory (recursively), unless it's missing
+  - `path.write`: create or overwrite file with contents
+  - `series.assert_equals`: Assert 2 series are equal
+  - `series.equals`: Get whether 2 series are equal
+  - `series.split`: Split values
+  - `test.temp_dir_cwd`: pytest fixture that sets current working directory to
+    a temporary directory
 
 v2.0.4
 ------
