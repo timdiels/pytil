@@ -64,6 +64,7 @@ setup(
                        'Topic :: Software Development :: Libraries :: Python Modules',
                        'Topic :: Utilities'],
     'description': 'Python 3 utility library',
+    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v3.0.0.tar.gz',
     'extras_require': {   'algorithms': ['collections-extended', 'networkx', 'numpy', 'scikit-learn', 'scipy'],
                           'asyncio': [],
                           'cli': ['click'],
@@ -190,5 +191,5 @@ setup(
     'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '0.0.0'}
+    'version': '3.0.0'}
 )
