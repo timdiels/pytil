@@ -16,13 +16,12 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Test utilities. Contains `temp_dir_cwd`, pytest fixture that cd's to temporary directory
+Test utilities.
 '''
 
 import pytest
 import os
 from pathlib import Path
-from chicken_turtle_util import path as path_
 
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):
@@ -38,3 +37,11 @@ def temp_dir_cwd(tmpdir):
     
     #
     os.chdir(str(original_cwd))
+
+def assert_text_equals(actual, expected):
+    '''
+    Assert long strings are equal
+    '''
+    assert actual == expected, '\nActual:\n{}\n\nExpected:\n{}'.format(actual, expected)
+    
+from chicken_turtle_util import path as path_  # yay, 'resolving' circular dependencies

@@ -16,7 +16,7 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Logging utilities. Contains only `set_level`, temporarily changes log level.
+Logging utilities.
 '''
 
 from contextlib import contextmanager
@@ -48,3 +48,41 @@ def set_level(logger, level):
     finally:
         logger.setLevel(original)
         
+def configure(log_file):
+    '''
+    Configure root logger to log INFO to stderr and DEBUG to log file.
+    
+    The log file is appended to. Stderr uses a terse format, while the log file
+    uses a verbose unambiguous format.
+    
+    Root level is set to INFO.
+    
+    Parameters
+    ----------
+    log_file : Path
+        File to log to
+        
+    Returns
+    -------
+    stderr_handler : logging.StreamHandler
+        Handler that logs to stderr
+    file_handler : logging.FileHandler
+        Handler that logs to log_file
+    '''
+    # Note: do not use logging.basicConfig as it does not play along with caplog in testing
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+    
+    # log info to stderr in terse format
+    stderr_handler = logging.StreamHandler() # to stderr
+    stderr_handler.setLevel(logging.INFO)
+    stderr_handler.setFormatter(logging.Formatter('{levelname[0]}: {message}', style='{'))
+    root_logger.addHandler(stderr_handler)
+    
+    # log debug to file in full format
+    file_handler = logging.FileHandler(str(log_file))
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(logging.Formatter('{levelname[0]} {asctime} {name} ({module}:{lineno}):\n{message}\n', style='{'))
+    root_logger.addHandler(file_handler)
+    
+    return stderr_handler, file_handler

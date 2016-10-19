@@ -138,6 +138,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    configure
     set_level
     
 .. rubric:: multi_dict
