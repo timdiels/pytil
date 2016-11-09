@@ -27,46 +27,67 @@ import traceback
 
 _logger = logging.getLogger(__name__)
 
-async def stubborn_gather(*futures):
+async def stubborn_gather(*awaitables):
     '''
-    Stubbornly wait for futures, despite some of them raising
+    Stubbornly wait for awaitables, despite some of them raising
     
     Like a more stubborn version of asyncio.gather.
     
-    Continue until all futures have finished or have raised. If one or more
-    futures raise, a new `Exception` is raised with the traceback and message of
-    each exception as message. However, if all exceptions raised are
+    Continue until all awaitables have finished or have raised. If one or more
+    awaitables raise, a new `Exception` is raised with the traceback and message
+    of each exception as message. However, if all exceptions raised are
     `asyncio.CancelledError`, `asyncio.CancelledError` is raised instead.
     
-    If cancelled, cancels the futures.
+    If cancelled, cancels the (futures associated with the) awaitables.
     
     Parameters
     ----------
-    futures : iterable(awaitable)
-        Futures to await
+    awaitables : iterable(awaitable)
+        Awaitables to await
         
     Returns
     -------
     results :: (any, ...)
-        Return of each future. The return of ``futures[i]`` is ``results[i]``.
+        Return of each awaitable. The return of ``awaitables[i]`` is ``results[i]``.
     '''
-    if futures:
-        results = await asyncio.gather(*futures, return_exceptions=True)
-        formatted_exceptions = []
-        all_cancelled = True
-        for i, result in enumerate(results):
-            if isinstance(result, Exception):
-                if not isinstance(result, asyncio.CancelledError):
-                    all_cancelled = False
-                formatted_exception = ''.join(traceback.format_exception(result.__class__, result, result.__traceback__))
-                formatted_exceptions.append('Future {}:\n{}'.format(i, formatted_exception))
-            else:
-                all_cancelled = False
-        if formatted_exceptions:
-            if all_cancelled:
-                raise asyncio.CancelledError()
-            else:
-                formatted_exceptions = '\n'.join(formatted_exceptions)
-                raise Exception('One or more futures raised an exception (not necessarily in this order):\n\n{}'.format(formatted_exceptions))
-        return results
+    if awaitables:
+        futures = [asyncio.ensure_future(awaitable) for awaitable in awaitables]
+        results = [None] * len(futures)  # return values
+        exceptions = []  # [(future_index, exception_raised)]
+        
+        # Await all and fill `results` and `exceptions`
+        pending = futures
+        while pending:
+            try:
+                done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_EXCEPTION)
+                for future in done:
+                    i = futures.index(future)
+                    ex = future.exception()
+                    if ex:
+                        _logger.error('stubborn_gather: Awaitable {} raised:\n{}'.format(i, _format_exception(ex)))
+                        exceptions.append((i, ex))
+                    else:
+                        results[i] = future.result()
+            except asyncio.CancelledError:
+                for future in pending:
+                    future.cancel()
+                raise
+            
+        # Raise cancelled if all raised cancelled
+        if len(exceptions) == len(results) and all(isinstance(ex, asyncio.CancelledError) for _, ex in exceptions):
+            raise asyncio.CancelledError()
+        
+        # Raise concatenation of exception messages if any raised
+        if exceptions:
+            formatted_exceptions = []
+            for i, ex in exceptions:
+                formatted_exceptions.append('Awaitable {}:\n{}'.format(i, _format_exception(ex)))
+            formatted_exceptions = '\n'.join(formatted_exceptions)
+            raise Exception('One or more awaitables raised an exception (not necessarily in this order):\n\n{}'.format(formatted_exceptions))
+        
+        # Simply return results otherwise
+        return tuple(results)
     return ()
+
+def _format_exception(ex):
+    return ''.join(traceback.format_exception(ex.__class__, ex, ex.__traceback__))

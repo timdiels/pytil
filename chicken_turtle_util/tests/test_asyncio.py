@@ -20,8 +20,11 @@ Test chicken_turtle_util.asyncio
 '''
 
 from chicken_turtle_util import asyncio as asyncio_
+from chicken_turtle_util.test import assert_search_matches
+from textwrap import dedent
 import pytest
 import asyncio
+import re
 
 class TestStubbornGather(object):
     
@@ -34,10 +37,10 @@ class TestStubbornGather(object):
         When given 2 tasks, await and return the results of both
         '''
         actual = await asyncio_.stubborn_gather(self.f(1), self.f(2))
-        assert actual == [1, 2]
+        assert actual == (1, 2)
     
     @pytest.mark.asyncio
-    async def test_exception(self):
+    async def test_exception(self, caplog):
         '''
         When given 1 task raises, await the other tasks, then raise a new
         exception
@@ -56,6 +59,30 @@ class TestStubbornGather(object):
             await asyncio_.stubborn_gather(fail(), succeed())
         assert finished
         assert ex != exception
+        
+        # Log the exception
+        expected = dedent('''\
+            .*stubborn_gather: Awaitable 0 raised:
+            Traceback \(most recent call last\):
+              .*
+              .*
+              File ".*/test_asyncio.py", line .*, in fail
+                raise exception
+            Exception: ex'''
+        )
+        assert_search_matches(caplog.text(), expected, re.MULTILINE)
+        
+        # Also mention it in the thrown exception
+        expected = dedent('''\
+            .*Awaitable 0:
+            Traceback \(most recent call last\):
+              .*
+              .*
+              File ".*/test_asyncio.py", line .*, in fail
+                raise exception
+            Exception: ex'''
+        )
+        assert_search_matches(str(ex.value), expected, re.MULTILINE) 
     
     @pytest.mark.asyncio
     async def test_cancel(self):
