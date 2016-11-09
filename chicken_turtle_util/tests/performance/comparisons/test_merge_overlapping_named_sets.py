@@ -403,40 +403,41 @@ def alg(request):
 #############################
 # Test
 
-@pytest.mark.skipif(True, reason='long test, only run on explicit request') # TODO condition is skipif not marked current
-# @pytest.mark.current
-@pytest.mark.timeout(10)
-class TestMergeOverlappingPerformance(object):
-    
-    '''
-    Test performance of implementations of `merge_overlapping_named_sets` minus the named aspect
-    '''
-    
-    # Results from a last run: http://pastebin.com/raw/kttQR1Pt
-    # Alexis' algorithm is faster than any other tested. robert_king, agf (first version only) and chrismit's algorithms were disqualified due to bugs. 
-     
-    def normalised(self, output):
-        return sorted([sorted(list(x)) for x in output])
-    
-    def test_itt(self, alg, input_, benchmark):
-        overlapping_sets, expected = input_
-        merged = benchmark(alg, overlapping_sets)
-        
-#         print()
-#         print(alg)
-#         print(merged)
-#         print('input = {}\nexpected = {}\nactual = {}'.format(
-#             overlapping_sets,
-#             expected,
-#             merged
-#         ))
-#         print('sorted_input = {}\nsorted_expected = {}\nsorted_actual = {}'.format(
-#             self.normalised(overlapping_sets),
-#             self.normalised(expected),
-#             self.normalised(merged)
-#         ))
-        
-        assert self.normalised(merged) == self.normalised(expected)
+#TODO Broke: pytest raises: ValueError: ids must be list of strings, found: (0.0, 'constant', 2, 100) (type: tuple)
+# @pytest.mark.skipif(True, reason='long test, only run on explicit request') # TODO condition is skipif not marked current
+# # @pytest.mark.current
+# @pytest.mark.timeout(10)
+# class TestMergeOverlappingPerformance(object):
+#     
+#     '''
+#     Test performance of implementations of `merge_overlapping_named_sets` minus the named aspect
+#     '''
+#     
+#     # Results from a last run: http://pastebin.com/raw/kttQR1Pt
+#     # Alexis' algorithm is faster than any other tested. robert_king, agf (first version only) and chrismit's algorithms were disqualified due to bugs. 
+#      
+#     def normalised(self, output):
+#         return sorted([sorted(list(x)) for x in output])
+#     
+#     def test_itt(self, alg, input_, benchmark):
+#         overlapping_sets, expected = input_
+#         merged = benchmark(alg, overlapping_sets)
+#         
+# #         print()
+# #         print(alg)
+# #         print(merged)
+# #         print('input = {}\nexpected = {}\nactual = {}'.format(
+# #             overlapping_sets,
+# #             expected,
+# #             merged
+# #         ))
+# #         print('sorted_input = {}\nsorted_expected = {}\nsorted_actual = {}'.format(
+# #             self.normalised(overlapping_sets),
+# #             self.normalised(expected),
+# #             self.normalised(merged)
+# #         ))
+#         
+#         assert self.normalised(merged) == self.normalised(expected)
         
 # TODO either extract parser into util or figure out a way to get to the data from pytest-benchmark directly
 def group_results():

@@ -6,6 +6,7 @@ coverage-pth
 pytest-mock
 pytest-localserver
 pytest-capturelog
+pytest-asyncio
 plumbum
 
 # performanc comparisons require this

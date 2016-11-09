@@ -18,6 +18,7 @@ Modules
     :toctree: api
 
     algorithms
+    asyncio
     cli
     configuration
     data_frame
@@ -50,6 +51,13 @@ Module contents overview
     multi_way_partitioning
     spread_points_in_hypercube
     toset_from_tosets
+    
+.. rubric:: asyncio
+.. currentmodule:: chicken_turtle_util.asyncio
+.. autosummary::
+    :nosignatures:
+    
+    stubborn_gather
     
 .. rubric:: cli
 .. currentmodule:: chicken_turtle_util.cli

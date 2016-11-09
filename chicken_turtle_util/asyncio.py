@@ -21,22 +21,24 @@ Extensions to asyncio.
 Requires Python >=3.5
 '''
 
-#TODO doc and test (API stuff checklist)
-
 import asyncio
+import logging
+import traceback
 
-async def stubborn_gather(*futures): #TODO untested
+_logger = logging.getLogger(__name__)
+
+async def stubborn_gather(*futures):
     '''
     Stubbornly wait for futures, despite some of them raising
     
     Like a more stubborn version of asyncio.gather.
     
     Continue until all futures have finished or have raised. If one or more
-    futures raise, one of the exceptions is reraised.
+    futures raise, a new `Exception` is raised with the traceback and message of
+    each exception as message. However, if all exceptions raised are
+    `asyncio.CancelledError`, `asyncio.CancelledError` is raised instead.
     
-    If cancelled, cancels the futures. If a future is cancelled, the future
-    raises an exception, which is handled like any other exception raised by
-    a future (see above).
+    If cancelled, cancels the futures.
     
     Parameters
     ----------
@@ -50,8 +52,21 @@ async def stubborn_gather(*futures): #TODO untested
     '''
     if futures:
         results = await asyncio.gather(*futures, return_exceptions=True)
-        for result in results:
+        formatted_exceptions = []
+        all_cancelled = True
+        for i, result in enumerate(results):
             if isinstance(result, Exception):
-                raise result
+                if not isinstance(result, asyncio.CancelledError):
+                    all_cancelled = False
+                formatted_exception = ''.join(traceback.format_exception(result.__class__, result, result.__traceback__))
+                formatted_exceptions.append('Future {}:\n{}'.format(i, formatted_exception))
+            else:
+                all_cancelled = False
+        if formatted_exceptions:
+            if all_cancelled:
+                raise asyncio.CancelledError()
+            else:
+                formatted_exceptions = '\n'.join(formatted_exceptions)
+                raise Exception('One or more futures raised an exception (not necessarily in this order):\n\n{}'.format(formatted_exceptions))
         return results
     return ()
