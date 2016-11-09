@@ -19,7 +19,7 @@ Modules
 
     algorithms
     asyncio
-    cli
+    click
     configuration
     data_frame
     debug
@@ -59,8 +59,8 @@ Module contents overview
     
     stubborn_gather
     
-.. rubric:: cli
-.. currentmodule:: chicken_turtle_util.cli
+.. rubric:: click
+.. currentmodule:: chicken_turtle_util.click
 .. autosummary::
     :nosignatures:
     

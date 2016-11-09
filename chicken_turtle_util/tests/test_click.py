@@ -19,7 +19,7 @@
 Test chicken_turtle_util.cli
 '''
 
-from chicken_turtle_util import cli
+from chicken_turtle_util import click as click_
 from click.testing import CliRunner
 import click
 
@@ -28,9 +28,9 @@ def test_options():
     Test our options and arguments
     '''
     @click.command()
-    @cli.option('--option', default=555)
-    @cli.argument('argument')
-    @cli.password_option('--password')
+    @click_.option('--option', default=555)
+    @click_.argument('argument')
+    @click_.password_option('--password')
     def main(option, argument, password):
         assert option == 5
         assert password == 'pass'

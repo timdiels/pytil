@@ -1,4 +1,4 @@
-# Copyright (C) 2015, 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 # 
 # This file is part of Chicken Turtle Util.
 # 
@@ -16,11 +16,13 @@
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-`click` options with other defaults
+`click` utilities
 '''
 
-from functools import partial
 import click
+from click.testing import CliRunner
+from functools import partial
+import traceback
 
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
@@ -30,4 +32,3 @@ argument = partial(click.argument, required=True)
 
 password_option = partial(option, prompt=True, hide_input=True, show_default=False)
 '''Like click.option, but by default ``prompt=True, hide_input=True, show_default=False, required=True``.'''
- 
