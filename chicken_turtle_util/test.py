@@ -21,6 +21,7 @@ Test utilities.
 
 import pytest
 import os
+import re
 from pathlib import Path
 
 @pytest.yield_fixture()
@@ -43,5 +44,8 @@ def assert_text_equals(actual, expected):
     Assert long strings are equal
     '''
     assert actual == expected, '\nActual:\n{}\n\nExpected:\n{}'.format(actual, expected)
+    
+def assert_search_matches(actual, pattern, flags=0):
+    assert re.search(pattern, actual, flags), 'Actual:{}\n\nExpected a subset to match:\n{}'.format(actual, pattern)
     
 from chicken_turtle_util import path as path_  # yay, 'resolving' circular dependencies
