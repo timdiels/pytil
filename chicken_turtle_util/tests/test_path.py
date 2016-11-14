@@ -22,6 +22,7 @@ Test chicken_turtle_util.path
 from chicken_turtle_util import path as path_
 from pathlib import Path
 from contextlib import contextmanager
+from itertools import product
 import plumbum as pb
 import hashlib
 import pytest
@@ -100,6 +101,9 @@ class TestRemove(object):
         assert not path.exists()
         
     def test_force(self, path):
+        '''
+        When force=True, remove file and directories even when read-only
+        '''
         path.mkdir()
         child = path / 'file'
         child.touch()
@@ -107,6 +111,29 @@ class TestRemove(object):
         path.chmod(0o000)
         path_.remove(path, force=True)
         assert not path.exists()
+        
+    @pytest.mark.parametrize('symlink_to_file, symlink_in_dir', product(*[(False, True)]*2))
+    def test_symlink(self, path, symlink_to_file, symlink_in_dir):
+        '''
+        When path is symlink, remove symlink, but not its target
+        '''
+        target_dir = Path('symlink_target')
+        target_dir.mkdir()
+        target_file = target_dir / 'file'
+        target_file.touch()
+        if symlink_in_dir:
+            path.mkdir()
+            source = path / 'source'
+        else:
+            source = path
+        if symlink_to_file:
+            source.symlink_to(target_file)
+        else:
+            source.symlink_to(target_dir)
+        path_.remove(path)
+        assert not path.exists()
+        assert target_dir.exists()
+        assert target_file.exists()
         
 class TestChmod(object):
     

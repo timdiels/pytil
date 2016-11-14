@@ -69,7 +69,7 @@ def read(path):
     with path.open('r') as f:
         return f.read()
     
-def remove(path, force=False): #TODO test the force
+def remove(path, force=False):
     '''
     Remove file or directory (recursively), unless it's missing
     
@@ -81,20 +81,26 @@ def remove(path, force=False): #TODO test the force
     path : Path
         Path to remove
     force : bool
-        If True, will remove read-only files and directories (as if first doing chmod +w)
+        If True, will remove files and directories even if they are read-only
+        (as if first doing chmod -R +w)
     '''
     if not path.exists():
         return
     else:
         if force:
             chmod(path, 0o700, '+', recursive=True)
-        if path.is_dir():
+        if path.is_dir() and not path.is_symlink():
             # Note: shutil.rmtree did not handle NFS well
             
             # First remove all files
-            for dir_, _, files in os.walk(str(path), topdown=False): # bottom-up walk
+            for dir_, dirs, files in os.walk(str(path), topdown=False): # bottom-up walk
+                dir_ = Path(dir_)
                 for file in files:
-                    (Path(dir_) / file).unlink()
+                    (dir_ / file).unlink()
+                for file in dirs:  # Note: os.walk treats symlinks to directories as directories
+                    file = dir_ / file
+                    if file.is_symlink():
+                        file.unlink()
                     
             # Now remove all dirs, being careful of any lingering .nfs* files
             for dir_, _, _ in os.walk(str(path), topdown=False): # bottom-up walk
