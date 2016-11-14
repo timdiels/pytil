@@ -6,6 +6,7 @@ chicken_turtle_util.path
 .. autosummary::
    :nosignatures:
 
+   assert_equals
    assert_mode
    chmod
    digest

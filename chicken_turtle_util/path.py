@@ -23,6 +23,7 @@ from pathlib import Path
 import time
 import os
 import hashlib
+from chicken_turtle_util.test import assert_text_equals
 
 #: The file system root to use (used for testing)
 _root = Path('/')
@@ -227,3 +228,25 @@ def assert_mode(path, mode):
     '''
     actual = path.stat().st_mode & 0o777
     assert actual == mode, '{:o} != {:o}'.format(actual, mode)
+    
+def assert_equals(file1, file2, contents=True, name=True, mode=True):
+    '''
+    Assert 2 files are equal
+    
+    Parameters
+    -----------
+    file1 : Path
+    file2 : Path
+    contents : bool
+        Assert file contents are equal
+    name : bool
+        Assert file names are equal
+    mode : bool
+        Assert the last 3 octal digits of file modes are equal 
+    '''
+    if name:
+        assert file1.name == file2.name
+    if contents:
+        assert_text_equals(read(file1), read(file2))
+    if mode:
+        assert file1.stat().st_mode == file2.stat().st_mode

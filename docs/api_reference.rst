@@ -168,6 +168,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    assert_equals
     assert_mode
     chmod
     digest

@@ -354,3 +354,51 @@ class TestDigestDirectory(object):
         current = path_.digest(root).hexdigest()
         assert original == current
     
+class TestAssertEquals(object):
+    
+    def test_contents(self):
+        '''
+        Only when contents=True, assert file contents match  
+        '''
+        file1 = Path('file1')
+        file2 = Path('file2')
+        contents = 'abc'
+        path_.write(file1, contents)
+        path_.write(file2, contents*2)
+        path_.assert_equals(file1, file2, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
+        path_.write(file2, contents)
+        path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
+        
+    def test_name(self):
+        '''
+        When name=True, assert file names match  
+        '''
+        Path('dir1').mkdir()
+        Path('dir2').mkdir()
+        file1a = Path('dir1/file_a')
+        file2a = Path('dir2/file_a')
+        file2b = Path('dir2/file_b')
+        file1a.touch()
+        file2a.touch()
+        file2b.touch()
+        path_.assert_equals(file1a, file2b, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            path_.assert_equals(file1a, file2b, name=True, contents=False, mode=False)
+        path_.assert_equals(file1a, file2a, name=True, contents=False, mode=False)
+        
+    def test_mode(self):
+        '''
+        When mode=True, assert file modes match  
+        '''
+        file1 = Path('file1')
+        file2 = Path('file2')
+        mode = 0o754
+        file1.touch(mode)
+        file2.touch(0o666)
+        path_.assert_equals(file1, file2, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
+        file2.chmod(mode)
+        path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
