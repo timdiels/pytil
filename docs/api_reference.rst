@@ -211,4 +211,6 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    assert_text_contains
+    assert_matches
     temp_dir_cwd

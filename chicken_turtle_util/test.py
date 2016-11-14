@@ -45,6 +45,15 @@ def assert_text_equals(actual, expected):
     '''
     assert actual == expected, '\nActual:\n{}\n\nExpected:\n{}'.format(actual, expected)
     
+def assert_text_contains(whole, part):
+    '''
+    Assert long string contains given string
+    '''
+    assert part in whole, '\nActual:\n{}\n\nExpected to contain:\n{}'.format(whole, part)
+    
+def assert_matches(actual, pattern, flags=0):
+    assert re.match(pattern, actual, flags), 'Actual:{}\n\nExpected to match:\n{}'.format(actual, pattern)
+    
 def assert_search_matches(actual, pattern, flags=0):
     assert re.search(pattern, actual, flags), 'Actual:{}\n\nExpected a subset to match:\n{}'.format(actual, pattern)
     
