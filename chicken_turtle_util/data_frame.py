@@ -70,20 +70,21 @@ def split_array_like(df, columns=None): #TODO rename TODO if it's not a big perf
     
     Parameters
     ----------
-    df : pandas.DataFrame
+    df : pd.DataFrame
         Data frame ``df[columns]`` should have cell values of type `np.array_like`.
     columns : iterable(str) or str or None
         Columns (or column) whose values to split. If None, `df.columns` is used.
         
     Returns
     -------
-    pandas.DataFrame
+    pd.DataFrame
         Data frame with `array_like` values in ``df[columns]`` split across rows,
         and corresponding values in other columns repeated.
         
     Examples
     --------
-    >>> pandas.DataFrame([[1,[1,2],[1]],[1,[1,2],[3,4,5]],[2,[1],[1,2]]], columns=('check', 'a', 'b'))
+    >>> df = pd.DataFrame([[1,[1,2],[1]],[1,[1,2],[3,4,5]],[2,[1],[1,2]]], columns=('check', 'a', 'b'))
+    >>> df
        check       a          b
     0      1  [1, 2]        [1]
     1      1  [1, 2]  [3, 4, 5]
@@ -124,7 +125,7 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
     '''
     Get whether 2 data frames are equal
     
-    ``NaN``\ s are considered equal (to be consistent with
+    ``NaN``\ s are considered equal (which is consistent with
     `pandas.DataFrame.equals`). ``None`` is considered equal to ``NaN``.
     
     Parameters
@@ -150,7 +151,7 @@ def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, 
         Whether they're equal (after ignoring according to the parameters)
     reason : str or None
         If equal, ``None``, otherwise short explanation of why the data frames
-        aren't equal. Omitted if not `return_reason`.
+        aren't equal. Omitted if not `_return_reason`.
     
     Notes
     -----

@@ -79,7 +79,7 @@ def remove(path, force=False): #TODO test the force
     Parameters
     ----------
     path : Path
-        path to remove
+        Path to remove
     force : bool
         If True, will remove read-only files and directories (as if first doing chmod +w)
     '''
@@ -127,7 +127,7 @@ def chmod(path, mode, operator='=', recursive=False):
     Parameters
     ----------
     path : Path
-        path to chmod
+        Path to chmod
     mode : int
         Mode bits to apply, e.g. ``0o777``.
     operator : '+' or '-' or '='
