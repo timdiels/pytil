@@ -213,3 +213,17 @@ def digest(path):
                     break
                 hash_.update(buffer)
     return hash_
+
+def assert_mode(path, mode):
+    '''
+    Assert last 3 octal mode digits match given mode exactly
+    
+    Parameters
+    ----------
+    path : pathlib.Path
+        Path whose mode to assert
+    mode : int
+        Expected mode
+    '''
+    actual = path.stat().st_mode & 0o777
+    assert actual == mode, '{:o} != {:o}'.format(actual, mode)
