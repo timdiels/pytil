@@ -231,8 +231,6 @@ def _equals(df1, df2, ignore_order, ignore_indices, all_close):
         raise ValueError('invalid ignore_indices, valid axi are 0 and 1, got: {!r}'.format(ignore_indices))
     
     dfs = [df1.copy(), df2.copy()]
-    logger.debug(df1)
-    logger.debug(df2)
     
     # If both empty, return True right away
     if dfs[0].empty and dfs[1].empty:
@@ -275,7 +273,6 @@ def _2d_array_equals(arrays, ignore_order, all_close):
     if not ignore_order:
         for value1, value2 in zip(*[values.ravel() for values in arrays]):
             if not _value_equals(value1, value2, all_close=all_close):
-                logger.debug('{} {}'.format(value1, value2))
                 return False
     else:
         # Compare along each axis 
@@ -293,7 +290,6 @@ def _2d_array_equals(arrays, ignore_order, all_close):
                 
             # Note: c-contiguous stores in memory as: row 1, row 2, ...
             for row1 in values1:
-                logger.debug('row1 = {}'.format(row1))
                 if not _try_mask_first_row(row1, values2, all_close, len(ignore_order) == 2):
                     return False
     return True
@@ -310,7 +306,6 @@ def _try_mask_first_row(row, values, all_close, ignore_order):
     Return whether masked a row. If False, masked nothing.
     '''
     for row2 in values:
-        logger.debug('row2 = {}'.format(row2))
         mask = ma.getmaskarray(row2)
         assert mask.sum() in (0, len(mask))  # sanity check: all or none masked
         if mask[0]: # Note: at this point row2's mask is either all False or all True
@@ -318,10 +313,8 @@ def _try_mask_first_row(row, values, all_close, ignore_order):
         
         # mask each value of row1 in row2
         if _try_mask_row(row, row2, all_close, ignore_order):
-            logger.debug('match row1')
             return True
     # row did not match
-    logger.debug('nomatch row1')
     return False
     
 def _try_mask_row(row1, row2, all_close, ignore_order):
@@ -342,15 +335,11 @@ def _try_mask_row(row1, row2, all_close, ignore_order):
     if ignore_order:
         for value1 in row1:
             if not _try_mask_first_value(value1, row2, all_close):
-                logger.debug('nomatch {}'.format(value1))
                 row2.mask = ma.nomask
                 return False
-            else:
-                logger.debug('match {}'.format(value1))
     else:
         for value1, value2 in zip(row1, row2):
             if not _value_equals(value1, value2, all_close):
-                logger.debug('nomatch {}'.format(value1))
                 return False
         row2[:] = ma.masked
     assert row2.mask.all()  # sanity check
@@ -382,8 +371,6 @@ def _value_equals(value1, value2, all_close):
     all_close : bool
         compare with np.isclose instead of ==
     '''
-    logger.debug('{} {}'.format(value1, value2))
-    
     if value1 is None:
         value1 = np.nan
     if value2 is None:
@@ -391,14 +378,11 @@ def _value_equals(value1, value2, all_close):
     
     are_floats = np.can_cast(type(value1), float) and np.can_cast(type(value2), float)
     if all_close and are_floats:
-        logger.debug('float close')
         return np.isclose(value1, value2, equal_nan=True)
     else:
         if are_floats:
-            logger.debug('float eq')
             return value1 == value2 or (value1 != value1 and value2 != value2)
         else:
-            logger.debug('eq')
             return value1 == value2
 
 def assert_equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, _return_reason=False):
