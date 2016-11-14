@@ -32,3 +32,25 @@ argument = partial(click.argument, required=True)
 
 password_option = partial(option, prompt=True, hide_input=True, show_default=False)
 '''Like click.option, but by default ``prompt=True, hide_input=True, show_default=False, required=True``.'''
+
+def assert_runs(command, args):
+    '''
+    Invoke click command and assert it completes successfully
+    
+    Parameters
+    ----------
+    command : click.Command
+        Command to invoke
+    args : Sequence(str)
+        Arguments to pass to the command
+    
+    Returns
+    -------
+    result : click.testing.Result
+    '''
+    result = CliRunner().invoke(command, args)
+    if result.exception:
+        print(result.output)
+        traceback.print_exception(*result.exc_info)
+        assert False
+    return result

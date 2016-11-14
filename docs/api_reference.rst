@@ -64,8 +64,9 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
-    option
     argument
+    assert_runs
+    option
     password_option
     
 .. rubric:: configuration
