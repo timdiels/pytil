@@ -26,6 +26,7 @@ Modules
     dict
     exceptions
     function
+    hashlib
     http
     inspect
     iterable
@@ -117,6 +118,13 @@ Module contents overview
     :nosignatures:
     
     compose
+
+.. rubric:: hashlib
+.. currentmodule:: chicken_turtle_util.hashlib
+.. autosummary::
+    :nosignatures:
+    
+    base85_digest
     
 .. rubric:: http
 .. currentmodule:: chicken_turtle_util.http
