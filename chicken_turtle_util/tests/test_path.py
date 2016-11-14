@@ -256,7 +256,7 @@ def test_digest_file(path, contents):
     path_.write(path, contents)
     hash_ = hashlib.sha512()
     hash_.update(contents.encode())
-    assert path_.digest(path).hexdigest() == hash_.hexdigest()
+    assert path_.hash(path).hexdigest() == hash_.hexdigest()
     
 class TestDigestDirectory(object):
     
@@ -276,14 +276,14 @@ class TestDigestDirectory(object):
     
     @pytest.fixture
     def original(self, root):
-        return path_.digest(root).hexdigest()
+        return path_.hash(root).hexdigest()
         
     def test_empty_directory_remove(self, root, original):
         '''
         When empty directory removed, hash changes
         '''
         (root / 'emptydir').rmdir()
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original != current
     
     def test_file_remove(self, root, original):
@@ -291,7 +291,7 @@ class TestDigestDirectory(object):
         When file removed, hash changes
         '''
         (root / 'file').unlink()
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original != current
             
     def test_file_move(self, root, original):
@@ -299,7 +299,7 @@ class TestDigestDirectory(object):
         When file moves, hash changes
         '''
         (root / 'file').rename(root / 'subdir1/file')
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original != current
         
     def test_directory_move(self, root, original):
@@ -307,7 +307,7 @@ class TestDigestDirectory(object):
         When directory moves, hash changes
         '''
         (root / 'emptydir').rename(root / 'subdir1/emptydir')
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original != current
         
     def test_file_content(self, root, original, contents):
@@ -315,7 +315,7 @@ class TestDigestDirectory(object):
         When file content changes, hash changes
         '''
         path_.write(root / 'file', contents * 3)
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original != current
         
     def test_no_root_name(self, root, original):
@@ -323,7 +323,7 @@ class TestDigestDirectory(object):
         When root directory renamed, hash unchanged
         '''
         root.rename('notroot')
-        current = path_.digest(Path('notroot')).hexdigest()
+        current = path_.hash(Path('notroot')).hexdigest()
         assert original == current
         
     def test_no_root_location(self, root, original):
@@ -332,7 +332,7 @@ class TestDigestDirectory(object):
         '''
         Path('subdir').mkdir()
         root.rename('subdir/root')
-        current = path_.digest(Path('subdir/root')).hexdigest()
+        current = path_.hash(Path('subdir/root')).hexdigest()
         assert original == current
         
     def test_no_cwd(self, root, original):
@@ -342,7 +342,7 @@ class TestDigestDirectory(object):
         root = root.absolute()
         Path('cwd').mkdir()
         with pb.local.cwd('cwd'):
-            current = path_.digest(root).hexdigest()
+            current = path_.hash(root).hexdigest()
             assert original == current
     
     def test_file_dir_stat(self, root, original):
@@ -351,7 +351,7 @@ class TestDigestDirectory(object):
         '''
         (root / 'emptydir').chmod(0o404)
         (root / 'file').chmod(0o404)
-        current = path_.digest(root).hexdigest()
+        current = path_.hash(root).hexdigest()
         assert original == current
     
 class TestAssertEquals(object):

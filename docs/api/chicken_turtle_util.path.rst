@@ -9,14 +9,14 @@ chicken_turtle_util.path
    assert_equals
    assert_mode
    chmod
-   digest
+   hash
    read
    remove
    write
 
 .. autofunction:: assert_mode
 .. autofunction:: chmod
-.. autofunction:: digest
+.. autofunction:: hash
 .. autofunction:: read
 .. autofunction:: remove
 .. autofunction:: write

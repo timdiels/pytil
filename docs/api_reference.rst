@@ -171,7 +171,7 @@ Module contents overview
     assert_equals
     assert_mode
     chmod
-    digest
+    hash
     read
     remove
     write

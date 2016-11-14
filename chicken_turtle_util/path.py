@@ -160,52 +160,53 @@ def chmod(path, mode, operator='=', recursive=False):
         
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
-def digest(path):
+def hash(path, hash_function=hashlib.sha512):
     '''
-    Get SHA512 checksum of file or directory
+    Hash file or directory
      
     Parameters
     ----------
     path : pathlib.Path
-        file or directory to hash
+        File or directory to hash
+    hash_function : () -> hash
+        Function which returns hashlib hash objects
      
     Returns
     -------
-    type_of(hashlib.sha512)
-        hash object of file/directory contents. File/directory stat data is
-        ignored. The directory digest covers file/directory contents and their
-        location relative to the directory being digested. The directory name
-        itself is ignored.
+    hash
+        hashlib hash object of file/directory contents. File/directory stat data
+        is ignored. The directory digest covers file/directory contents and
+        their location relative to the directory being digested. The directory
+        name itself is ignored.
     '''
-    hash_ = hashlib.sha512()
+    hash_ = hash_function()
     if path.is_dir():
         for directory, directories, files in os.walk(str(path), topdown=True):
             # Note:
             # - directory: path to current directory in walk relative to current working direcotry
             # - directories/files: dir/file names
             
-            # hash like:
+            # Note: file names can contain nearly any character (even newlines).
+            
+            # hash like (ignore the whitespace):
             #
-            #   relative-dir-path
-            #   (
-            #       (dir_name)
-            #       (dir_name2)
-            #   )
-            #   (
-            #       (file_name)(file_hash)
-            #       (file_name2)(file_hash2)
-            #   )
-            #   relative-dir-path2
+            #   h(relative-dir-path)
+            #   h(dir_name)
+            #   h(dir_name2)
+            #   ,
+            #   h(file_name) h(file_content)
+            #   h(file_name2) h(file_content2)
+            #   ;
+            #   h(relative-dir-path2)
             #   ...
-            hash_.update(str(Path(directory).relative_to(path)).encode())
-            hash_.update(b'(')
+            hash_.update(hash_function(str(Path(directory).relative_to(path)).encode()).digest())
             for name in sorted(directories):
-                hash_.update(b'(' + name.encode() + b')')
-            hash_.update(b')(')
+                hash_.update(hash_function(name.encode()).digest())
+            hash_.update(b',')
             for name in sorted(files):
-                hash_.update(b'(' + name.encode() + b')')
-                hash_.update(b'(' + digest(Path(directory) / name).digest() + b')')
-            hash_.update(b')')
+                hash_.update(hash_function(name.encode()).digest())
+                hash_.update(hash(Path(directory) / name).digest())
+            hash_.update(b';')
     else:
         with path.open('rb') as f:
             while True:
