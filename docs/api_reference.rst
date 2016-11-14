@@ -212,5 +212,7 @@ Module contents overview
     :nosignatures:
     
     assert_text_contains
+    assert_text_equals
     assert_matches
+    assert_search_matches
     temp_dir_cwd
