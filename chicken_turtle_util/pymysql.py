@@ -32,4 +32,4 @@ def patch():
     '''
     with suppress(ImportError):
         import numpy as np
-        pymysql.converters.encoders[np.int64] = pymysql.converters.encoders[int]
+        pymysql.converters.conversions[np.int64] = pymysql.converters.encoders[int]
