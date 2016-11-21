@@ -33,19 +33,23 @@ Changelog
 
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+v4.0.1
+------
+- Fixed: README formatting error
+
 v4.0.0
 ------
 - Major:
 
-    - `path.digest` renamed to `path.hash` (and added `hash_function` parameter)
-    - renamed `cli` to `click`
-    - require Python 3.5 or newer
-    - Changed: `asyncio.stubborn_gather`:
+  - `path.digest` renamed to `path.hash` (and added `hash_function` parameter)
+  - renamed `cli` to `click`
+  - require Python 3.5 or newer
+  - Changed: `asyncio.stubborn_gather`:
 
-      - raise `CancelledError` if all its awaitables raised `CancelledError`.
-      - raise summary exception if any awaitable raises exception other than
-        `CancelledError`
-      - log exceptions, as soon as they are raised
+    - raise `CancelledError` if all its awaitables raised `CancelledError`.
+    - raise summary exception if any awaitable raises exception other than
+      `CancelledError`
+    - log exceptions, as soon as they are raised
 
 - Minor:
 

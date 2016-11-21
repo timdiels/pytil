@@ -61,7 +61,6 @@ setup(
                        'Topic :: Software Development :: Libraries :: Python Modules',
                        'Topic :: Utilities'],
     'description': 'Python 3 utility library',
-    'download_url': 'https://github.com/timdiels/chicken_turtle_util/releases/v4.0.0.tar.gz',
     'extras_require': {   'algorithms': ['collections-extended', 'networkx', 'numpy', 'scikit-learn', 'scipy'],
                           'asyncio': [],
                           'click': ['click'],
@@ -132,19 +131,23 @@ setup(
                         '\n'
                         '`Semantic versioning <semver_>`_ is used (starting with v3.0.0).\n'
                         '\n'
+                        'v4.0.1\n'
+                        '------\n'
+                        '- Fixed: README formatting error\n'
+                        '\n'
                         'v4.0.0\n'
                         '------\n'
                         '- Major:\n'
                         '\n'
-                        '    - `path.digest` renamed to `path.hash` (and added `hash_function` parameter)\n'
-                        '    - renamed `cli` to `click`\n'
-                        '    - require Python 3.5 or newer\n'
-                        '    - Changed: `asyncio.stubborn_gather`:\n'
+                        '  - `path.digest` renamed to `path.hash` (and added `hash_function` parameter)\n'
+                        '  - renamed `cli` to `click`\n'
+                        '  - require Python 3.5 or newer\n'
+                        '  - Changed: `asyncio.stubborn_gather`:\n'
                         '\n'
-                        '      - raise `CancelledError` if all its awaitables raised `CancelledError`.\n'
-                        '      - raise summary exception if any awaitable raises exception other than\n'
-                        '        `CancelledError`\n'
-                        '      - log exceptions, as soon as they are raised\n'
+                        '    - raise `CancelledError` if all its awaitables raised `CancelledError`.\n'
+                        '    - raise summary exception if any awaitable raises exception other than\n'
+                        '      `CancelledError`\n'
+                        '    - log exceptions, as soon as they are raised\n'
                         '\n'
                         '- Minor:\n'
                         '\n'
@@ -220,5 +223,5 @@ setup(
     'package_data': {'chicken_turtle_util.tests': ['data/inheritance.defaults.conf']},
     'packages': ['chicken_turtle_util', 'chicken_turtle_util.tests'],
     'url': 'https://github.com/timdiels/chicken_turtle_util',
-    'version': '4.0.0'}
+    'version': '0.0.0'}
 )
