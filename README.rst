@@ -29,9 +29,47 @@ maintenance cost is required), request to have it moved to a stable library
 .. _opening an issue: https://github.com/timdiels/chicken_turtle_util/issues
 
 Changelog
-==========
+=========
 
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
+
+v4.0.0
+------
+- Major:
+
+    - `path.digest` renamed to `path.hash` (and added `hash_function` parameter)
+    - renamed `cli` to `click`
+    - require Python 3.5 or newer
+    - Changed: `asyncio.stubborn_gather`:
+
+      - raise `CancelledError` if all its awaitables raised `CancelledError`.
+      - raise summary exception if any awaitable raises exception other than
+        `CancelledError`
+      - log exceptions, as soon as they are raised
+
+- Minor:
+
+  - Added:
+
+    - `click.assert_runs`
+    - `hashlib.base85_digest`
+    - `logging.configure`
+    - `path.assert_equals`
+    - `path.assert_mode`
+    - `test.assert_matches`
+    - `test.assert_search_matches`
+    - `test.assert_text_contains`
+    - `test.assert_text_equals`
+
+- Fixes:
+
+  - `path.remove`: raised when ``path.is_symlink()`` or contains a symlink
+  - `path.digest/hash`: directory hash collisions were more likely than necessary
+  - `pymysql.patch`: change was not picked up in recent pymysql versions
+
+v3.0.1
+------
+- Fixed: README formatting error
 
 v3.0.0
 ------
