@@ -89,7 +89,8 @@ def remove(path, force=False):
         return
     else:
         if force:
-            chmod(path, 0o700, '+', recursive=True)
+            with suppress(FileNotFoundError):
+                chmod(path, 0o700, '+', recursive=True)
         if path.is_dir() and not path.is_symlink():
             # Note: shutil.rmtree did not handle NFS well
             
@@ -97,31 +98,35 @@ def remove(path, force=False):
             for dir_, dirs, files in os.walk(str(path), topdown=False): # bottom-up walk
                 dir_ = Path(dir_)
                 for file in files:
-                    (dir_ / file).unlink()
+                    with suppress(FileNotFoundError):
+                        (dir_ / file).unlink()
                 for file in dirs:  # Note: os.walk treats symlinks to directories as directories
                     file = dir_ / file
                     if file.is_symlink():
-                        file.unlink()
+                        with suppress(FileNotFoundError):
+                            file.unlink()
                     
             # Now remove all dirs, being careful of any lingering .nfs* files
             for dir_, _, _ in os.walk(str(path), topdown=False): # bottom-up walk
                 dir_ = Path(dir_)
-                
-                # wait for .nfs* files
-                children = list(dir_.iterdir())
-                while children:
-                    # only wait for nfs temporary files
-                    if any(not child.name.startswith('.nfs') for child in children):
-                        dir_.rmdir()  # raises dir not empty
-                        
-                    # wait and go again
-                    time.sleep(.1)
+                with suppress(FileNotFoundError):
+                    # wait for .nfs* files
                     children = list(dir_.iterdir())
+                    
+                    while children:
+                        # only wait for nfs temporary files
+                        if any(not child.name.startswith('.nfs') for child in children):
+                            dir_.rmdir()  # raises dir not empty
+                            
+                        # wait and go again
+                        time.sleep(.1)
+                        children = list(dir_.iterdir())
                 
-                # rm
-                dir_.rmdir()
+                    # rm
+                    dir_.rmdir()
         else:
-            path.unlink()
+            with suppress(FileNotFoundError):
+                path.unlink()
         
 def chmod(path, mode, operator='=', recursive=False):
     '''
