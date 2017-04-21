@@ -1,4 +1,17 @@
-# Development dependencies, excluding test dependencies
+# Development dependencies
 sphinx-rtd-theme
 Sphinx
 numpydoc
+
+# Test dependencies
+pytest
+pytest-xdist
+pytest-env
+pytest-cov
+coverage-pth
+pytest-mock
+pytest-localserver
+pytest-capturelog
+pytest-asyncio
+plumbum
+networkx  # for a performance test
