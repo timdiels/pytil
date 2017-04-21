@@ -19,11 +19,12 @@
 Extensions to pathlib.
 '''
 
+from chicken_turtle_util.test import assert_text_equals
+from contextlib import suppress
 from pathlib import Path
+import hashlib
 import time
 import os
-import hashlib
-from chicken_turtle_util.test import assert_text_equals
 
 #: The file system root to use (used for testing)
 _root = Path('/')
@@ -160,9 +161,11 @@ def chmod(path, mode, operator='=', recursive=False):
         for dir_, dirs, files in os.walk(str(path)):
             dir_ = Path(dir_)
             for child in dirs:
-                chmod((dir_ / child), mode, operator)
+                with suppress(FileNotFoundError):
+                    chmod((dir_ / child), mode, operator)
             for file in files:
-                chmod((dir_ / file), mode & 0o777666, operator)
+                with suppress(FileNotFoundError):
+                    chmod((dir_ / file), mode & 0o777666, operator)
         
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
