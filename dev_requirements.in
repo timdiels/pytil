@@ -11,7 +11,7 @@ pytest-cov
 coverage-pth
 pytest-mock
 pytest-localserver
-pytest-capturelog
+pytest-catchlog
 pytest-asyncio
 plumbum
 networkx  # for a performance test

@@ -73,7 +73,7 @@ setup(
                                       'plumbum',
                                       'pytest',
                                       'pytest-asyncio',
-                                      'pytest-capturelog',
+                                      'pytest-catchlog',
                                       'pytest-cov',
                                       'pytest-env',
                                       'pytest-localserver',
