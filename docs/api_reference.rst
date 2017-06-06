@@ -109,6 +109,7 @@ Module contents overview
 .. autosummary::
     :nosignatures:
     
+    exc_info
     UserException
     InvalidOperationError
     

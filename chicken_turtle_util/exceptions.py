@@ -27,6 +27,12 @@ If you miss the ability to pass args to any of these exceptions, note that you a
 You can only use positional arguments though.
 '''
 
+def exc_info(exception):
+    '''
+    Get exc_info tuple from exception
+    '''
+    return (type(exception), exception, exception.__traceback__)
+
 class UserException(Exception):
     
     '''

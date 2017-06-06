@@ -6,6 +6,7 @@ chicken_turtle_util.exceptions
 .. autosummary::
    :nosignatures:
 
+   exc_info
    InvalidOperationError
    UserException
 
