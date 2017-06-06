@@ -22,24 +22,24 @@ Observable collections. Only contains `Set` currently.
 from contextlib import contextmanager
 
 class Set(set):
-    
+
     '''
     Observable set
     '''
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._change_listeners = []
         self._watching = False
-        
+
     @property
     def change_listeners(self):
         '''
         Get change listeners
-        
+
         Each change listener is called immediately after a mutating operation
         that actually changed the set. E.g. redundant additions are ignored.
-        
+
         Returns
         -------
         [(added :: frozenset, removed :: frozenset) -> bool or None]
@@ -49,7 +49,7 @@ class Set(set):
             raises, the change is rolled back without further notification.
         '''
         return self._change_listeners
-    
+
     @contextmanager
     def _notify_if_changed(self):
         if self._watching:
@@ -74,23 +74,23 @@ class Set(set):
                             raise ex
             finally:
                 self._watching = False
-         
+
     def add(self, item):
         with self._notify_if_changed():
             super().add(item)
-            
+
     def discard(self, item):
         with self._notify_if_changed():
             super().discard(item)
-            
+
     def update(self, *args):
         with self._notify_if_changed():
             super().update(*args)
-            
+
     def __ior__(self, *args):
         with self._notify_if_changed():
             return super().__ior__(*args)
-    
+
     def intersection_update(self, *args):
         with self._notify_if_changed():
             super().intersection_update(*args)

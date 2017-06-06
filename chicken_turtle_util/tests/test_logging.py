@@ -1,17 +1,17 @@
 # Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -35,19 +35,19 @@ def test_set_level(caplog):
     logger.info('ignored')
     logger.warning('not ignored')
     assert [x.msg for x in caplog.records] == ['not ignored'] * 3
-    
+
 def test_configure(temp_dir_cwd, capsys, caplog):
     log_file = Path('file.log')
     stderr_handler, file_handler = logging_.configure(log_file)
     assert isinstance(stderr_handler, logging.StreamHandler)
     assert isinstance(file_handler, logging.FileHandler)
-    
+
     logger = logging.getLogger(__name__)
     logger.info('Fake info')
     logger.debug('Ignored debug')
     logger.setLevel(logging.DEBUG)
     logger.debug('Fake debug')
-    
+
     # stderr
     #
     # - level is INFO
@@ -55,7 +55,7 @@ def test_configure(temp_dir_cwd, capsys, caplog):
     expected = 'I: Fake info\n'
     actual = capsys.readouterr()[1]
     assert_text_equals(actual, expected)
-    
+
     # log file
     #
     # - level is DEBUG
@@ -68,7 +68,7 @@ def test_configure(temp_dir_cwd, capsys, caplog):
     pattern = dedent('''\
         {}
         Fake info
-         
+        
         {}
         Fake debug
         '''
@@ -78,4 +78,3 @@ def test_configure(temp_dir_cwd, capsys, caplog):
         )
     )
     assert re.match(pattern, log_file_content, re.MULTILINE), 'Actual:{}\n\nExpected to match:\n{}'.format(log_file_content, pattern)
-    

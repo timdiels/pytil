@@ -1,17 +1,17 @@
 # Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -24,17 +24,17 @@ import chicken_turtle_util.data_frame as df_
 def invert(series):
     '''
     Swap index with values of series
-    
+
     Parameters
     ----------
     series
         Series to swap on, must have a name
-    
+
     Returns
     -------
     pandas.Series
         Series after swap
-        
+
     See also
     --------
     pandas.Series.map
@@ -47,19 +47,19 @@ def invert(series):
 def split(series):
     '''
     Split values
-    
+
     The index is dropped, but this may change in the future.
-    
+
     Parameters
     ----------
     series : pd.Series
         Series with numpy array-like values.
-        
+
     Returns
     -------
     pd.Series
         Series with values split across rows.
-        
+
     Examples
     --------
     >>> series = pd.Series([[1,2],[1,2],[3,4,5]])
@@ -85,10 +85,10 @@ def split(series):
 def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False, _return_reason=False):
     '''
     Get whether 2 series are equal
-    
+
     ``NaN``\ s are considered equal (which is consistent with
     `pandas.Series.equals`). ``None`` is considered equal to ``NaN``.
-    
+
     Parameters
     ----------
     series1, series2 : pd.Series
@@ -104,7 +104,7 @@ def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=F
         Internal. If True, `equals` returns a tuple containing the reason, else
         `equals` only returns a bool indicating equality (or equivalence
         rather).
-        
+
     Returns
     -------
     equal : bool
@@ -112,11 +112,11 @@ def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=F
     reason : str or None
         If equal, ``None``, otherwise short explanation of why the data frames
         aren't equal. Omitted if not `_return_reason`.
-    
+
     See also
     --------
     data_frame.equals : Get whether 2 data frames are equal
-    
+
     Notes
     -----
     All values (including those of indices) must be copyable and `__eq__` must
@@ -130,7 +130,7 @@ def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=F
         return result
     else:
         return result[0]
-        
+
 def _equals(series1, series2, ignore_order, ignore_index, all_close):
     if not ignore_index:
         if series1.name != series2.name:
@@ -143,15 +143,15 @@ def _equals(series1, series2, ignore_order, ignore_index, all_close):
         all_close=all_close,
         _return_reason=True  #TODO the reasons will be about dataframes, this is confusing. May need to copy paste after all and do the analog for a series. Or add an internal param so it outputs series info (pick the former option)
     )
-    
+
 def assert_equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False):
     '''
     Assert 2 series are equal
-    
+
     Like ``assert equals(series1, series2, ...)``, but with better hints at
     where the series differ. See :func:`chicken_turtle_util.series.equals` for
     detailed parameter doc.
-    
+
     Parameters
     ----------
     series1, series2 : pd.Series
@@ -161,4 +161,3 @@ def assert_equals(series1, series2, ignore_order=False, ignore_index=False, all_
     '''
     equals_, reason = equals(series1, series2, ignore_order, ignore_index, all_close, _return_reason=True)
     assert equals_, '{}\n\n{}\n\n{}'.format(reason, series1.to_string(), series2.to_string())
-    

@@ -1,20 +1,19 @@
 # Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
-
 
 '''
 Performance tests of implementations for `merge_overlapping_named_sets`.
@@ -110,11 +109,11 @@ def agf2(lists):
 # TODO try optimise alexis?
 # TODO use alexis' alg, but assume the input is list of set of any, input list is modified in place
 class Alexis():
-        
+
     def alexis(self, data):
         bins = list(range(len(data)))  # Initialize each bin[n] == n
         nums = dict()
-    
+
         data = [set(m) for m in data ]  # Convert to sets    
         for r, row in enumerate(data):
             for num in row:
@@ -126,20 +125,20 @@ class Alexis():
                     dest = self.locatebin(bins, nums[num])
                     if dest == r:
                         continue # already in the same bin
-    
+
                     if dest > r:
                         dest, r = r, dest   # always merge into the smallest bin
-    
+
                     data[dest].update(data[r]) 
                     data[r] = None
                     # Update our indices to reflect the move
                     bins[r] = dest
                     r = dest 
-    
+
         # Filter out the empty bins
         have = [ m for m in data if m ]
         return have
-    
+
     def locatebin(self, bins, n):
         """
         Find the bin where list n has ended up: Follow bin references until
@@ -148,7 +147,7 @@ class Alexis():
         while bins[n] != n:
             n = bins[n]
         return n
-    
+
 alexis = Alexis().alexis
 
 def ecatmur(data):
@@ -197,14 +196,14 @@ class Katrielalex(object):
             yield prev, item
             prev = item
         yield item, first
-    
+
     def katrielalex(self, lists):
         g = nx.Graph()
         for sub_list in lists:
             for edge in self.pairs(sub_list):
                     g.add_edge(*edge)
         return list(nx.connected_components(g))
-    
+
 katrielalex = Katrielalex().katrielalex
 
 def connected_components(sets):
@@ -238,7 +237,7 @@ def steabert(lsts):
                     rep = joined[idx_0]
                     joined = [rep if id_ == old else id_ for id_ in joined]
             el_0, idx_0 = el, idx
-    
+
     # Addition to steabert's answer to return actual lists
     lsts = list(map(set, lsts))
     result = []
@@ -311,7 +310,7 @@ def create_input(overlap, list_size_distribution, list_size_mean, set_count):
         assert False
     indices = np.insert(list_sizes.astype(int).cumsum(), 0, 0)
     sets = [set(range(start, end)) for start, end in sliding_window(indices)]
-    
+
     # add overlap, with a skip every so often
     overlap_to_create = round(set_count * overlap)
     i = 0
@@ -338,19 +337,19 @@ def create_input(overlap, list_size_distribution, list_size_mean, set_count):
     else:
         expected_output.append(current_overlap)
     expected_output.extend(sets[i+1:])
-        
+
     # final things
     sets = [list(x) for x in sets]
     random.shuffle(sets)
-    
+
     # debug info of this func
 #     print()
 #     print('{} overlap, {} set sizes with mean {}, {} sets'.format(overlap, list_size_distribution, list_size_mean, set_count))
 #     print(pd.Series(len(x) for x in sets).describe())
-#     
+#
 #     overlap = 1 - len(expected_output)/len(sets)
 #     print('{:.2}% of sets removed due to overlap'.format(overlap))  # Note this is only a rough under-estimate of actual number of sets overlapping
-    
+
     return sets, expected_output
 
 def create_input_args():
@@ -408,21 +407,21 @@ def alg(request):
 # # @pytest.mark.current
 # @pytest.mark.timeout(10)
 # class TestMergeOverlappingPerformance(object):
-#     
+#
 #     '''
 #     Test performance of implementations of `merge_overlapping_named_sets` minus the named aspect
 #     '''
-#     
+#
 #     # Results from a last run: http://pastebin.com/raw/kttQR1Pt
 #     # Alexis' algorithm is faster than any other tested. robert_king, agf (first version only) and chrismit's algorithms were disqualified due to bugs. 
-#      
+#
 #     def normalised(self, output):
 #         return sorted([sorted(list(x)) for x in output])
-#     
+#
 #     def test_itt(self, alg, input_, benchmark):
 #         overlapping_sets, expected = input_
 #         merged = benchmark(alg, overlapping_sets)
-#         
+#
 # #         print()
 # #         print(alg)
 # #         print(merged)
@@ -436,9 +435,9 @@ def alg(request):
 # #             self.normalised(expected),
 # #             self.normalised(merged)
 # #         ))
-#         
+#
 #         assert self.normalised(merged) == self.normalised(expected)
-        
+
 # TODO either extract parser into util or figure out a way to get to the data from pytest-benchmark directly
 def group_results():
     '''
@@ -446,7 +445,7 @@ def group_results():
     '''
     with open('merge_overlapping_sets_performance.log') as f:
         groups = defaultdict(list)
-        
+
         # ad hoc parser
         is_prolog = True
         is_content = False
@@ -465,18 +464,18 @@ def group_results():
                     # parse and group actual test line
                     line = re.match(r'.+\[(.+)-(.+)\](.+)', line)
                     groups[eval(line.group(2))].append((line.group(1), line.group(3)))
-        
+
         # print grouped result
         for group, values in sorted(groups.items(), key=lambda x: (x[0][3], x[0][2], x[0][1], x[0][0])):
             print(group)
             print('\n'.join(['{} {}'.format(*x) for x in values]))
             print()
-            
+
         # print detailed summary
         places = pd.DataFrame([(group, i, x[0]) for group, values in groups.items() for i, x in enumerate(values)], columns='group place alg'.split())
         print(places.groupby('alg')['place'].describe().to_string())
         print()
-        
+
         # print percentage of times one alg was faster than the other
         def count_times_faster(places, alg1, alg2):
             return places.groupby('group').apply(lambda x: x[x['alg'] == alg1]['place'] < x[x['alg'] == alg2]['place']).sum() / len(places.groupby('group'))
@@ -485,9 +484,7 @@ def group_results():
         print('pct alg1 (rows) faster than alg2 (columns)')
         print(times_faster.to_string())
         print()
-        
+
         # print real terse summary
         print(places.groupby('alg')['place'].mean().sort_values().to_string())
         print()
-    
-    

@@ -1,17 +1,17 @@
 # Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -27,10 +27,10 @@ import asyncio
 import re
 
 class TestStubbornGather(object):
-    
+
     async def f(self, x):
         return x
-    
+
     @pytest.mark.asyncio
     async def test_happy_days(self):
         '''
@@ -38,7 +38,7 @@ class TestStubbornGather(object):
         '''
         actual = await asyncio_.stubborn_gather(self.f(1), self.f(2))
         assert actual == (1, 2)
-    
+
     @pytest.mark.asyncio
     async def test_exception(self, caplog):
         '''
@@ -51,7 +51,7 @@ class TestStubbornGather(object):
         async def succeed():
             await raised.wait()
             nonlocal finished
-            finished = True
+            finished = True  # @UnusedVariable
         async def fail():
             raised.set()
             raise exception
@@ -59,7 +59,7 @@ class TestStubbornGather(object):
             await asyncio_.stubborn_gather(fail(), succeed())
         assert finished
         assert ex != exception
-        
+
         # Log the exception
         expected = dedent('''\
             .*stubborn_gather: Awaitable 0 raised:
@@ -71,7 +71,7 @@ class TestStubbornGather(object):
             Exception: ex'''
         )
         assert_search_matches(caplog.text, expected, re.MULTILINE)
-        
+
         # Also mention it in the thrown exception
         expected = dedent('''\
             .*Awaitable 0:
@@ -83,7 +83,7 @@ class TestStubbornGather(object):
             Exception: ex'''
         )
         assert_search_matches(str(ex.value), expected, re.MULTILINE) 
-    
+
     @pytest.mark.asyncio
     async def test_cancel(self):
         '''
@@ -102,7 +102,7 @@ class TestStubbornGather(object):
             assert gather_future.cancelled()
             for future in futures:
                 assert future.cancelled()
-    
+
     @pytest.mark.asyncio
     async def test_awaitable_cancelled(self):
         '''
@@ -113,7 +113,7 @@ class TestStubbornGather(object):
         async def succeed():
             await cancelled.wait()
             nonlocal finished
-            finished = True
+            finished = True  # @UnusedVariable
         async def gets_cancelled():
             await cancelled.wait()
         gets_cancelled_future = asyncio.ensure_future(gets_cancelled())
@@ -124,7 +124,7 @@ class TestStubbornGather(object):
             await asyncio_.stubborn_gather(gets_cancelled_future, succeed())
         assert not isinstance(ex, asyncio.CancelledError)
         assert finished
-        
+
     @pytest.mark.asyncio
     async def test_awaitables_cancelled(self):
         '''

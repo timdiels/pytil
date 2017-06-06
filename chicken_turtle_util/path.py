@@ -1,17 +1,17 @@
 # Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,9 +32,9 @@ _root = Path('/')
 def write(path, contents, mode=None):
     '''
     Create or overwrite file with contents
-    
+
     Missing parent directories of `path` will be created.
-    
+
     Parameters
     ----------
     path : pathlib.Path
@@ -52,16 +52,16 @@ def write(path, contents, mode=None):
         f.write(contents)
     if mode is not None:
         path.chmod(mode)
-        
+
 def read(path):
     '''
     Get file contents
-    
+
     Parameters
     ----------
     path : pathlib.Path
         Path of file to read
-        
+
     Returns
     -------
     str
@@ -69,14 +69,14 @@ def read(path):
     '''
     with path.open('r') as f:
         return f.read()
-    
+
 def remove(path, force=False):
     '''
     Remove file or directory (recursively), unless it's missing
-    
+
     On NFS file systems, if a directory contains .nfs* temporary files
     (sometimes created when deleting a file), it waits for them to go away.
-    
+
     Parameters
     ----------
     path : Path
@@ -93,7 +93,7 @@ def remove(path, force=False):
                 chmod(path, 0o700, '+', recursive=True)
         if path.is_dir() and not path.is_symlink():
             # Note: shutil.rmtree did not handle NFS well
-            
+
             # First remove all files
             for dir_, dirs, files in os.walk(str(path), topdown=False): # bottom-up walk
                 dir_ = Path(dir_)
@@ -105,39 +105,39 @@ def remove(path, force=False):
                     if file.is_symlink():
                         with suppress(FileNotFoundError):
                             file.unlink()
-                    
+
             # Now remove all dirs, being careful of any lingering .nfs* files
             for dir_, _, _ in os.walk(str(path), topdown=False): # bottom-up walk
                 dir_ = Path(dir_)
                 with suppress(FileNotFoundError):
                     # wait for .nfs* files
                     children = list(dir_.iterdir())
-                    
+
                     while children:
                         # only wait for nfs temporary files
                         if any(not child.name.startswith('.nfs') for child in children):
                             dir_.rmdir()  # raises dir not empty
-                            
+
                         # wait and go again
                         time.sleep(.1)
                         children = list(dir_.iterdir())
-                
+
                     # rm
                     dir_.rmdir()
         else:
             with suppress(FileNotFoundError):
                 path.unlink()
-        
+
 def chmod(path, mode, operator='=', recursive=False):
     '''
     Change file mode bits
-    
+
     When recursively chmodding a directory, executable bits in `mode` are
     ignored when applying to a regular file. E.g. ``chmod(path, mode=0o777,
     recursive=True)`` would apply ``mode=0o666`` to regular files.
-    
+
     Symlinks are ignored.
-    
+
     Parameters
     ----------
     path : Path
@@ -184,14 +184,14 @@ def chmod(path, mode, operator='=', recursive=False):
 def hash(path, hash_function=hashlib.sha512):
     '''
     Hash file or directory
-     
+
     Parameters
     ----------
     path : pathlib.Path
         File or directory to hash
     hash_function : () -> hash
         Function which returns hashlib hash objects
-     
+
     Returns
     -------
     hash
@@ -206,9 +206,9 @@ def hash(path, hash_function=hashlib.sha512):
             # Note:
             # - directory: path to current directory in walk relative to current working direcotry
             # - directories/files: dir/file names
-            
+
             # Note: file names can contain nearly any character (even newlines).
-            
+
             # hash like (ignore the whitespace):
             #
             #   h(relative-dir-path)
@@ -240,7 +240,7 @@ def hash(path, hash_function=hashlib.sha512):
 def assert_mode(path, mode):
     '''
     Assert last 3 octal mode digits match given mode exactly
-    
+
     Parameters
     ----------
     path : pathlib.Path
@@ -250,11 +250,11 @@ def assert_mode(path, mode):
     '''
     actual = path.stat().st_mode & 0o777
     assert actual == mode, '{:o} != {:o}'.format(actual, mode)
-    
+
 def assert_equals(file1, file2, contents=True, name=True, mode=True):
     '''
     Assert 2 files are equal
-    
+
     Parameters
     -----------
     file1 : Path

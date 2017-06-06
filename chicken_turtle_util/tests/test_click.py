@@ -1,17 +1,17 @@
 # Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -37,7 +37,7 @@ def test_options():
         assert option == 5
         assert password == 'pass'
         assert argument == 'arg'
-        
+
     params = {x.opts[0]: x for x in main.params}
     print(main)
     print(main.params)
@@ -51,7 +51,7 @@ def test_options():
     assert params['--password'].hide_input
     assert not params['--password'].show_default
     assert params['--password'].required
-    
+
     result = CliRunner().invoke(main, ['--option', '5', '--password', 'pass', 'arg'])
     assert not result.exception, result.output
 

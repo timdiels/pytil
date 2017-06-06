@@ -1,17 +1,17 @@
 # Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
-# 
+#
 # This file is part of Chicken Turtle Util.
-# 
+#
 # Chicken Turtle Util is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # Chicken Turtle Util is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU Lesser General Public License
 # along with Chicken Turtle Util.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,36 +32,36 @@ import collections
 def sliding_window(iterable, size=2):
     '''
     Iterate using a sliding window
-    
+
     Parameters
     ----------
     iterable : iterable(any)
         Iterable to slide a window across
     size : int, optional
         Window size
-    
+
     Yields
     -------
     (any, ...)
         Iterator slices of size `size`, taken from start to end through the iterator.
-        
+
     Raises
     ------
     ValueError
         When ``ilen(iterable) < size or size < 1``
-        
+
     See also
     --------
     more_itertools.chunked : Divide iterable into (non-overlapping) chunks of given size
-        
+
     Examples
     --------
     >>> list(sliding_window(range(4)))
     [(0,1), (1,2), (2,3)]
-    
+
     >>> list(sliding_window(range(4), size=3))
     [(0,1,2), (1,2,3)]
-    
+
     >>> list(sliding_window(range(1)))
     []
     '''
@@ -75,18 +75,18 @@ def sliding_window(iterable, size=2):
     for elem in it:
         result = result[1:] + (elem,)
         yield result
-        
+
 def partition(iterable, key):
     '''
     Split iterable into partitions
-    
+
     Parameters
     ----------
     iterable : iterable(item :: any)
         Iterable to split into partitions
     key : (item :: any) -> (partition_id :: any)
         Function that assigns an item of the iterable to a partition
-    
+
     Returns
     -------
     partitioning : {(partition_id :: any) : partition :: [item :: any]} 
@@ -101,12 +101,12 @@ def partition(iterable, key):
 def is_sorted(iterable):
     '''
     Get whether iterable is sorted ascendingly
-    
+
     Parameters
     ----------
     iterable : iterable(comparable)
         Iterable whose ordering to check
-        
+
     Returns
     -------
     bool
@@ -118,10 +118,10 @@ def is_sorted(iterable):
 def flatten(iterable, times=1):
     '''
     Flatten shallowly zero or more times
-    
+
     Does not flatten `str` and `bytes`. Order is stably maintained (i.e. no 2
     items swap places, even if they're equal).
-    
+
     Parameters
     ----------
     iterable : iterable(any) except str or bytes
@@ -129,31 +129,31 @@ def flatten(iterable, times=1):
     times : int, optional
         The number of times to flatten shallowly or, equivalently, the number of
         levels of depth to remove. Should be 0 or more.
-        
+
     Yields
     -------
     any
         Items of iterable flattened to depth ``depth(iterable) - times``
-        
+
     Raises
     ------
     ValueError
         If input is invalid.
-    
+
     Examples
     --------
     >>> list(flatten([[2, 3], 1, [5, [7, 8]]]))
     [2, 3, 1, 5, [7, 8]]
-    
+
     >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=2))
     [2, 3, 1, 5, 7, 8]
-    
+
     >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=3))
     [2, 3, 1, 5, 7, 8]
-    
+
     >>> flatten([iter([2, 3]), 1, [5, iter([7, 8])]])
     iter([2, 3, 1, 5, iter([7, 8])])
-    
+
     >>> list(flatten([[2, 3], 1, [5, [7, 8]]], times=0))
     [[2, 3], 1, [5, [7, 8]]]
     '''
@@ -163,7 +163,7 @@ def flatten(iterable, times=1):
         raise ValueError('times < 0: {}'.format(times))
     for x in _flatten(iterable, times+1):  # times+1 as _flatten includes unpacking the passed iterable in times
         yield x
-        
+
 def _flatten(item, times):
     assert times >= 0
     if times > 0 and _is_sensibly_iterable(item):

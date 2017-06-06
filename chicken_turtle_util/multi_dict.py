@@ -24,56 +24,56 @@ A multi-dict (or multi map) is a dict that maps each key to one or more values.
 from collections import defaultdict
 
 class MultiDict(object):
-    
+
     '''
     A multi-dict view of a ``{hashable => {hashable}}`` dict.
-    
+
     A light wrapper offering a few methods for working with multi-dicts.
-    
+
     Parameters
     ----------
     dict_ : {hashable => {hashable}}
         Dict to access as a multi-dict
-    
+
     Notes
     -----
     A multi-dict (or multi map) is a dict that maps each key to one or more values.
-    
+
     ``MultiDict``\ s provided by other libraries tend to be more feature rich, while
     this interface is far more conservative. Instead of wrapping, they provide
     an interface that mixes regular and multi-dict access. Additionally, other
     ``MultiDict``\ 's map keys to lists of values, allowing a key to map to the same
     value multiple times.
     '''
-    
+
     def __init__(self, dict_):
         self._dict = dict_
-        
+
     @property
     def dict(self):
         '''
         Get the underlying dict
-        
+
         Returns
         -------
         {hashable => {hashable}}
         '''
         return self._dict
-    
+
     def invert(self):
         '''
         Invert by swapping each value with its key.
-        
+
         Parameters
         ----------
         dict_ : {hashable => {hashable}}
             Multi-dict to invert
-            
+
         Returns
         -------
         {hashable => {hashable}}
             `dict_` copy with key and value swapped.
-            
+
         Examples
         --------
         >>> invert({1: {1}, 2: {1,2,3}}, 4: {})
@@ -83,13 +83,12 @@ class MultiDict(object):
         for k, val in self.items():
             result[val].add(k)
         return dict(result)
-    
+
     def items(self):
         return ((k, val) for k, vals in self._dict.items() for val in vals)
-    
+
     def keys(self):
         return (k for k, vals in self._dict.items() if vals)
-                            
+
     def values(self):
         return (val for vals in self._dict.values() for val in vals) 
-    
