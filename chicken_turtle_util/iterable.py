@@ -167,12 +167,10 @@ def flatten(iterable, times=1):
 def _flatten(item, times):
     assert times >= 0
     if times > 0 and _is_sensibly_iterable(item):
-        print('+')
         for x in item:
             for y in _flatten(x, times-1):
                 yield y
     else:
-        print('-')
         yield item
 
 def _is_sensibly_iterable(obj):
