@@ -124,6 +124,13 @@ setup_args = dict(
     ],
 )
 
+# Generate extras_require['all'], union of all extras
+all_extra_dependencies = []
+for dependencies in setup_args['extras_require'].values():
+    all_extra_dependencies.extend(dependencies)
+all_extra_dependencies = list(set(all_extra_dependencies))
+setup_args['extras_require']['all'] = all_extra_dependencies
+
 # Generate package data
 #
 # Anything placed underneath a directory named 'data' in a package, is added to

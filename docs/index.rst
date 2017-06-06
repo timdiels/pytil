@@ -14,9 +14,10 @@ The API reference makes heavy use of a `type language`_; for
 example, to describe exactly what arguments can
 be passed to a function.  
 
-Most dependencies are optional and grouped by module. For example, when using
+Dependencies are grouped by module. For example, when using
 ``chicken_turtle_util.data_frame``, you should ``pip install
-chicken_turtle_util[data_frame]``.
+'chicken_turtle_util[data_frame]'``. To install dependencies of all modules, use
+``pip install 'chicken_turtle_util[all]'``.
 
 While all features are documented and tested, the API is changed frequently.
 When doing so, the `major version <semver_>`_ is bumped and a changelog is kept
