@@ -34,7 +34,7 @@ def test_set_level(caplog):
         logger.warning('not ignored')
     logger.info('ignored')
     logger.warning('not ignored')
-    assert [x.msg for x in caplog.records()] == ['not ignored'] * 3
+    assert [x.msg for x in caplog.records] == ['not ignored'] * 3
     
 def test_configure(temp_dir_cwd, capsys, caplog):
     log_file = Path('file.log')

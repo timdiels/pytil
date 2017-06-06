@@ -70,7 +70,7 @@ class TestStubbornGather(object):
                 raise exception
             Exception: ex'''
         )
-        assert_search_matches(caplog.text(), expected, re.MULTILINE)
+        assert_search_matches(caplog.text, expected, re.MULTILINE)
         
         # Also mention it in the thrown exception
         expected = dedent('''\

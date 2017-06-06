@@ -1,3 +1,5 @@
 [run]
-omit = chicken_turtle_util/tests/*
+omit =
+    chicken_turtle_util/tests/*
+    venv/*
 

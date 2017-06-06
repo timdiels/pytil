@@ -1,5 +1,0 @@
-numpy
-scipy  # required but not listed by scikit-learn (one of its extras_require may list scipy though; but first the numpy issue should be fixed)
-scikit-learn  # its setup.py refuses to run when numpy isn't installed. TODO bug report
-collections-extended
-networkx
