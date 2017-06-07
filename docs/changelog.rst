@@ -2,6 +2,33 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+4.1.0
+-----
+- Backwards incompatible changes: None
+
+- Enhancements/additions:
+
+  - ``click.assert_runs``: pass on extra args to click's ``invoke()``
+  - ``path.chmod``, ``path.remove``: ignore disappearing children instead of
+    raising
+  - Add ``exceptions.exc_info``: exc_info tuple as seen in function parameters
+    in the ``traceback`` standard module
+  - Add ``extras_require['all']`` to ``setup.py``: union of all extra
+    dependencies
+
+- Fixes:
+
+  - ``path.chmod``: do not follow symlinks
+  - ``iterable.flatten``: removed debug prints: ``+``, ``-``
+
+- Internal / implementation details:
+
+  - use simple project structure instead of Chicken Turtle Project
+  - ``pytest-catchlog`` instead of ``pytest-capturelog``
+  - ``extras_require['dev']``: test dependencies were missing
+  - ``test_http`` created ``existing_file`` in working dir instead of in test
+    dir
+
 v4.0.1
 ------
 - Fixed: README formatting error
