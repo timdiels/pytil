@@ -21,6 +21,7 @@ Test chicken_turtle_util.http
 
 import pytest
 from chicken_turtle_util.http import download
+from chicken_turtle_util.test import temp_dir_cwd
 from pathlib import Path
 
 class TestDownload(object):
@@ -34,7 +35,7 @@ class TestDownload(object):
     )
 
     @pytest.mark.parametrize('destination, headers, path_expected, name_expected', params)
-    def test_download(self, tmpdir, destination, headers, path_expected, name_expected, httpserver):
+    def test_download(self, temp_dir_cwd, destination, headers, path_expected, name_expected, httpserver):
         '''
         Test all of `download`
 
@@ -43,11 +44,9 @@ class TestDownload(object):
         - When destination does not exist, it is overwritten with README.md contents
         '''
         httpserver.serve_content(lorem_ipsum, headers=headers)
-        tmpdir = Path(str(tmpdir))
-        path_expected = tmpdir / path_expected
-        destination = tmpdir / destination
-        with open('existing_file', 'w') as f:
-            f.write('exists')
+        path_expected = Path(path_expected)
+        destination = Path(destination)
+        Path('existing_file').write_text('exists')
         path, name = download(httpserver.url, destination)
         assert path == path_expected
         assert path.exists()
