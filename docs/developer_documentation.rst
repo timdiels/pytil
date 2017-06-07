@@ -53,4 +53,4 @@ user should realise they should not be used. E.g.  ``import numpy as np`` in
 `module.py` can be accessed with `module.np`, but it isn't mentioned in
 `help(module)` or Sphinx documentation.
 
-.. _simple project structure: http://python-project.readthedocs.io/en/latest/simple.html
+.. _simple project structure: http://python-project.readthedocs.io/en/1.0.0/simple.html
