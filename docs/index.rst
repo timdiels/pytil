@@ -4,11 +4,9 @@ Chicken Turtle Util (CTU) is a Python utility library.
 
 The `API reference`_ starts with an overview of all the features and then gets
 down to the nitty gritty details of each of them. Most of the reference
-provides examples. The `user guide`_ shows you how to depend on the library and
-how the various parts of the API can be combined to achieve common tasks. 
-For a full overview of features see the `module contents overview`_ of the API
-reference and the table of contents of the user guide (in the sidebar) as they
-are complementary.
+provides examples.  For a full overview of features see the `module contents
+overview`_ of the API reference and the table of contents of the user guide (in
+the sidebar) as they are complementary.
 
 The API reference makes heavy use of a `type language`_; for
 example, to describe exactly what arguments can
@@ -17,7 +15,8 @@ be passed to a function.
 Dependencies are grouped by module. For example, when using
 ``chicken_turtle_util.data_frame``, you should ``pip install
 'chicken_turtle_util[data_frame]'``. To install dependencies of all modules, use
-``pip install 'chicken_turtle_util[all]'``.
+``pip install 'chicken_turtle_util[all]'``.  If you are not familiar with pip,
+see `pip's quickstart guide <https://pip.pypa.io/en/stable/quickstart/>`_.
 
 While all features are documented and tested, the API is changed frequently.
 When doing so, the `major version <semver_>`_ is bumped and a changelog is kept
@@ -35,7 +34,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   user_guide
    api_reference
    type_language
    developer_documentation
