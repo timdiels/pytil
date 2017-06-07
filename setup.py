@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 
 setup_args = dict(
-    version='4.1.0',
+    version='4.1.1.dev1',
     name='chicken_turtle_util',
     description='Python 3 utility library',
     long_description=Path('README.rst').read_text(),
