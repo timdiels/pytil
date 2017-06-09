@@ -2,26 +2,8 @@ Developer documentation
 =======================
 Documentation for developers/contributors of Chicken Turtle Util.
 
-The project is structured according `simple project structure`_, please read its
-documentation, it contains release checklists, etc.
-
-Coding guidelines
------------------
-- Docstrings must follow 
-  `NumPy style <https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt#sections>`_.
-- Use the `type language <type_language>`_ when referring to a type, e.g. in
-  the Parameters section.
-- When using someone else's code or idea, give credit in a comment in the
-  source file, not in the documentation.
-  
-Commit checklist
-----------------
-Do not forget any of these steps before committing:
-
-- Tests adjusted to match what you changed (preferably test-driven)
-- API has docstrings and guidelines are followed
-- docs/api_reference.rst updated
-- docs/api/... updated
+The project follows a `simple project`_ structure and associated workflow. Please
+read `its documentation <simple project_>`_.
 
 Project decisions
 -----------------
@@ -53,4 +35,4 @@ user should realise they should not be used. E.g.  ``import numpy as np`` in
 `module.py` can be accessed with `module.np`, but it isn't mentioned in
 `help(module)` or Sphinx documentation.
 
-.. _simple project structure: http://python-project.readthedocs.io/en/1.0.0/simple.html
+.. _simple project: http://python-project.readthedocs.io/en/1.1.1/simple.html
