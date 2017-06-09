@@ -29,7 +29,7 @@ import os
 #: The file system root to use (used for testing)
 _root = Path('/')
 
-def write(path, contents, mode=None):
+def write(path, contents, mode=None): # TODO consider rm in favor of pathlib.Path.write_text and write_bytes. This allows setting mode though...
     '''
     Create or overwrite file with contents
 
@@ -53,7 +53,7 @@ def write(path, contents, mode=None):
     if mode is not None:
         path.chmod(mode)
 
-def read(path):
+def read(path): #TODO rm in favor of pathlib.Path.read_text and read_bytes
     '''
     Get file contents
 
