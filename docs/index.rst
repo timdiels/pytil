@@ -25,10 +25,6 @@ major version in your setup.py, e.g. for 2.x.y::
 
     install_requires = ['chicken_turtle_util==2.*', ...]
 
-If you see something you like but need long term stability (e.g. if low
-maintenance cost is required), request to have it moved to a stable library
-(one with fewer major releases) by `opening an issue`_.
-
 Contents:
 
 .. toctree::
@@ -50,6 +46,5 @@ Indices and tables
 .. _user guide: user_guide.html
 .. _module contents overview: api_reference.html#module-contents-overview
 .. _type language: type_language.html
-.. _opening an issue: https://github.com/timdiels/chicken_turtle_util/issues
 .. _semver: http://semver.org/spec/v2.0.0.html
 
