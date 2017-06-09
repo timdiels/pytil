@@ -49,11 +49,12 @@ setup_args = dict(
         'dict': ['more-itertools==2.*'],
         'exceptions': [],
         'function': [],
+        'hashlib': [],
         'http': ['requests==2.*'],
         'inspect': [],
         'iterable': [],
         'logging': [],
-        'multidict': [],
+        'multi_dict': [],
         'observable': [],
         'path': [],
         'pymysql': ['pymysql==0.*'],
@@ -63,6 +64,7 @@ setup_args = dict(
         ],
         'set': [],
         'sqlalchemy': ['sqlparse==0.*'],
+        'test': [],
     },
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
