@@ -2,6 +2,13 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+4.1.1
+-----
+- Fixes:
+
+  - add missing keys to ``extras_require``: ``hashlib``, ``multi_dict``,
+    ``test``
+
 4.1.0
 -----
 - Backwards incompatible changes: None
