@@ -1,6 +1,6 @@
 Welcome to Chicken Turtle Util's documentation!
 ================================================================================================
-Chicken Turtle Util (CTU) is a Python utility library.
+Chicken Turtle Util (CTU) is a Python utility library. It was renamed to `pytil`_, for the latest version, see `pytil`_.
 
 The `API reference`_ starts with an overview of all the features and then gets
 down to the nitty gritty details of each of them. Most of the reference
@@ -47,4 +47,5 @@ Indices and tables
 .. _module contents overview: api_reference.html#module-contents-overview
 .. _type language: type_language.html
 .. _semver: http://semver.org/spec/v2.0.0.html
+.. _pytil: http://pytil.readthedocs.io/en/latest/
 

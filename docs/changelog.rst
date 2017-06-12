@@ -2,6 +2,10 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+4.1.2
+-----
+Announce rename to pytil.
+
 4.1.1
 -----
 - Fixes:
