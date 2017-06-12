@@ -1,6 +1,6 @@
 Developer documentation
 =======================
-Documentation for developers/contributors of Chicken Turtle Util.
+Documentation for developers/contributors of pytil.
 
 The project follows a `simple project`_ structure and associated workflow. Please
 read `its documentation <simple project_>`_.

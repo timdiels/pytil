@@ -1,6 +1,6 @@
-Welcome to Chicken Turtle Util's documentation!
+Welcome to pytil's documentation!
 ================================================================================================
-Chicken Turtle Util (CTU) is a Python utility library. It was renamed to `pytil`_, for the latest version, see `pytil`_.
+pytil (formerly known as `Chicken Turtle Util`_) is a Python utility library.
 
 The `API reference`_ starts with an overview of all the features and then gets
 down to the nitty gritty details of each of them. Most of the reference
@@ -13,9 +13,9 @@ example, to describe exactly what arguments can
 be passed to a function.  
 
 Dependencies are grouped by module. For example, when using
-``chicken_turtle_util.data_frame``, you should ``pip install
-'chicken_turtle_util[data_frame]'``. To install dependencies of all modules, use
-``pip install 'chicken_turtle_util[all]'``.  If you are not familiar with pip,
+``pytil.data_frame``, you should ``pip install 'pytil[data_frame]'``. To
+install dependencies of all modules, use ``pip install 'pytil[all]'``.  If you
+are not familiar with pip,
 see `pip's quickstart guide <https://pip.pypa.io/en/stable/quickstart/>`_.
 
 While all features are documented and tested, the API is changed frequently.
@@ -23,7 +23,7 @@ When doing so, the `major version <semver_>`_ is bumped and a changelog is kept
 to help upgrade. Fixes will not be backported. It is recommended to pin the
 major version in your setup.py, e.g. for 2.x.y::
 
-    install_requires = ['chicken_turtle_util==2.*', ...]
+    install_requires = ['pytil.*', ...]
 
 Contents:
 
@@ -47,5 +47,5 @@ Indices and tables
 .. _module contents overview: api_reference.html#module-contents-overview
 .. _type language: type_language.html
 .. _semver: http://semver.org/spec/v2.0.0.html
-.. _pytil: http://pytil.readthedocs.io/en/latest/
+.. _chicken turtle util: http://chicken-turtle-util.readthedocs.io/en/latest/
 

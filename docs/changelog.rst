@@ -2,6 +2,12 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+5.0.0
+-----
+
+Major backwards incompatible change: Renamed root package, pypi name and
+project to pytil.
+
 4.1.2
 -----
 Announce rename to pytil.

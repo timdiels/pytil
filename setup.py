@@ -4,11 +4,11 @@ from pathlib import Path
 import os
 
 setup_args = dict(
-    version='4.1.2',
-    name='chicken_turtle_util',
+    version='5.0.0',
+    name='pytil',
     description='Python 3 utility library',
     long_description=Path('README.rst').read_text(),
-    url='https://github.com/timdiels/chicken_turtle_util',
+    url='https://github.com/timdiels/pytil',
     author='Tim Diels',
     author_email='timdiels.m@gmail.com',
     license='LGPL3',

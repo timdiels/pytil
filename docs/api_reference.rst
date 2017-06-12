@@ -13,7 +13,7 @@ be passed to a function.
 Modules
 -------
     
-.. currentmodule:: chicken_turtle_util
+.. currentmodule:: pytil
 .. autosummary::
     :toctree: api
 
@@ -45,7 +45,7 @@ Module contents overview
 ------------------------
 
 .. rubric:: algorithms
-.. currentmodule:: chicken_turtle_util.algorithms
+.. currentmodule:: pytil.algorithms
 .. autosummary::
     :nosignatures:
     
@@ -54,14 +54,14 @@ Module contents overview
     toset_from_tosets
     
 .. rubric:: asyncio
-.. currentmodule:: chicken_turtle_util.asyncio
+.. currentmodule:: pytil.asyncio
 .. autosummary::
     :nosignatures:
     
     stubborn_gather
     
 .. rubric:: click
-.. currentmodule:: chicken_turtle_util.click
+.. currentmodule:: pytil.click
 .. autosummary::
     :nosignatures:
     
@@ -71,14 +71,14 @@ Module contents overview
     password_option
     
 .. rubric:: configuration
-.. currentmodule:: chicken_turtle_util.configuration
+.. currentmodule:: pytil.configuration
 .. autosummary::
     :nosignatures:
     
     ConfigurationLoader
     
 .. rubric:: data_frame
-.. currentmodule:: chicken_turtle_util.data_frame
+.. currentmodule:: pytil.data_frame
 .. autosummary::
     :nosignatures:
     
@@ -88,14 +88,14 @@ Module contents overview
     split_array_like
     
 .. rubric:: debug
-.. currentmodule:: chicken_turtle_util.debug
+.. currentmodule:: pytil.debug
 .. autosummary::
     :nosignatures:
     
     pretty_memory_info
     
 .. rubric:: dict
-.. currentmodule:: chicken_turtle_util.dict
+.. currentmodule:: pytil.dict
 .. autosummary::
     :nosignatures:
     
@@ -105,7 +105,7 @@ Module contents overview
     assign
     
 .. rubric:: exceptions
-.. currentmodule:: chicken_turtle_util.exceptions
+.. currentmodule:: pytil.exceptions
 .. autosummary::
     :nosignatures:
     
@@ -114,35 +114,35 @@ Module contents overview
     InvalidOperationError
     
 .. rubric:: function
-.. currentmodule:: chicken_turtle_util.function
+.. currentmodule:: pytil.function
 .. autosummary::
     :nosignatures:
     
     compose
 
 .. rubric:: hashlib
-.. currentmodule:: chicken_turtle_util.hashlib
+.. currentmodule:: pytil.hashlib
 .. autosummary::
     :nosignatures:
     
     base85_digest
     
 .. rubric:: http
-.. currentmodule:: chicken_turtle_util.http
+.. currentmodule:: pytil.http
 .. autosummary::
     :nosignatures:
     
     download
 
 .. rubric:: inspect
-.. currentmodule:: chicken_turtle_util.inspect
+.. currentmodule:: pytil.inspect
 .. autosummary::
     :nosignatures:
     
     call_args
     
 .. rubric:: iterable
-.. currentmodule:: chicken_turtle_util.iterable
+.. currentmodule:: pytil.iterable
 .. autosummary::
     :nosignatures:
     
@@ -152,7 +152,7 @@ Module contents overview
     flatten
     
 .. rubric:: logging
-.. currentmodule:: chicken_turtle_util.logging
+.. currentmodule:: pytil.logging
 .. autosummary::
     :nosignatures:
     
@@ -160,21 +160,21 @@ Module contents overview
     set_level
     
 .. rubric:: multi_dict
-.. currentmodule:: chicken_turtle_util.multi_dict
+.. currentmodule:: pytil.multi_dict
 .. autosummary::
     :nosignatures:
     
     MultiDict
     
 .. rubric:: observable
-.. currentmodule:: chicken_turtle_util.observable
+.. currentmodule:: pytil.observable
 .. autosummary::
     :nosignatures:
     
     Set
     
 .. rubric:: path
-.. currentmodule:: chicken_turtle_util.path
+.. currentmodule:: pytil.path
 .. autosummary::
     :nosignatures:
     
@@ -187,14 +187,14 @@ Module contents overview
     write
     
 .. rubric:: pymysql
-.. currentmodule:: chicken_turtle_util.pymysql
+.. currentmodule:: pytil.pymysql
 .. autosummary::
     :nosignatures:
     
     patch
 
 .. rubric:: series
-.. currentmodule:: chicken_turtle_util.series
+.. currentmodule:: pytil.series
 .. autosummary::
     :nosignatures:
     
@@ -204,14 +204,14 @@ Module contents overview
     split
     
 .. rubric:: set
-.. currentmodule:: chicken_turtle_util.set
+.. currentmodule:: pytil.set
 .. autosummary::
     :nosignatures:
     
     merge_by_overlap
     
 .. rubric:: sqlalchemy
-.. currentmodule:: chicken_turtle_util.sqlalchemy
+.. currentmodule:: pytil.sqlalchemy
 .. autosummary::
     :nosignatures:
     
@@ -219,7 +219,7 @@ Module contents overview
     pretty_sql
     
 .. rubric:: test
-.. currentmodule:: chicken_turtle_util.test
+.. currentmodule:: pytil.test
 .. autosummary::
     :nosignatures:
     

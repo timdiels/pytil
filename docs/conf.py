@@ -31,16 +31,16 @@ autosummary_generate = True
 master_doc = 'index'
 
 # General information about the project.
-project = 'Chicken Turtle Util'
+project = 'pytil'
 author = 'Tim Diels'
 copyright = '2016, ' + author  # @ReservedAssignment
-pypi_name = 'chicken_turtle_util'
+pypi_name = 'pytil'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-from chicken_turtle_util import __version__
+from pytil import __version__
 release = __version__  # The full version, including alpha/beta/rc tags.
 version = release  # The short X.Y version.
 
