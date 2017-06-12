@@ -60,29 +60,25 @@ class TestStubbornGather(object):
         assert finished
         assert ex != exception
 
-        # Log the exception
-        expected = dedent('''\
+        # Log the exception and mention it in the thrown exception
+        def assert_exception_matches(actual, head, tail):
+            for expected in (head, tail):
+                assert_search_matches(actual, expected, re.MULTILINE)
+        expected_tail = dedent('''\
+              File ".*/test_asyncio.py", line .*, in fail
+                raise exception
+            Exception: ex'''
+        )
+        expected_head = dedent('''\
             .*stubborn_gather: Awaitable 0 raised:
-            Traceback \(most recent call last\):
-              .*
-              .*
-              File ".*/test_asyncio.py", line .*, in fail
-                raise exception
-            Exception: ex'''
+            Traceback \(most recent call last\):'''
         )
-        assert_search_matches(caplog.text, expected, re.MULTILINE)
-
-        # Also mention it in the thrown exception
-        expected = dedent('''\
+        assert_exception_matches(caplog.text, expected_head, expected_tail)
+        expected_head = dedent('''\
             .*Awaitable 0:
-            Traceback \(most recent call last\):
-              .*
-              .*
-              File ".*/test_asyncio.py", line .*, in fail
-                raise exception
-            Exception: ex'''
+            Traceback \(most recent call last\):'''
         )
-        assert_search_matches(str(ex.value), expected, re.MULTILINE) 
+        assert_exception_matches(str(ex.value), expected_head, expected_tail)
 
     @pytest.mark.asyncio
     async def test_cancel(self):
