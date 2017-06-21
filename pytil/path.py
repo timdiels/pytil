@@ -20,9 +20,11 @@ Extensions to pathlib.
 '''
 
 from pytil.test import assert_text_equals
-from contextlib import suppress
+from contextlib import suppress, contextmanager
 from pathlib import Path
+import tempfile
 import hashlib
+import errno
 import time
 import os
 
@@ -178,6 +180,36 @@ def chmod(path, mode, operator='=', recursive=False):
             parent = Path(parent)
             chmod_children(parent, dirs, 0o777777, operator)
             chmod_children(parent, files, 0o777666, operator)
+
+@contextmanager
+def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  # @ReservedAssignment
+    '''
+    An extension to tempfile.TemporaryDirectory
+
+    Unlike with tempfile, a Path is yielded on __enter__, not a str.
+
+    Parameters
+    ----------
+    *
+        See tempfile.TemporaryDirectory, except ``dir`` param is now of type
+        `~pathlib.Path`.
+    on_error : one of {'ignore', 'raise'}
+        Handling of failure to delete directory (happens frequently on NFS). If
+        'raise', an exception is raised, else it is ignored.
+    '''
+    if dir:
+        dir = str(dir)  # @ReservedAssignment
+    temp_dir = tempfile.TemporaryDirectory(suffix, prefix, dir)
+    try:
+        yield Path(temp_dir.name)
+    finally:
+        try:
+            temp_dir.cleanup()
+        except OSError as ex:
+            print(ex)
+            # Suppress relevant errors if ignoring failed delete
+            if on_error != 'ignore' or ex.errno != errno.ENOTEMPTY:
+                raise
 
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 

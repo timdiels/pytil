@@ -24,8 +24,11 @@ from pathlib import Path
 from contextlib import contextmanager
 from itertools import product
 import plumbum as pb
+import tempfile
 import hashlib
 import pytest
+import errno
+import os
 
 @pytest.fixture
 def path():
@@ -429,3 +432,46 @@ class TestAssertEquals(object):
             path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
         file2.chmod(mode)
         path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
+
+class TestTemporaryDirectory:
+
+    @pytest.fixture
+    def cleanup(self, mocker):
+        return mocker.patch.object(tempfile.TemporaryDirectory, 'cleanup')
+
+    def test_happy_days(self, temp_dir_cwd):  # @UnusedVariable
+        '''
+        Test tempfile.TemporaryDirectory args and happy days
+        '''
+        root_tmp_dir = Path('tmp')
+        root_tmp_dir.mkdir()
+        with path_.TemporaryDirectory('suffix', 'prefix', root_tmp_dir) as tmp_dir:
+            assert tmp_dir.is_dir()  # it's a Path, it's a dir
+            assert tmp_dir.name.startswith('prefix')
+            assert tmp_dir.name.endswith('suffix')
+        assert not tmp_dir.exists()
+
+    def test_ignore(self, temp_dir_cwd, cleanup):  # @UnusedVariable
+        '''
+        Test on_error=ignore
+        '''
+        # Ignore ENOTEMPTY (we may ignore more in the future)
+        cleanup.side_effect = OSError(errno.ENOTEMPTY, 'Error msg')
+        with path_.TemporaryDirectory():
+            pass
+
+        # But do raise everything else
+        cleanup.side_effect = OSError(errno.ECONNABORTED, 'Error msg')
+        with pytest.raises(OSError):
+            with path_.TemporaryDirectory():
+                pass
+
+    def test_raise(self, temp_dir_cwd, cleanup):  # @UnusedVariable
+        '''
+        Test on_error=raise
+        '''
+        # Let any OSError through
+        cleanup.side_effect = OSError(errno.ENOTEMPTY, 'Error msg')
+        with pytest.raises(OSError):
+            with path_.TemporaryDirectory(on_error='raise'):
+                pass
