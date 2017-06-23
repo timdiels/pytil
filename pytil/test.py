@@ -19,10 +19,11 @@
 Test utilities.
 '''
 
+from pathlib import Path
+import logging
 import pytest
 import os
 import re
-from pathlib import Path
 
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):
@@ -38,6 +39,49 @@ def temp_dir_cwd(tmpdir):
 
     #
     os.chdir(str(original_cwd))
+
+def reset_loggers(name, root=True):
+    '''
+    Reset loggers matching name pattern
+
+    ``logging.basicConfig`` cannot be reset, so subsequent calls to it will be
+    ignored as usual.
+
+    Parameters
+    ----------
+    name : str
+        Reset only loggers whose name match this regex pattern. This does not
+        include the root logger, see the ``root`` param.
+    root : bool
+        Reset the root logger iff True.
+
+    Examples
+    --------
+    To reset your loggers and the root logger before each test::
+
+        @pytest.fixture(autouse=True)
+        def global_auto():
+            reset_loggers('mypkg(\..*)?')
+    '''
+    pattern = re.compile(name)
+
+    # Reset root logger
+    # Note: it is not included in loggerDict
+    # Note: logging.getLogger(root_logger.name) != root_logger
+    if root:
+        _reset_logger(logging.getLogger())
+
+    # Reset other loggers
+    for name, logger in logging.Logger.manager.loggerDict.items():  # @UndefinedVariable
+        if isinstance(logger, logging.Logger) and pattern.fullmatch(name):
+            _reset_logger(logger)
+
+def _reset_logger(logger):
+    # Remove handlers and filters
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+    for filter_ in logger.filters[:]:
+        logger.removeFilter(filter_)
 
 def assert_text_equals(actual, expected):
     '''

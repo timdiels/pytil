@@ -227,4 +227,5 @@ Module contents overview
     assert_text_equals
     assert_matches
     assert_search_matches
+    reset_loggers
     temp_dir_cwd
