@@ -233,6 +233,7 @@ Module contents overview
     
     assert_text_contains
     assert_text_equals
+    assert_lines_equal
     assert_matches
     assert_search_matches
     reset_loggers

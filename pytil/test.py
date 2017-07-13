@@ -19,6 +19,7 @@
 Test utilities.
 '''
 
+from itertools import zip_longest
 from pathlib import Path
 import logging
 import pytest
@@ -101,4 +102,42 @@ def assert_matches(actual, pattern, flags=0):
 def assert_search_matches(actual, pattern, flags=0):
     assert re.search(pattern, actual, flags), 'Actual:{}\n\nExpected a subset to match:\n{}'.format(actual, pattern)
 
+def assert_lines_equal(actual, expected):
+    '''
+    Assert (long) lines equal
+
+    Reports first line that differs, in detail.
+
+    Parameters
+    ----------
+    actual : iterable(str)
+    expected : iterable(str)
+    '''
+    # Note: the for loop is much faster than a single assert
+    line_pairs = zip_longest(actual, expected)
+    unequal_counts_msg = (
+        'There are {} lines than expected, '
+        'or there is a None value in {} lines'
+    )
+    for i, (actual_line, expected_line) in enumerate(line_pairs):
+        assert actual_line is not None, unequal_counts_msg.format('fewer', 'actual')
+        assert expected_line is not None, unequal_counts_msg.format('more', 'expected')
+        _assert_line_equals(actual_line, expected_line, i)
+
+def _assert_line_equals(actual, expected, i):
+    '''
+    Assert long line equals
+
+    Parameters
+    ----------
+    actual : str
+    expected : str
+    i : int
+        Line index (if coming from a collection of lines)
+    '''
+    if actual != expected:
+        diff = line_diff(actual, expected)
+        assert False, 'Line {} (0-based) differs (-actual, +expected) :\n{}'.format(i, diff)
+
+from pytil.difflib import line_diff
 from pytil import path as path_  # yay, 'resolving' circular dependencies

@@ -67,7 +67,7 @@ setup_args = dict(
         ],
         'set': [],
         'sqlalchemy': ['sqlparse==0.*'],
-        'test': [],
+        'test': ['more_itertools==2.*'],
     },
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
