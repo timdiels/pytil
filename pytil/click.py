@@ -45,6 +45,13 @@ def assert_runs(*args, **kwargs):
     Returns
     -------
     result : click.testing.Result
+
+    Examples
+    --------
+    >>> @click.command()
+    ... def main():
+    ...     pass
+    >>> result = assert_runs(main, ['--help'])
     '''
     result = CliRunner().invoke(*args, **kwargs)
     if result.exception:
