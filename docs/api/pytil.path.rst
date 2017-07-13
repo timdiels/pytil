@@ -12,6 +12,7 @@ pytil.path
    hash
    read
    remove
+   sorted_lines
    write
 
 .. autofunction:: assert_mode
@@ -19,4 +20,5 @@ pytil.path
 .. autofunction:: hash
 .. autofunction:: read
 .. autofunction:: remove
+.. autofunction:: sorted_lines
 .. autofunction:: write

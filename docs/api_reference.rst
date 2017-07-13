@@ -192,6 +192,7 @@ Module contents overview
     hash
     read
     remove
+    sorted_lines
     write
     
 .. rubric:: pymysql

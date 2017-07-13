@@ -269,6 +269,21 @@ def hash(path, hash_function=hashlib.sha512):
                 hash_.update(buffer)
     return hash_
 
+def sorted_lines(file):
+    '''
+    Lines of file, sorted
+
+    Parameters
+    ----------
+    path : pathlib.Path
+
+    Returns
+    -------
+    [str]
+        Sorted lines of file
+    '''
+    return sorted(file.read_text().splitlines())
+
 def assert_mode(path, mode):
     '''
     Assert last 3 octal mode digits match given mode exactly
