@@ -24,6 +24,7 @@ Modules
     data_frame
     debug
     dict
+    difflib
     exceptions
     function
     hashlib
@@ -103,7 +104,14 @@ Module contents overview
     DefaultDict
     invert
     assign
+
+.. rubric:: difflib
+.. currentmodule:: pytil.difflib
+.. autosummary::
+    :nosignatures:
     
+    line_diff
+
 .. rubric:: exceptions
 .. currentmodule:: pytil.exceptions
 .. autosummary::

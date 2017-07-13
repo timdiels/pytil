@@ -47,6 +47,9 @@ setup_args = dict(
             'pytest-mock==1.*'
         ],
         'dict': ['more-itertools==2.*'],
+        'difflib': [
+            'more_itertools==2.*'
+        ],
         'exceptions': [],
         'function': [],
         'hashlib': [],
