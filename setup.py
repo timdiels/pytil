@@ -128,13 +128,23 @@ setup_args = dict(
         'Topic :: Utilities'
     ],
 )
+extras = setup_args['extras_require']
+
+# Propagate dependencies between modules that depend on each other
+#
+# depends_on should be listed in such a way that an extra does not appear as a
+# dependent, after it has been listed as a dependency
+def depends_on(dependent, dependency, extras):
+    extras[dependent] = list(set(extras[dependent]) | set(extras[dependency]))
+depends_on('test', 'difflib', extras)
+depends_on('path', 'test', extras)
 
 # Generate extras_require['all'], union of all extras
 all_extra_dependencies = []
 for dependencies in setup_args['extras_require'].values():
     all_extra_dependencies.extend(dependencies)
 all_extra_dependencies = list(set(all_extra_dependencies))
-setup_args['extras_require']['all'] = all_extra_dependencies
+extras['all'] = all_extra_dependencies
 
 # Generate package data
 #
