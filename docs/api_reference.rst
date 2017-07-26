@@ -4,7 +4,7 @@ API reference
 See modules for a short description of each modules. For a full listing of the
 contents of all modules, see the module contents overview.
 
-The API reference makes heavy use of a `type language`_; for
+The API reference makes use of a `type language`_; for
 example, to describe exactly what arguments can
 be passed to a function.  
 
