@@ -319,3 +319,38 @@ def assert_equals(file1, file2, contents=True, name=True, mode=True):
         assert_text_equals(read(file1), read(file2))
     if mode:
         assert file1.stat().st_mode == file2.stat().st_mode
+
+def tsv_lines(file, skip=0):
+    '''
+    Lines of tab separated file
+
+    Ignores empty lines and comment lines starting with #
+
+    For advanced stuff, use pandas.read_table
+
+    Parameters
+    ----------
+    file : Path
+    skip : int
+        Number of lines to skip (at the start) after empty/comment lines have
+        been removed.
+
+    Returns
+    -------
+    iterable(line :: [str])
+    '''
+    with file.open() as f:
+        for line in f.readlines():
+            line = line.rstrip('\n\r')
+
+            # Skip comment and empty lines
+            if line.startswith('#') or not line.strip():
+                continue
+
+            # Skip first `skip` lines
+            if skip:
+                skip -= 1
+                continue
+
+            #
+            yield line.split('\t')

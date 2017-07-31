@@ -193,6 +193,7 @@ Module contents overview
     read
     remove
     sorted_lines
+    tsv_lines
     write
     
 .. rubric:: pymysql

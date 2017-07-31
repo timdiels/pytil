@@ -13,6 +13,7 @@ pytil.path
    read
    remove
    sorted_lines
+   tsv_lines
    write
 
 .. autofunction:: assert_mode
@@ -21,4 +22,5 @@ pytil.path
 .. autofunction:: read
 .. autofunction:: remove
 .. autofunction:: sorted_lines
+.. autofunction:: tsv_lines
 .. autofunction:: write
