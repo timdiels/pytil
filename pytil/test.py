@@ -90,7 +90,7 @@ def assert_text_equals(actual, expected):
     '''
     Assert long strings are equal
     '''
-    assert actual == expected, '\nActual:\n{}\n\nExpected:\n{}'.format(actual, expected)
+    assert_lines_equal(actual.splitlines(), expected.splitlines())
 
 def assert_text_contains(whole, part):
     '''
