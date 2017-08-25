@@ -21,10 +21,12 @@ Test utilities.
 
 from itertools import zip_longest
 from pathlib import Path
+from lxml import objectify, etree  # @UnresolvedImport
 import logging
 import pytest
 import os
 import re
+import io
 
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):
@@ -138,6 +140,31 @@ def _assert_line_equals(actual, expected, i):
     if actual != expected:
         diff = line_diff(actual, expected)
         assert False, 'Line {} (0-based) differs (-actual, +expected) :\n{}'.format(i, diff)
+
+def assert_xml_equals(actual, expected):
+    '''
+    Assert xml files/strings are equal
+
+    Parameters
+    ----------
+    actual, expected : IO or Path or str
+        File object or Path to XML file, or XML contents as string
+    '''
+    # Note: if this ever breaks, there is a way to write out XML to file
+    # canonicalised. StringIO may help in not having to use any temp files
+    # http://lxml.de/api/lxml.etree._ElementTree-class.html#write_c14n
+    def normalised(xml):
+        if isinstance(xml, str):
+            xml = objectify.fromstring(str(xml))
+        else:
+            if isinstance(xml, Path):
+                xml = str(xml)
+            xml = objectify.parse(xml)
+        xml.getroot().nsmap = {}
+        f = io.BytesIO()
+        xml.write_c14n(f, exclusive=True)
+        return f.getvalue().decode()
+    assert_text_equals(normalised(actual), normalised(expected))
 
 from pytil.difflib import line_diff
 from pytil import path as path_  # yay, 'resolving' circular dependencies

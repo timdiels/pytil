@@ -46,9 +46,9 @@ setup_args = dict(
             'pytest-localserver==0.*',
             'pytest-mock==1.*'
         ],
-        'dict': ['more-itertools==2.*'],
+        'dict': ['more-itertools==3.*'],
         'difflib': [
-            'more_itertools==2.*'
+            'more-itertools==3.*'
         ],
         'exceptions': [],
         'function': [],
@@ -67,7 +67,10 @@ setup_args = dict(
         ],
         'set': [],
         'sqlalchemy': ['sqlparse==0.*'],
-        'test': ['more_itertools==2.*'],
+        'test': [
+            'lxml',
+            'more-itertools==3.*',
+        ],
     },
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
