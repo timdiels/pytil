@@ -154,7 +154,7 @@ extras['all'] = all_extra_dependencies
 # Anything placed underneath a directory named 'data' in a package, is added to
 # the package_data of that package; i.e. included in the sdist/bdist and
 # accessible via pkg_resources.resource_*
-project_root = Path(__file__).with_name(setup_args['name'])
+project_root = Path(__file__).parent
 package_data = defaultdict(list)
 for package in setup_args['packages']:
     package_dir = project_root / package.replace('.', '/')
