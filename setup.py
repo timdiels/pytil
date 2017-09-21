@@ -21,7 +21,8 @@ setup_args = dict(
             'networkx==1.*',
             'numpy==1.*',
             'scikit-learn==0.*',
-            'scipy==0.*'
+            'scipy==0.*',
+            'more-itertools==3.*',
         ],
         'click': ['click==6.*'],
         'configuration': ['pyxdg==0.*'],
@@ -50,7 +51,7 @@ setup_args = dict(
         ],
         'exceptions': [],
         'hashlib': [],
-        'iterable': [],
+        'iterable': ['more-itertools==3.*'],
         'logging': [],
         'multi_dict': [],
         'numpy': [],

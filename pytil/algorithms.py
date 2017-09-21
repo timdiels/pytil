@@ -21,7 +21,7 @@ Various algorithms, e.g. `multi_way_partitioning` to greedily divide weighted it
 
 from sklearn.utils.extmath import cartesian
 from collections_extended import bag, frozenbag, setlist
-from pytil.iterable import sliding_window
+from more_itertools import windowed
 import networkx as nx
 import numpy as np
 
@@ -149,7 +149,7 @@ def toset_from_tosets(*tosets):  # Note: a setlist is perfect representation of 
     graph = nx.DiGraph()
     for toset in tosets:
         graph.add_nodes_from(toset)
-        graph.add_edges_from(sliding_window(reversed(toset)))
+        graph.add_edges_from(windowed(reversed(toset)))
 
     # No cycles allowed
     if not nx.is_directed_acyclic_graph(graph): #TODO could rely on NetworkXUnfeasible https://networkx.github.io/documentation/networkx-1.9/reference/generated/networkx.algorithms.dag.topological_sort.html
