@@ -22,7 +22,7 @@ Test utilities.
 from contextlib import contextmanager
 from itertools import zip_longest
 from pathlib import Path
-from lxml import objectify, etree  # @UnresolvedImport
+from lxml import objectify  # @UnresolvedImport
 import logging
 import pytest
 import os
