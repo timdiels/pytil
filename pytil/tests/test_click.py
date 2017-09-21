@@ -22,8 +22,6 @@ Test pytil.cli
 from pytil import click as click_
 from click.testing import CliRunner
 import click
-import sys
-import pytest
 
 def test_options():
     '''
@@ -54,16 +52,3 @@ def test_options():
 
     result = CliRunner().invoke(main, ['--option', '5', '--password', 'pass', 'arg'])
     assert not result.exception, result.output
-
-def test_assert_runs():
-    '''
-    Test args are passed and when exit non-zero, raise
-    '''
-    @click.command()
-    @click.option('--arg')
-    def main(arg):
-        if arg == 'fail':
-            sys.exit(1)
-    click_.assert_runs(main, ['--arg', 'nofail'])
-    with pytest.raises(AssertionError):
-        click_.assert_runs(main, ['--arg', 'fail'])

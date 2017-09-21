@@ -20,9 +20,7 @@
 '''
 
 import click
-from click.testing import CliRunner
 from functools import partial
-import traceback
 
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
@@ -32,30 +30,3 @@ argument = partial(click.argument, required=True)
 
 password_option = partial(option, prompt=True, hide_input=True, show_default=False)
 '''Like click.option, but by default ``prompt=True, hide_input=True, show_default=False, required=True``.'''
-
-def assert_runs(*args, **kwargs):
-    '''
-    Invoke click command and assert it completes successfully
-
-    Parameters
-    ----------
-    *args, **kwargs
-        CliRunner.invoke arguments, excluding catch_exceptions
-
-    Returns
-    -------
-    result : click.testing.Result
-
-    Examples
-    --------
-    >>> @click.command()
-    ... def main():
-    ...     pass
-    >>> result = assert_runs(main, ['--help'])
-    '''
-    result = CliRunner().invoke(*args, **kwargs)
-    if result.exception:
-        print(result.output)
-        traceback.print_exception(*result.exc_info)
-        assert False
-    return result
