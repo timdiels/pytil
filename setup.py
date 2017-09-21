@@ -50,7 +50,6 @@ setup_args = dict(
         ],
         'exceptions': [],
         'hashlib': [],
-        'inspect': [],
         'iterable': [],
         'logging': [],
         'multi_dict': [],
