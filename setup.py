@@ -42,7 +42,6 @@ setup_args = dict(
             'pytest-catchlog==1.*',
             'pytest-cov==2.*',
             'pytest-env==0.*',
-            'pytest-localserver==0.*',
             'pytest-mock==1.*'
         ],
         'dict': ['more-itertools==3.*'],
@@ -51,7 +50,6 @@ setup_args = dict(
         ],
         'exceptions': [],
         'hashlib': [],
-        'http': ['requests==2.*'],
         'inspect': [],
         'iterable': [],
         'logging': [],
