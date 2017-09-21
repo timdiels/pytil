@@ -1,0 +1,4 @@
+<ns:attribute xmlns:ns='https://example.com/ns'>
+  <ns:name>attr</ns:name>
+  <ns:value>val</ns:value>
+</ns:attribute>

@@ -19,7 +19,11 @@
 Test pytil.test
 '''
 
-from pytil.test import reset_loggers, assert_dir_unchanged, assert_text_equals
+from pytil.pkg_resources import resource_path
+from pytil.test import (
+    reset_loggers, assert_dir_unchanged, assert_text_equals, assert_xml_equals,
+    assert_matches, assert_search_matches
+)
 from pathlib import Path
 from textwrap import dedent
 import logging
@@ -63,5 +67,33 @@ def test_assert_dir_unchanged(temp_dir_cwd):  # @UnusedVariable
     assert_text_equals(ex.value.args[0], dedent('''
             Actual: {'dir/child'}
             Expected: set()'''
+        )
+    )
+
+def test_assert_xml_equals(temp_dir_cwd):  # @UnusedVariable
+    '''
+    Test assert_xml_equals, simple happy days
+    '''
+    file1a = resource_path(__name__, 'data/test/assert_xml_equals/file1a.xml')
+    file1b = resource_path(__name__, 'data/test/assert_xml_equals/file1b.xml')
+    file2 = resource_path(__name__, 'data/test/assert_xml_equals/file2.xml')
+
+    # When equal but formatted differently, with namespaces aliased differently,
+    # consider them equal
+    assert_xml_equals(file1a, file1b)
+
+    # When a formatting, namespaces are the same, but a value differs, consider them different
+    with pytest.raises(AssertionError) as ex:
+        assert_xml_equals(file1a, file2)
+    assert_matches(ex.value.args[0], dedent('''\
+            XMLs differ
+            
+            Actual XML:
+            PosixPath\('.*/file1a.xml'\)
+            
+            Expected XML:
+            PosixPath\('.*/file2.xml'\)
+            
+            Difference: text: 'val' != 'val2\''''
         )
     )

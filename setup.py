@@ -72,6 +72,7 @@ setup_args = dict(
         'test': [
             'lxml',
             'more-itertools==3.*',
+            'formencode',
         ],
     },
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers

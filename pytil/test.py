@@ -19,10 +19,11 @@
 Test utilities.
 '''
 
+from formencode.doctest_xml_compare import xml_compare
 from contextlib import contextmanager
 from itertools import zip_longest
 from pathlib import Path
-from lxml import objectify  # @UnresolvedImport
+from lxml import etree  # @UnresolvedImport
 import logging
 import pytest
 import os
@@ -144,7 +145,10 @@ def _assert_line_equals(actual, expected, i):
 
 def assert_xml_equals(actual, expected):
     '''
-    Assert xml files/strings are equal
+    Assert xml files/strings are equivalent
+
+    Differences in formatting or attribute order are ignored. Comments are
+    ignored as well. Differences in element order are significant though!
 
     Parameters
     ----------
@@ -154,18 +158,17 @@ def assert_xml_equals(actual, expected):
     # Note: if this ever breaks, there is a way to write out XML to file
     # canonicalised. StringIO may help in not having to use any temp files
     # http://lxml.de/api/lxml.etree._ElementTree-class.html#write_c14n
-    def normalised(xml):
+    def tree(xml):
         if isinstance(xml, str):
-            xml = objectify.fromstring(str(xml))
+            xml = etree.fromstring(str(xml))
         else:
             if isinstance(xml, Path):
                 xml = str(xml)
-            xml = objectify.parse(xml)
-        xml.getroot().nsmap = {}
-        f = io.BytesIO()
-        xml.write_c14n(f, exclusive=True)
-        return f.getvalue().decode()
-    assert_text_equals(normalised(actual), normalised(expected))
+            xml = etree.parse(xml)
+        return xml.getroot()
+    def raise_assert(msg):
+        assert False, 'XMLs differ\n\nActual XML:\n{!r}\n\nExpected XML:\n{!r}\n\nDifference: {}'.format(actual, expected, msg)
+    xml_compare(tree(actual), tree(expected), reporter=raise_assert)
 
 @contextmanager
 def assert_dir_unchanged(path, ignore=()):
