@@ -25,16 +25,14 @@ import click
 
 def test_options():
     '''
-    Test our options and arguments
+    Test our options
     '''
     @click.command()
     @click_.option('--option', default=555)
-    @click_.argument('argument')
     @click_.password_option('--password')
-    def main(option, argument, password):
+    def main(option, password):
         assert option == 5
         assert password == 'pass'
-        assert argument == 'arg'
 
     params = {x.opts[0]: x for x in main.params}
     print(main)
@@ -42,13 +40,11 @@ def test_options():
     assert '--option' in params
     assert params['--option'].show_default
     assert params['--option'].required
-    assert 'argument' in params
-    assert params['argument'].required
     assert '--password' in params
     assert params['--password'].prompt
     assert params['--password'].hide_input
     assert not params['--password'].show_default
     assert params['--password'].required
 
-    result = CliRunner().invoke(main, ['--option', '5', '--password', 'pass', 'arg'])
+    result = CliRunner().invoke(main, ['--option', '5', '--password', 'pass'])
     assert not result.exception, result.output

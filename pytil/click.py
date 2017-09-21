@@ -25,8 +25,5 @@ from functools import partial
 option = partial(click.option, show_default=True, required=True)
 '''Like `click.option`, but by default ``show_default=True, required=True``'''
 
-argument = partial(click.argument, required=True)
-'''Like `click.argument`, but by default ``required=True``'''
-
 password_option = partial(option, prompt=True, hide_input=True, show_default=False)
 '''Like click.option, but by default ``prompt=True, hide_input=True, show_default=False, required=True``.'''
