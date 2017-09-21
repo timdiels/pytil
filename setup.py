@@ -60,6 +60,7 @@ setup_args = dict(
         'multi_dict': [],
         'observable': [],
         'path': [],
+        'pkg_resources': [],
         'pymysql': ['pymysql==0.*'],
         'series': [
             'numpy==1.*',
