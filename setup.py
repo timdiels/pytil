@@ -58,6 +58,7 @@ setup_args = dict(
         'iterable': [],
         'logging': [],
         'multi_dict': [],
+        'numpy': [],
         'observable': [],
         'path': [],
         'pkg_resources': [],
