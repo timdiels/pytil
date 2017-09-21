@@ -475,3 +475,66 @@ class TestTemporaryDirectory:
         with pytest.raises(OSError):
             with path_.TemporaryDirectory(on_error='raise'):
                 pass
+
+def is_descendant_parameters():
+    # descendant != ancestor
+    parameters = [
+        # descendant, ancestor, expected=True
+
+        # Relative paths only!
+        (Path('a/b'), Path('a')),
+        # Use of .
+        (Path('a/./b'), Path('a')),
+        (Path('a/b'), Path('a/.')),
+        # Use of ..
+        (Path('a/b'), Path('a/b/..')),
+        (Path('a/b'), Path('a/../a')),
+        (Path('a/../a/b'), Path('a')),
+    ]
+
+    # Add is_descendant and expected
+    parameters = [
+        (is_descendant, descendant, ancestor, True)
+        for is_descendant in (path_.is_descendant, path_.is_descendant_or_self)
+        for descendant, ancestor in parameters
+    ]
+
+    # Add with descendant and ancestor swapped
+    parameters.extend(
+        (is_descendant, ancestor, descendant, False)
+        for is_descendant, descendant, ancestor, _ in parameters[:]
+    )
+
+    # descendant == ancestor
+    self_parameters = [
+        # Relative paths only!
+        (Path('a/b'), Path('a/b')),
+        # Use of .
+        (Path('a/./b'), Path('a/b')),
+        (Path('a/b'), Path('a/b/.')),
+        # Use of ..
+        (Path('a/b'), Path('a/b/c/..')),
+        (Path('a/b/../b'), Path('a/b')),
+    ]
+    self_parameters = [
+        (is_descendant, descendant, ancestor, expected)
+        for descendant, ancestor in self_parameters
+        for is_descendant, expected in (
+            (path_.is_descendant, False),
+            (path_.is_descendant_or_self, True)
+        )
+    ]
+
+    # Add self parameters
+    parameters.extend(self_parameters)
+
+    return parameters
+
+@pytest.mark.parametrize('is_descendant, descendant, ancestor, expected', is_descendant_parameters())
+def test_is_descendant(is_descendant, ancestor, descendant, expected):
+    '''
+    Test is_descendant*
+    '''
+    os.makedirs(str(ancestor), exist_ok=True)
+    os.makedirs(str(descendant), exist_ok=True)
+    assert is_descendant(descendant, ancestor) == expected

@@ -354,3 +354,72 @@ def tsv_lines(file, skip=0):
 
             #
             yield line.split('\t')
+
+def is_descendant(descendant, ancestor):
+    '''
+    Get whether path is descendant of other path
+
+    Uses the absolute path, so symlinks, ... do not affect this.
+
+    Parameters
+    ----------
+    descendant : pathlib.Path
+    ancestor : pathlib.Path
+    
+    Returns
+    -------
+    bool
+
+    See also
+    --------
+    is_descendant_or_self : Get whether path is descendant of other path or is equivalent to it
+
+    Examples
+    --------
+    >>> is_descendant(Path('a'), Path('a'))
+    False
+    >>> is_descendant(Path('a/b'), Path('a'))
+    True
+    >>> is_descendant(Path('a'), Path('a/b'))
+    False
+    >>> is_descendant(Path('a'), Path('a/..'))
+    False
+    '''
+    return _is_descendant(descendant, ancestor, or_self=False)
+
+def is_descendant_or_self(descendant, ancestor):
+    '''
+    Get whether path is descendant of other path or is equivalent to it
+
+    Uses the absolute path, so symlinks, ... do not affect this.
+
+    Parameters
+    ----------
+    descendant : pathlib.Path
+    ancestor : pathlib.Path
+
+    Returns
+    -------
+    bool
+
+    See also
+    --------
+    is_descendant : Get whether path is descendant of other path
+
+    Examples
+    --------
+    >>> is_descendant_or_self(Path('a'), Path('a'))
+    True
+    >>> is_descendant_or_self(Path('a/b'), Path('a'))
+    True
+    >>> is_descendant_or_self(Path('a'), Path('a/b'))
+    False
+    >>> is_descendant_or_self(Path('a'), Path('a/..'))
+    False
+    '''
+    return _is_descendant(descendant, ancestor, or_self=True)
+
+def _is_descendant(descendant, ancestor, or_self):
+    ancestor = ancestor.resolve()
+    descendant = descendant.resolve()
+    return ancestor in descendant.parents or (or_self and ancestor == descendant)
