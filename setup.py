@@ -23,7 +23,6 @@ setup_args = dict(
             'scikit-learn==0.*',
             'scipy==0.*'
         ],
-        'asyncio': [],
         'click': ['click==6.*'],
         'configuration': ['pyxdg==0.*'],
         'data_frame': [
