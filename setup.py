@@ -50,7 +50,6 @@ setup_args = dict(
             'more-itertools==3.*'
         ],
         'exceptions': [],
-        'function': [],
         'hashlib': [],
         'http': ['requests==2.*'],
         'inspect': [],
