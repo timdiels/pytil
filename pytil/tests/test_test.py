@@ -19,8 +19,11 @@
 Test pytil.test
 '''
 
-from pytil.test import reset_loggers
+from pytil.test import reset_loggers, assert_dir_unchanged, assert_text_equals
+from pathlib import Path
+from textwrap import dedent
 import logging
+import pytest
 
 def test_reset_loggers():
     '''
@@ -41,3 +44,24 @@ def test_reset_loggers():
     for logger in loggers:
         assert not logger.handlers
         assert not logger.filters
+
+def test_assert_dir_unchanged(temp_dir_cwd):  # @UnusedVariable
+    '''
+    Test test.assert_dir_unchanged
+    '''
+    dir_ = Path('dir')
+    dir_.mkdir()
+
+    # When dir unchanged, nothing happens
+    with assert_dir_unchanged(dir_):
+        pass
+
+    # When dir does change, raise
+    with pytest.raises(AssertionError) as ex:
+        with assert_dir_unchanged(dir_):
+            (dir_ / 'child').mkdir()
+    assert_text_equals(ex.value.args[0], dedent('''
+            Actual: {'dir/child'}
+            Expected: set()'''
+        )
+    )

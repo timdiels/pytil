@@ -19,6 +19,7 @@
 Test utilities.
 '''
 
+from contextlib import contextmanager
 from itertools import zip_longest
 from pathlib import Path
 from lxml import objectify, etree  # @UnresolvedImport
@@ -165,6 +166,37 @@ def assert_xml_equals(actual, expected):
         xml.write_c14n(f, exclusive=True)
         return f.getvalue().decode()
     assert_text_equals(normalised(actual), normalised(expected))
+
+@contextmanager
+def assert_dir_unchanged(path, ignore=()):
+    '''
+    Assert dir unchanged after code block
+
+    Parameters
+    ----------
+    ignore : Collection[pathlib.Path]
+        Paths to ignore in comparison
+
+    Examples
+    --------
+    ::
+        with assert_dir_unchanged(Path('input')):
+            Path('input/child').mkdir()
+        # assert raised here
+    '''
+    def contents():
+        children = set(path.iterdir())
+        ignored_children = {
+            child
+            for child in children
+            for path in ignore
+            if path_.is_descendant_or_self(child, path)
+        }
+        return set(map(str, children - ignored_children))
+    expected = contents()
+    yield
+    actual = contents()
+    assert actual == expected, '\nActual: {}\nExpected: {}'.format(actual, expected)
 
 from pytil.difflib import line_diff
 from pytil import path as path_  # yay, 'resolving' circular dependencies
