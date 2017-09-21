@@ -105,33 +105,3 @@ def invert(dict_):
     for k, val in dict_.items():
         result[val].add(k)
     return dict(result)
-
-def assign(destination, source):
-    '''
-    Assign one dict to the other through mutations
-
-    Roughly put, ``destination := source``. More formally, after the call,
-    ``destination == source`` is true and ``id(destination)`` is unchanged.
-
-    Parameters
-    ----------
-    destination : dict
-        dict to assign to
-    source : dict
-        dict to assign from
-
-    Examples
-    --------
-    >>> import pytil.dict as dict_
-    >>> destination = {1: 2, 3: 4}
-    >>> source = {3: 5, 6: 7}
-    >>> dict_.assign(destination, source)
-    >>> assert destination == {3: 5, 6: 7} 
-    '''
-    # remove extra
-    for key in destination.keys() - source.keys():
-        del destination[key]
-
-    # assign the rest
-    for key, value in source.items():
-        destination[key] = value
