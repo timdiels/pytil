@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-sqlalchemy utilities. Contains pretty sql formatting and temporarily enabling sqlalchemy logging
+sqlalchemy extensions.
 '''
 
 from pytil import logging as logging_
@@ -25,7 +25,7 @@ import sqlparse
 
 def log_sql():
     '''
-    Temporarily log SQL statements
+    Temporarily log SQL statements.
 
     Examples
     --------
@@ -36,16 +36,17 @@ def log_sql():
 
 def pretty_sql(statement):
     '''
-    Pretty format sql
+    Pretty format SQL.
 
     Parameters
     ----------
-    statement : hasattr('__str__')
-        anything whose str() returns SQL
+    statement : ~typing.Any
+        SQL statement or more generally any object whose ``__str__`` returns
+        SQL.
 
     Returns
     -------
     str
-        Pretty formatted SQL
+        Pretty formatted SQL.
     '''
     return sqlparse.format(str(statement), reindent=True, keyword_case='upper')

@@ -16,30 +16,30 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-`dict` utilities
+`python:dict` utilities.
 '''
 
 from collections import defaultdict
 from pprint import pprint
 from more_itertools import take
 
-def pretty_print_head(dict_, count=10):
+def pretty_print_head(dict_, count=10): #TODO only format and rename to pretty_head
     '''
-    Pretty print some items of a dict
+    Pretty print some items of a dict.
 
-    For an unordered dict, `count` arbitrary items will be printed. 
+    For an unordered dict, ``count`` arbitrary items will be printed.
 
     Parameters
     ----------
-    dict_ : dict
-        Dict to print from
-    count : int, optional
+    dict_ : ~typing.Dict
+        Dict to print from.
+    count : int
         Number of items to print.
 
     Raises
     ------
     ValueError
-        When ``count < 1``
+        When ``count < 1``.
     '''
     if count < 1:
         raise ValueError('`count` must be at least 1')
@@ -49,14 +49,15 @@ def pretty_print_head(dict_, count=10):
 class DefaultDict(defaultdict):
 
     '''
-    Replacement for `collections.defaultdict`, its default value factory takes a
-    key argument
+    Default dict whose factory takes a key argument.
+
+    A replacement for `collections.defaultdict`.
 
     Parameters
     ----------
-    default_factory : (key :: any) -> (value :: any)
+    default_factory : ~typing.Callable[[~typing.Any], ~typing.Any]
         Function that is called with the missing key and returns the default
-        value to use for it
+        value to use for it.
     '''
 
     def __missing__(self, key):
@@ -66,29 +67,28 @@ class DefaultDict(defaultdict):
             ret = self[key] = self.default_factory(key)
             return ret
 
-def invert(dict_):
+def invert(dict_): #TODO return a MultiDict right away
     '''
-    Invert dict by swapping each value with its key
+    Invert dict by swapping each value with its key.
 
     Parameters
     ----------
-    dict_ : {hashable => hashable}
-        Dict to invert
+    dict_ : ~typing.Dict[~typing.Hashable, ~typing.Hashable]
+        Dict to invert.
 
     Returns
     -------
-    {hashable => {hashable}}
-        `dict_` copy with key and value swapped, a multi-dict (as some keys in
-        `dict_` may have had the same value).
+    ~typing.Dict[~typing.Hashable, ~typing.Set[~typing.Hashable]]
+        Dict with keys and values swapped.
 
     See also
     --------
-    MultiDict : A mutable multi-dict view of a ``{hashable => {hashable}}`` dict.
+    pytil.multi_dict.MultiDict : Multi-dict view of a ``Dict[Hashable, Set[Hashable]]`` dict.
 
     Notes
     -----
     If your dict never has 2 keys mapped to the same value, you can convert it
-    to a ``{hashable => any}`` dict using::
+    to a ``Dict[Hashable, Hashable]`` dict using::
 
         from pytil.multi_dict import MultiDict
         inverted_dict = dict(MultiDict(inverted_dict))

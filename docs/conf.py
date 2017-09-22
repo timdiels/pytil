@@ -16,16 +16,24 @@
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.mathjax',
+    'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'numpydoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.coverage',
     'sphinx.ext.autosummary',
+    'sphinx.ext.intersphinx',
 ]
 
-numpydoc_show_class_members = False  # setting this to True breaks autosummary and not having autosummary breaks numpydoc
-autosummary_generate = True
+intersphinx_mapping = {
+    'click': ('http://click.pocoo.org/6/', None),
+    'collections_extended': ('http://collections-extended.lenzm.net/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy', None),
+    'pandas': ('http://pandas.pydata.org/pandas-docs/stable/', None),
+    'python': ('https://docs.python.org/3/', None),
+    'setuptools': ('http://setuptools.readthedocs.io/en/latest/', None),
+}
+
+default_role = 'any'
+
+autodoc_default_flags = ['members', 'show-inheritance']
 
 # The master toctree document.
 master_doc = 'index'
@@ -33,7 +41,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'pytil'
 author = 'Tim Diels'
-copyright = '2016, ' + author  # @ReservedAssignment
+copyright = '2015, ' + author  # @ReservedAssignment
 pypi_name = 'pytil'
 
 # The version info for the project you're documenting, acts as replacement for

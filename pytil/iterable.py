@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Utility functions for working with iterables
+Utilities for working with iterables.
 
 See also
 --------
@@ -29,17 +29,17 @@ from more_itertools import windowed
 
 def is_sorted(iterable):
     '''
-    Get whether iterable is sorted ascendingly
+    Get whether iterable is sorted ascendingly.
 
     Parameters
     ----------
-    iterable : iterable(comparable)
-        Iterable whose ordering to check
+    iterable : ~typing.Iterable[~typing.Any]
+        Iterable of comparable objects whose ordering to check.
 
     Returns
     -------
     bool
-        Whether iterable is sorted
+        Whether iterable is sorted.
 
     Notes
     -----

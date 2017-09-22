@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Debug utilities. Contains `pretty_memory_info`, formats a memory usage message
+Debug utilities.
 '''
 
 import os
@@ -24,12 +24,17 @@ import psutil
 
 def pretty_memory_info():
     '''
-    Get pretty memory info message
+    Pretty format memory info.
 
     Returns
     -------
     str
-        Memory usage, ...
+        Memory info.
+
+    Examples
+    --------
+    >>> pretty_memory_info()
+    '5MB memory usage'
     '''
     process = psutil.Process(os.getpid())
     return '{}MB memory usage'.format(int(process.memory_info().rss / 2**20))

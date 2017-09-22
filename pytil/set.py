@@ -1,4 +1,4 @@
-# Copyright (C) 2015, 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 #
 # This file is part of pytil.
 #
@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Set utilities. Contains only `merge_by_overlap`, merges overlapping sets in place.
+Set utilities.
 '''
 
 def _locate_bin(bins, n):
@@ -35,11 +35,11 @@ def merge_by_overlap(sets):
     '''
     Of a list of sets, merge those that overlap, in place.
 
-    The result isn't necessarily a subsequence of the original `sets`.
+    The result isn't necessarily a subsequence of the original ``sets``.
 
     Parameters
     ----------
-    sets : [{any}]
+    sets : ~typing.Sequence[~typing.Set[~typing.Any]]
         Sets of which to merge those that overlap. Empty sets are ignored.
 
     Notes

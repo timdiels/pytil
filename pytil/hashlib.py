@@ -16,23 +16,23 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-hashlib additions
+`python:hashlib` extensions.
 '''
 
 import base64
 
 def base85_digest(hash_):
     '''
-    Get base 85 encoded digest of hash
+    Get base 85 encoded digest of hash.
 
     Parameters
     ----------
-    hash_ : hash
-        hashlib hash object. E.g. the return of hashlib.sha512()
+    hash_ : hash object
+        E.g. as returned by ``hashlib.sha512()``.
 
     Returns
     -------
     str
-        base 85 encoded digest
+        Base 85 encoded digest.
     '''
     return base64.b85encode(hash_.digest()).decode('ascii')

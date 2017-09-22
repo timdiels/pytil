@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Numpy additions
+`numpy:numpy` extensions.
 '''
 
 import typing
@@ -26,7 +26,7 @@ T = typing.TypeVar('T')
 class ArrayLike(typing.Generic[T]):
 
     '''
-    A value is array-like iff it can be passed to `numpy.array` to create an array.
+    Type representing any value that can be passed to `numpy.array` to create an array.
 
-    T is the data type of the array.
+    ``ArrayLike[T]`` is an array-like with data type ``T``.
     '''

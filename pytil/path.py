@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Extensions to pathlib.
+`python:pathlib` extensions.
 '''
 
 from pytil.test import assert_text_equals
@@ -33,18 +33,18 @@ _root = Path('/')
 
 def remove(path, force=False):
     '''
-    Remove file or directory (recursively), unless it's missing
+    Remove file or directory (recursively), if it exists.
 
-    On NFS file systems, if a directory contains .nfs* temporary files
+    On NFS file systems, if a directory contains :file:`.nfs*` temporary files
     (sometimes created when deleting a file), it waits for them to go away.
 
     Parameters
     ----------
-    path : Path
-        Path to remove
+    path : ~pathlib.Path
+        Path to remove.
     force : bool
         If True, will remove files and directories even if they are read-only
-        (as if first doing chmod -R +w)
+        (as if first doing ``chmod -R +w``).
     '''
     if not path.exists():
         return
@@ -91,9 +91,9 @@ def remove(path, force=False):
 
 def chmod(path, mode, operator='=', recursive=False):
     '''
-    Change file mode bits
+    Change file mode bits.
 
-    When recursively chmodding a directory, executable bits in `mode` are
+    When recursively chmodding a directory, executable bits in ``mode`` are
     ignored when applying to a regular file. E.g. ``chmod(path, mode=0o777,
     recursive=True)`` would apply ``mode=0o666`` to regular files.
 
@@ -101,16 +101,22 @@ def chmod(path, mode, operator='=', recursive=False):
 
     Parameters
     ----------
-    path : Path
-        Path to chmod
+    path : ~pathlib.Path
+        Path to chmod.
     mode : int
         Mode bits to apply, e.g. ``0o777``.
-    operator : '+' or '-' or '='
-        How to apply the mode bits to the file. If '=', assign mode, if '+', add to current
-        mode, if '-', subtract from current mode.
+    operator : str
+        How to apply the mode bits to the file, one of:
+
+        '='
+            Replace mode with given mode.
+        '+'
+            Add to current mode.
+        '-'
+            Subtract from current mode.
+
     recursive : bool
-        Whether to chmod recursively. If recursive, applies modes in a top-down
-        fashion, like the chmod command.
+        Whether to chmod recursively.
     '''
     if mode > 0o777 and operator != '=':
         raise ValueError('Special bits (i.e. >0o777) only supported when using "=" operator')
@@ -143,18 +149,26 @@ def chmod(path, mode, operator='=', recursive=False):
 @contextmanager
 def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  # @ReservedAssignment
     '''
-    An extension to tempfile.TemporaryDirectory
+    An extension to `tempfile.TemporaryDirectory`.
 
-    Unlike with tempfile, a Path is yielded on __enter__, not a str.
+    Unlike with `python:tempfile`, a :py:class:`~pathlib.Path` is yielded on
+    ``__enter__``, not a `str`.
 
     Parameters
     ----------
-    *
-        See tempfile.TemporaryDirectory, except ``dir`` param is now of type
-        `~pathlib.Path`.
-    on_error : one of {'ignore', 'raise'}
-        Handling of failure to delete directory (happens frequently on NFS). If
-        'raise', an exception is raised, else it is ignored.
+    suffix : str
+        See `tempfile.TemporaryDirectory`.
+    prefix : str
+        See `tempfile.TemporaryDirectory`.
+    dir : ~pathlib.Path
+        See `tempfile.TemporaryDirectory`, but pass a :py:class:`~pathlib.Path` instead.
+    on_error : str
+        Handling of failure to delete directory (happens frequently on NFS), one of:
+
+        raise
+            Raise exception on failure.
+        ignore
+            Fail silently.
     '''
     if dir:
         dir = str(dir)  # @ReservedAssignment
@@ -174,18 +188,19 @@ def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  
 
 def hash(path, hash_function=hashlib.sha512):  # @ReservedAssignment
     '''
-    Hash file or directory
+    Hash file or directory.
 
     Parameters
     ----------
-    path : pathlib.Path
-        File or directory to hash
-    hash_function : () -> hash
-        Function which returns hashlib hash objects
+    path : ~pathlib.Path
+        File or directory to hash.
+    hash_function : ~typing.Callable[[], hash object]
+        Function which creates a hashlib hash object when called. Defaults to
+        ``hashlib.sha512``.
 
     Returns
     -------
-    hash
+    hash object
         hashlib hash object of file/directory contents. File/directory stat data
         is ignored. The directory digest covers file/directory contents and
         their location relative to the directory being digested. The directory
@@ -230,73 +245,76 @@ def hash(path, hash_function=hashlib.sha512):  # @ReservedAssignment
 
 def sorted_lines(file):
     '''
-    Lines of file, sorted
+    Lines of file, sorted.
 
     Parameters
     ----------
-    path : pathlib.Path
+    file : ~pathlib.Path
+        Path to file whose lines to read.
 
     Returns
     -------
-    [str]
-        Sorted lines of file
+    ~typing.List[str]
+        Sorted lines of file.
     '''
     return sorted(file.read_text().splitlines())
 
 def assert_mode(path, mode):
     '''
-    Assert last 3 octal mode digits match given mode exactly
+    Assert last 3 octal mode digits match given mode exactly.
 
     Parameters
     ----------
-    path : pathlib.Path
-        Path whose mode to assert
+    path : ~pathlib.Path
+        Path whose mode to assert.
     mode : int
-        Expected mode
+        Expected mode.
     '''
     actual = path.stat().st_mode & 0o777
     assert actual == mode, '{:o} != {:o}'.format(actual, mode)
 
-def assert_equals(file1, file2, contents=True, name=True, mode=True):
+def assert_equals(actual_file, expected_file, contents=True, name=True, mode=True):
     '''
-    Assert 2 files are equal
+    Assert 2 files are equal.
 
     Parameters
     -----------
-    file1 : Path
-    file2 : Path
+    actual_file : ~pathlib.Path
+    expected_file : ~pathlib.Path
     contents : bool
-        Assert file contents are equal
+        Assert file contents are equal.
     name : bool
-        Assert file names are equal
+        Assert file names are equal.
     mode : bool
-        Assert the last 3 octal digits of file modes are equal 
+        Assert the last 3 octal digits of file modes are equal.
     '''
     if name:
-        assert file1.name == file2.name
+        assert actual_file.name == expected_file.name
     if contents:
-        assert_text_equals(file1.read_text(), file2.read_text())
+        assert_text_equals(actual_file.read_text(), expected_file.read_text())
     if mode:
-        assert file1.stat().st_mode == file2.stat().st_mode
+        assert actual_file.stat().st_mode == expected_file.stat().st_mode
 
 def tsv_lines(file, skip=0):
     '''
-    Lines of tab separated file
+    Lines of tab separated (TSV) file.
 
-    Ignores empty lines and comment lines starting with #
+    Ignores empty lines and comment lines starting with ``#``.
 
-    For advanced stuff, use pandas.read_table
+    For advanced stuff, use `pandas.read_table` instead.
 
     Parameters
     ----------
-    file : Path
+    file : ~pathlib.Path
+        TSV file.
     skip : int
         Number of lines to skip (at the start) after empty/comment lines have
         been removed.
 
     Returns
-    -------
-    iterable(line :: [str])
+    ------
+    ~typing.Iterable[~typing.Sequence[str]]
+        Lines. Each line is a sequence of field/cell values.
     '''
     with file.open() as f:
         for line in f.readlines():
@@ -316,18 +334,21 @@ def tsv_lines(file, skip=0):
 
 def is_descendant(descendant, ancestor):
     '''
-    Get whether path is descendant of other path
+    Get whether path is descendant of other path.
 
     Uses the absolute path, so symlinks, ... do not affect this.
 
     Parameters
     ----------
-    descendant : pathlib.Path
-    ancestor : pathlib.Path
-    
+    descendant : ~pathlib.Path
+        Supposed descendant.
+    ancestor : ~pathlib.Path
+        Supposed ancestor.
+
     Returns
     -------
     bool
+        Whether ``descendant`` is indeed a descendant of ``ancestor``.
 
     See also
     --------
@@ -348,18 +369,22 @@ def is_descendant(descendant, ancestor):
 
 def is_descendant_or_self(descendant, ancestor):
     '''
-    Get whether path is descendant of other path or is equivalent to it
+    Get whether path is descendant of other path or is equivalent to it.
 
     Uses the absolute path, so symlinks, ... do not affect this.
 
     Parameters
     ----------
-    descendant : pathlib.Path
-    ancestor : pathlib.Path
+    descendant : ~pathlib.Path
+        Supposed descendant.
+    ancestor : ~pathlib.Path
+        Supposed ancestor.
 
     Returns
     -------
     bool
+        Whether ``descendant`` is indeed a descendant of ``ancestor`` or they
+        are equivalent (equal after path normalisation).
 
     See also
     --------

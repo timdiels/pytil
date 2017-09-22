@@ -7,3 +7,9 @@ Links
 - `PyPI <https://pypi.python.org/pypi/pytil/>`_
 - `GitHub <https://github.com/timdiels/pytil/>`_
 
+See also
+========
+Some other utility libraries:
+
+- `Toolz <https://toolz.readthedocs.io/en/latest/>`_
+- `More Itertools <https://more-itertools.readthedocs.io/en/latest/>`_

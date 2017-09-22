@@ -1,4 +1,4 @@
-# Copyright (C) 2015, 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 #
 # This file is part of pytil.
 #
@@ -16,16 +16,18 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Extensions to `pandas.DataFrame`
+`pandas.DataFrame` extensions.
 
 .. warning::
 
-   Module contents have only been tested on `DataFrame`\ s with an `Index`,
-   `DataFrame`\ s using a `MultiIndex` may not work with this module's
-   functions.
+   Module contents have only been tested on :py:class:`~pandas.DataFrame`\ s
+   with an :py:class:`~pandas.Index`, :py:class:`~pandas.DataFrame`\ s using a
+   :py:class:`~pandas.MultiIndex` may not work with this module's functions.
 '''
 
-#TODO there is no guarantee that inplace=True offers better performance, stop using it unless it's actually handy http://stackoverflow.com/questions/22532302/pandas-peculiar-performance-drop-for-inplace-rename-after-dropna
+# TODO there is no guarantee that inplace=True offers better performance, stop
+# using it unless it's actually handy
+# http://stackoverflow.com/questions/22532302/pandas-peculiar-performance-drop-for-inplace-rename-after-dropna
 
 import pandas as pd
 import numpy as np
@@ -36,49 +38,47 @@ logger = logging.getLogger(__name__)
 
 def replace_na_with_none(df):
     '''
-    Replace ``NaN`` values in `pd.DataFrame` with ``None``
+    Replace ``NaN`` values in :py:class:`~pandas.DataFrame` with `None`.
 
     Parameters
     ----------
-    df : pd.DataFrame
-        DataFrame whose ``NaN`` values to replace
+    df : ~pandas.DataFrame
+        Data frame whose ``NaN`` values to replace.
 
     Returns
     -------
-    pd.DataFrame
-        `df` with ``NaN`` values replaced by None
+    ~pandas.DataFrame
+        Data frame with ``NaN`` values replaced by `None`.
 
     Notes
     -----
-    Like `DataFrame.fillna`, but replaces ``NaN`` values with ``None``, which
-    `DataFrame.fillna` cannot do.
-
-    These ``None`` values will not be treated as ``NA`` by DataFrame, as the
-    dtypes will be set to ``object``
+    :py:meth:`~pandas.DataFrame.fillna` does not support replacing ``NaN`` with
+    `None`.
     '''
     return df.where(pd.notnull(df), None)
 
 # Note: if want to optimise further, could try: http://stackoverflow.com/questions/17116814/pandas-how-do-i-split-text-in-a-column-into-multiple-rows/17116976#17116976
 # Would be nice to have a generic way of splitting. I.e. by func (value -> parts)
-#TODO maintain the index (and columns as we already do, should be docced)
-#TODO also compare performance to trivial implementation: split=pd.concat(df.reset_index().[col].apply(pd.Series)); del df[col]; df=df.join(split) 
+# TODO maintain the index (and columns as we already do, should be docced)
+# TODO also compare performance to trivial implementation: split=pd.concat(df.reset_index().[col].apply(pd.Series)); del df[col]; df=df.join(split) 
 def split_array_like(df, columns=None): #TODO rename TODO if it's not a big performance hit, just make them arraylike? We already indicated the column explicitly (sort of) so...
     '''
-    Split cells with array_like values along row axis.
+    Split cells with array-like values along row axis.
 
-    Column names are maintained. The index is dropped, but this may change in the future.
+    Column names are maintained. The index is dropped.
 
     Parameters
     ----------
-    df : pd.DataFrame
-        Data frame ``df[columns]`` should have cell values of type `np.array_like`.
-    columns : iterable(str) or str or None
-        Columns (or column) whose values to split. If None, `df.columns` is used.
+    df : ~pandas.DataFrame
+        Data frame ``df[columns]`` should contain :py:class:`~pytil.numpy.ArrayLike`
+        values.
+    columns : ~typing.Collection[str] or str or None
+        Columns (or column) whose values to split. Defaults to ``df.columns``.
 
     Returns
     -------
-    pd.DataFrame
-        Data frame with `array_like` values in ``df[columns]`` split across rows,
+    ~pandas.DataFrame
+        Data frame with array-like values in ``df[columns]`` split across rows,
         and corresponding values in other columns repeated.
 
     Examples
@@ -102,7 +102,11 @@ def split_array_like(df, columns=None): #TODO rename TODO if it's not a big perf
     8     2  1  1
     9     2  1  2
     '''
-    #TODO could add option to keep_index by using reset_index and eventually set_index. index names trickery: MultiIndex.names, Index.name. Both can be None. If Index.name can be None in which case it translates to 'index' or if that already exists, it translates to 'level_0'. If MultiIndex.names is None, it translates to level_0,... level_N
+    # TODO could add option to keep_index by using reset_index and eventually
+    # set_index. index names trickery: MultiIndex.names, Index.name. Both can be
+    # None. If Index.name can be None in which case it translates to 'index' or
+    # if that already exists, it translates to 'level_0'. If MultiIndex.names is
+    # None, it translates to level_0,... level_N
     dtypes = df.dtypes
 
     if columns is None:
@@ -110,10 +114,10 @@ def split_array_like(df, columns=None): #TODO rename TODO if it's not a big perf
     elif isinstance(columns, str):
         columns = [columns]
 
-    for column in columns: #TODO pulling apart and working with values, ... constructing one new df at the end may be faster and use less memory
+    for column in columns:
         expanded = np.repeat(df.values, df[column].apply(len).values, axis=0)
         expanded[:, df.columns.get_loc(column)] = np.concatenate(df[column].tolist())
-        df = pd.DataFrame(expanded, columns=df.columns) # XXX can optimise to outside of loop perhaps
+        df = pd.DataFrame(expanded, columns=df.columns)
 
     # keep types unchanged
     for i, dtype in enumerate(dtypes):
@@ -123,41 +127,44 @@ def split_array_like(df, columns=None): #TODO rename TODO if it's not a big perf
 
 def equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=False, _return_reason=False):
     '''
-    Get whether 2 data frames are equal
+    Get whether 2 data frames are equal.
 
-    ``NaN``\ s are considered equal (which is consistent with
-    `pandas.DataFrame.equals`). ``None`` is considered equal to ``NaN``.
+    ``NaN`` is considered equal to ``NaN`` and `None`.
 
     Parameters
     ----------
-    df1, df2 : pd.DataFrame
-        Data frames to compare
-    ignore_order : {int}
-        Axi in which to ignore order
-    ignore_indices : {int}
+    df1 : ~pandas.DataFrame
+        Data frame to compare.
+    df2 : ~pandas.DataFrame
+        Data frame to compare.
+    ignore_order : ~typing.Set[int]
+        Axi in which to ignore order.
+    ignore_indices : ~typing.Set[int]
         Axi of which to ignore the index. E.g. ``{1}`` allows differences in
-        ``df.columns.name`` and `df.columns.equals(df2.columns)``.
+        ``df.columns.name`` and ``df.columns.equals(df2.columns)``.
     all_close : bool
-        If False, values must match exactly, if True, floats are compared as if
-        compared with `np.isclose`.
+        If `False`, values must match exactly, if `True`, floats are compared as if
+        compared with `numpy.isclose`.
     _return_reason : bool
-        Internal. If True, `equals` returns a tuple containing the reason, else
+        Internal. If `True`, `equals` returns a tuple containing the reason, else
         `equals` only returns a bool indicating equality (or equivalence
         rather).
 
     Returns
     -------
-    equal : bool
-        Whether they're equal (after ignoring according to the parameters)
-    reason : str or None
-        If equal, ``None``, otherwise short explanation of why the data frames
-        aren't equal. Omitted if not `_return_reason`.
+    bool
+        Whether they are equal (after ignoring according to the parameters).
+
+        Internal note: if ``_return_reason``, ``Tuple[bool, str or None]`` is
+        returned. The former is whether they're equal, the latter is `None` if
+        equal or a short explanation of why the data frames aren't equal,
+        otherwise.
 
     Notes
     -----
-    All values (including those of indices) must be copyable and `__eq__` must
+    All values (including those of indices) must be copyable and ``__eq__`` must
     be such that a copy must equal its original. A value must equal itself
-    unless it's `np.nan`. Values needn't be orderable or hashable (however
+    unless it's ``NaN``. Values needn't be orderable or hashable (however
     pandas requires index values to be orderable and hashable). By consequence,
     this is not an efficient function, but it is flexible.
 
@@ -268,7 +275,6 @@ def _equals(df1, df2, ignore_order, ignore_indices, all_close):
     return True, None
 
 def _2d_array_equals(arrays, ignore_order, all_close):
-    #XXX can further optimise by using better numpy routines Maybe able to optimise at an algorithmic level first though
     # e.g. nditer has more efficient ways. There's also Cython of course
     if not ignore_order:
         for value1, value2 in zip(*[values.ravel() for values in arrays]):
@@ -349,7 +355,7 @@ def _try_mask_first_value(value, row, all_close):
     '''
     mask first value in row
 
-    value1 : any
+    value1 : ~typing.Any
     row : 1d masked array
     all_close : bool
         compare with np.isclose instead of ==
@@ -367,7 +373,7 @@ def _value_equals(value1, value2, all_close):
     '''
     Get whether 2 values are equal
 
-    value1, value2 : any
+    value1, value2 : ~typing.Any
     all_close : bool
         compare with np.isclose instead of ==
     '''
@@ -389,15 +395,16 @@ def assert_equals(df1, df2, ignore_order=set(), ignore_indices=set(), all_close=
     '''
     Assert 2 data frames are equal
 
-    Like ``assert equals(df1, df2, ...)``, but with better hints at where the
-    data frames differ. See :func:`pytil.data_frame.equals` for
-    detailed parameter doc.
+    A more verbose form of ``assert equals(df1, df2, ...)``. See `equals` for an explanation of the parameters.
 
     Parameters
     ----------
-    df1, df2 : pd.DataFrame
-    ignore_order : {int}
-    ignore_indices : {int}
+    df1 : ~pandas.DataFrame
+        Actual data frame.
+    df2 : ~pandas.DataFrame
+        Expected data frame.
+    ignore_order : ~typing.Set[int]
+    ignore_indices : ~typing.Set[int]
     all_close : bool
     '''
     equals_, reason = equals(df1, df2, ignore_order, ignore_indices, all_close, _return_reason=True)

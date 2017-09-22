@@ -12,7 +12,7 @@ else ifeq ($(OS),Darwin)
 endif
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -W -j$(PROC_COUNT)
+SPHINXOPTS    = -j$(PROC_COUNT)
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build

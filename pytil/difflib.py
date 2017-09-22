@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-difflib additions
+`python:difflib` extensions.
 '''
 
 from more_itertools import sliced
@@ -24,27 +24,28 @@ from difflib import ndiff
 
 def line_diff(original, new):
     '''
-    ndiff two (long) lines
+    :py:obj:`~difflib.ndiff` two (long) lines.
 
-    Breaks up each line in 70 char chunks with tabs replaced with '→', ndiffs
+    Breaks up each line in 70 char chunks with tabs replaced by ``→``, ndiffs
     the chunks and returns the diff as a string.
 
     Parameters
     ----------
     original : str
-        Original line
+        Original line.
     new : str
-        New line
+        New line.
 
     Returns
     -------
     str
+        Diff of the given lines
     '''
     return '\n'.join(ndiff(_ndiff_arg(original), _ndiff_arg(new)))
 
 def _ndiff_arg(text):
     '''
-    Wrap text for use with ndiff and replace tabs with '→'
+    Wrap text for use with ndiff and replace tabs with '→'.
 
     Notes
     -----

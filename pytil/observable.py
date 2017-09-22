@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Observable collections. Only contains `Set` currently.
+Observable collections.
 '''
 
 from contextlib import contextmanager
@@ -35,18 +35,19 @@ class Set(set):
     @property
     def change_listeners(self):
         '''
-        Get change listeners
+        Get change listeners.
 
         Each change listener is called immediately after a mutating operation
         that actually changed the set. E.g. redundant additions are ignored.
 
         Returns
         -------
-        [(added :: frozenset, removed :: frozenset) -> bool or None]
-            List of change listeners. `added` are the items that were added,
-            `removed` contains the items that were removed. Note: Items can be
-            added and removed from a set in a single operation. When a listener
-            raises, the change is rolled back without further notification.
+        ~typing.List[~typing.Callable[[~typing.FrozenSet, ~typing.FrozenSet], None]]
+            List of change listeners. Each change listener takes 2 arguments:
+            the items that were added, and the items that were removed. Note:
+            Items can be added and removed from a set in a single operation.
+            When a listener raises, the change is rolled back without further
+            notification.
         '''
         return self._change_listeners
 

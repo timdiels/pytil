@@ -16,24 +16,24 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Utilities for working with `pandas.Series`. Contains only `invert`, swaps series' index with its values
+`pandas.Series` extensions.
 '''
 
 import pytil.data_frame as df_
 
 def invert(series):
     '''
-    Swap index with values of series
+    Swap index with values of series.
 
     Parameters
     ----------
-    series
-        Series to swap on, must have a name
+    series : ~pandas.Series
+        Series to swap on, must have a name.
 
     Returns
     -------
-    pandas.Series
-        Series after swap
+    ~pandas.Series
+        Series after swap.
 
     See also
     --------
@@ -46,18 +46,18 @@ def invert(series):
 
 def split(series):
     '''
-    Split values
+    Split values.
 
     The index is dropped, but this may change in the future.
 
     Parameters
     ----------
-    series : pd.Series
-        Series with numpy array-like values.
+    series : ~pandas.Series[~pytil.numpy.ArrayLike]
+        Series with array-like values.
 
     Returns
     -------
-    pd.Series
+    ~pandas.Series
         Series with values split across rows.
 
     Examples
@@ -84,44 +84,42 @@ def split(series):
 
 def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False, _return_reason=False):
     '''
-    Get whether 2 series are equal
+    Get whether 2 series are equal.
 
-    ``NaN``\ s are considered equal (which is consistent with
-    `pandas.Series.equals`). ``None`` is considered equal to ``NaN``.
+    ``NaN`` is considered equal to ``NaN`` and `None`.
 
     Parameters
     ----------
-    series1, series2 : pd.Series
-        Series to compare
+    series1 : pandas.Series
+        Series to compare.
+    series2 : pandas.Series
+        Series to compare.
     ignore_order : bool
-        Ignore order of values (and index)
+        Ignore order of values (and index).
     ignore_index : bool
         Ignore index values and name.
     all_close : bool
-        If False, values must match exactly, if True, floats are compared as if
-        compared with `np.isclose`.
+        If `False`, values must match exactly, if `True`, floats are compared as if
+        compared with `numpy.isclose`.
     _return_reason : bool
-        Internal. If True, `equals` returns a tuple containing the reason, else
+        Internal. If `True`, `equals` returns a tuple containing the reason, else
         `equals` only returns a bool indicating equality (or equivalence
         rather).
 
     Returns
     -------
-    equal : bool
-        Whether they're equal (after ignoring according to the parameters)
-    reason : str or None
-        If equal, ``None``, otherwise short explanation of why the data frames
-        aren't equal. Omitted if not `_return_reason`.
+    bool
+        Whether they are equal (after ignoring according to the parameters).
 
-    See also
-    --------
-    data_frame.equals : Get whether 2 data frames are equal
+        Internal note: if ``_return_reason``, ``Tuple[bool, str or None]`` is
+        returned. The former is whether they're equal, the latter is `None` if
+        equal or a short explanation of why the series aren't equal, otherwise.
 
     Notes
     -----
-    All values (including those of indices) must be copyable and `__eq__` must
+    All values (including those of indices) must be copyable and ``__eq__`` must
     be such that a copy must equal its original. A value must equal itself
-    unless it's `np.nan`. Values needn't be orderable or hashable (however
+    unless it's ``NaN``. Values needn't be orderable or hashable (however
     pandas requires index values to be orderable and hashable). By consequence,
     this is not an efficient function, but it is flexible.
     '''
@@ -144,20 +142,21 @@ def _equals(series1, series2, ignore_order, ignore_index, all_close):
         _return_reason=True  #TODO the reasons will be about dataframes, this is confusing. May need to copy paste after all and do the analog for a series. Or add an internal param so it outputs series info (pick the former option)
     )
 
-def assert_equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False):
+def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_close=False):
     '''
-    Assert 2 series are equal
+    Assert 2 series are equal.
 
     Like ``assert equals(series1, series2, ...)``, but with better hints at
-    where the series differ. See :func:`pytil.series.equals` for
+    where the series differ. See `equals` for
     detailed parameter doc.
 
     Parameters
     ----------
-    series1, series2 : pd.Series
+    actual : ~pandas.Series
+    expected : ~pandas.Series
     ignore_order : bool
     ignore_index : bool
     all_close : bool
     '''
-    equals_, reason = equals(series1, series2, ignore_order, ignore_index, all_close, _return_reason=True)
-    assert equals_, '{}\n\n{}\n\n{}'.format(reason, series1.to_string(), series2.to_string())
+    equals_, reason = equals(actual, expected, ignore_order, ignore_index, all_close, _return_reason=True)
+    assert equals_, '{}\n\n{}\n\n{}'.format(reason, actual.to_string(), expected.to_string())

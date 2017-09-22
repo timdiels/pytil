@@ -28,7 +28,7 @@ class TestMultiDict(object):
         assert set(actual.items()) == set()
         assert set(actual.keys()) == set()
         assert set(actual.values()) == set()
-        assert actual.invert() == {}
+        assert actual.invert().dict == {}
 
     def test_normal(self):
         original = {
@@ -44,7 +44,7 @@ class TestMultiDict(object):
         assert set(actual.items()) == {(1,1), (1,2), (1,3), (2,1), (3,4), (3,5)}
         assert set(actual.keys()) == {1, 2, 3}
         assert set(actual.values()) == {1, 2, 3, 4, 5}
-        assert actual.invert() == {
+        assert actual.invert().dict == {
             1: {1,2},
             2: {1},
             3: {1},

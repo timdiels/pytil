@@ -16,48 +16,45 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Various algorithms, e.g. `multi_way_partitioning` to greedily divide weighted items equally across bins.
+Various algorithms.
 '''
 
 from sklearn.utils.extmath import cartesian
-from collections_extended import bag, frozenbag, setlist
+from collections_extended import frozenbag, setlist
 from more_itertools import windowed
 import networkx as nx
 import numpy as np
 
-def spread_points_in_hypercube(point_count, dimension_count): #TODO rename points_spread_in_hypercube
+def spread_points_in_hypercube(point_count, dimension_count): #TODO rename points_spread_in_hypercube #TODO rename dimension_count -> dimensions
     '''
-    Place points in a unit hypercube such that the minimum distance between
-    points is approximately maximal.
+    Place points in a unit hypercube, approximately maximising the minimum of
+    distances between points.
 
     Euclidean distance is used.
-
-    .. note:: Current implementation simply puts the points in a hypergrid
 
     Parameters
     ----------
     point_count : int
-        Number of points to pick
+        Number of points to pick.
     dimension_count : int
-        Number of dimensions of the hypercube
+        Number of dimensions of the hypercube.
 
     Returns
     -------
-    np.array(shape=(point_count, dimension_count))
-        Points spread approximately optimally across the hypercube.
+    ~numpy.array[float]
+        Points spread approximately optimally across the hypercube. Array shape
+        is ``(point_count, dimension_count)``.
 
     Raises
     ------
     ValueError
-        When ``point_count < 0 or dimension_count < 1``
+        When ``point_count < 0 or dimension_count < 1``.
 
     Notes
     -----
-    The exact solution to this problem is known for only a few `n`.
-
-    References
-    ----------
-    .. [1] http://stackoverflow.com/a/2723764/1031434
+    The current implementation puts points in a hypergrid. The exact solution to
+    this problem is known for only a few ``n``. See also this `StackOverflow
+    question with solutions to the problem <https://stackoverflow.com/q/2723626/1031434>`_.
     '''
     # Current implementation simply puts points in a grid
     if point_count < 0:
@@ -69,7 +66,7 @@ def spread_points_in_hypercube(point_count, dimension_count): #TODO rename point
     side_count = np.ceil(point_count ** (1/dimension_count)) # number of points per side
     points = np.linspace(0, 1, side_count)
     points = cartesian([points]*dimension_count)
-    return np.random.permutation(points)[:point_count] #XXX permutation is unnecessary
+    return points[:point_count]
 
 class _Bin(object):
     def __init__(self):
@@ -88,35 +85,35 @@ class _Bin(object):
     def weights_sum(self):
         return self._weights_sum
 
-def multi_way_partitioning(items, bin_count):
+def multi_way_partitioning(items, bin_count): #TODO rename bin_count -> bins
     '''
-    Greedily divide weighted items equally across bins (multi-way partition problem)
+    Greedily divide weighted items equally across bins.
 
-    This approximately minimises the difference between the largest and smallest
-    sum of weights in a bin.
+    This approximately solves a multi-way partition problem, minimising the
+    difference between the largest and smallest sum of weights in a bin.
 
     Parameters
     ----------
-    items : iterable((item :: any) : (weight :: number))
-        Weighted items
+    items : ~typing.Iterable[~typing.Tuple[~typing.Any, float]]
+        Weighted items as ``(item, weight)`` tuples.
     bin_count : int
-        Number of bins
+        Number of bins.
 
     Returns
     -------
-    bins : bag(bin :: frozenbag(item :: any))
-        Bins with the items
+    bins : ~collections_extended.frozenbag[~collections_extended.frozenbag[~typing.Any]]
+        Item bins as a bag of item bags.
 
-    References
+    Notes
     ----------
-    .. [1] http://stackoverflow.com/a/6855546/1031434 describes the greedy algorithm
-    .. [2] http://ijcai.org/Proceedings/09/Papers/096.pdf defines the problem and describes algorithms
+    - `A greedy solution <http://stackoverflow.com/a/6855546/1031434>`_
+    - `Problem definition and solutions <http://ijcai.org/Proceedings/09/Papers/096.pdf>`_
     '''
     bins = [_Bin() for _ in range(bin_count)]
     for item, weight in sorted(items, key=lambda x: x[1], reverse=True):
         bin_ = min(bins, key=lambda bin_: bin_.weights_sum) 
         bin_.add(item, weight)
-    return bag(frozenbag(bin_.items) for bin_ in bins)
+    return frozenbag(frozenbag(bin_.items) for bin_ in bins)
 
 # Note: Currently unused. Test and polish before using it
 # Note: a deterministic variant of this could be built with https://pypi.python.org/pypi/toposort/1.0
@@ -131,8 +128,8 @@ def toset_from_tosets(*tosets):  # Note: a setlist is perfect representation of 
 
     Parameters
     ----------
-    tosets : iterable of setlist
-        Tosets to merge
+    tosets : Iterable[~collections_extended.setlist]
+        Tosets to merge.
 
     Raises
     ------
@@ -142,8 +139,8 @@ def toset_from_tosets(*tosets):  # Note: a setlist is perfect representation of 
 
     Returns
     -------
-    setlist
-        Totally ordered set
+    toset : ~collectiontions_extended.setlist
+        Totally ordered set.
     '''
     # Construct directed graph with: a <-- b iff a < b and adjacent in a list
     graph = nx.DiGraph()

@@ -25,19 +25,19 @@ import logging
 @contextmanager
 def set_level(logger, level):
     '''
-    Temporarily change log level of logger
+    Temporarily change log level of logger.
 
     Parameters
     ----------
-    logger : str or Logger
-        Logger name
-    level
-        Log level to set
+    logger : str or ~logging.Logger
+        Logger name or logger whose log level to change.
+    level : int
+        Log level to set.
 
     Examples
     --------
     >>> with set_level('sqlalchemy.engine', logging.INFO):
-    ...     pass # sqlalchemy log level is set to INFO in this block
+    ...     pass  # sqlalchemy log level is set to INFO in this block
     '''
     if isinstance(logger, str):
         logger = logging.getLogger(logger)
@@ -59,15 +59,13 @@ def configure(log_file):
 
     Parameters
     ----------
-    log_file : Path
-        File to log to
+    log_file : ~pathlib.Path
+        File to log to.
 
     Returns
     -------
-    stderr_handler : logging.StreamHandler
-        Handler that logs to stderr
-    file_handler : logging.FileHandler
-        Handler that logs to log_file
+    ~typing.Tuple[~logging.StreamHandler, ~logging.FileHandler]
+        Stderr and file handler respectively.
     '''
     # Note: do not use logging.basicConfig as it does not play along with caplog in testing
     root_logger = logging.getLogger()

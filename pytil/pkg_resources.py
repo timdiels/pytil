@@ -16,7 +16,7 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Additions to pkg_resources
+`setuptools:pkg_resources` extensions.
 '''
 
 from pkg_resources import resource_isdir, resource_listdir, resource_stream, resource_filename  # @UnresolvedImport
@@ -25,18 +25,30 @@ import shutil
 
 def resource_path(package_or_requirement, resource_name):
     '''
-    Like resource_filename but return a pathlib.Path instead
+    Like ``resource_filename`` but return a :py:class:`~pathlib.Path` instead.
+
+    Parameters
+    ----------
+    package_or_requirement : str
+    resource_name : str
+
+    Returns
+    -------
+    ~pathlib.Path
+        Path to resource.
     '''
     return Path(resource_filename(package_or_requirement, resource_name))
 
 def resource_copy(package_or_requirement, resource_name, destination):
     '''
-    Copy file/dir resource to destination
+    Copy file/dir resource to destination.
 
     Parameters
     ----------
-    destination : pathlib.Path
-        Directory to copy to, it must not exist.
+    package_or_requirement : str
+    resource_name : str
+    destination : ~pathlib.Path
+        Path to copy to, it must not exist.
     '''
     args = package_or_requirement, resource_name
     if resource_isdir(*args):

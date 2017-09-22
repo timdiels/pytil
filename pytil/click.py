@@ -16,14 +16,18 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-`click` utilities
+`click:click` extensions.
 '''
 
 import click
 from functools import partial
 
 option = partial(click.option, show_default=True, required=True)
-'''Like `click.option`, but by default ``show_default=True, required=True``'''
+'''
+:py:func:`click:click.option` with other defaults.
+'''
 
 password_option = partial(option, prompt=True, hide_input=True, show_default=False)
-'''Like click.option, but by default ``prompt=True, hide_input=True, show_default=False, required=True``.'''
+'''
+Password option.
+'''

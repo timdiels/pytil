@@ -32,7 +32,8 @@ import re
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):
     '''
-    pytest fixture that sets current working directory to a temporary directory
+    pytest fixture which sets current working directory to a temporary
+    directory.
     '''
     original_cwd = Path.cwd()
     os.chdir(str(tmpdir))
@@ -46,10 +47,14 @@ def temp_dir_cwd(tmpdir):
 
 def reset_loggers(name, root=True):
     '''
-    Reset loggers matching name pattern
+    Reset loggers matching name pattern.
 
-    ``logging.basicConfig`` cannot be reset, so subsequent calls to it will be
-    ignored as usual.
+    .. warning::
+
+       :py:func:`reset_loggers` is incompatible with
+       :py:func:`~logging.basicConfig` as the latter cannot be reset. E.g. if a
+       first test uses :py:func:`~logging.basicConfig`, a call to it in a next
+       test will be ignored as it could not be reset.
 
     Parameters
     ----------
@@ -57,7 +62,7 @@ def reset_loggers(name, root=True):
         Reset only loggers whose name match this regex pattern. This does not
         include the root logger, see the ``root`` param.
     root : bool
-        Reset the root logger iff True.
+        Reset the root logger iff `True`.
 
     Examples
     --------
@@ -89,32 +94,64 @@ def _reset_logger(logger):
 
 def assert_text_equals(actual, expected):
     '''
-    Assert long strings are equal
+    Assert long strings are equal.
+
+    Parameters
+    ----------
+    actual : str
+    expected : str
     '''
     assert_lines_equal(actual.splitlines(), expected.splitlines())
 
 def assert_text_contains(whole, part):
     '''
-    Assert long string contains given string
+    Assert long string contains given string.
+
+    Parameters
+    ----------
+    whole : str
+    part : str
     '''
     assert part in whole, '\nActual:\n{}\n\nExpected to contain:\n{}'.format(whole, part)
 
 def assert_matches(actual, pattern, flags=0):
+    '''
+    Assert string matches pattern.
+
+    Parameters
+    ----------
+    actual : str
+    pattern : str
+    flags : int
+        Regex flags.
+    '''
     assert re.match(pattern, actual, flags), 'Actual:\n{}\n\nExpected to match:\n{}'.format(actual, pattern)
 
 def assert_search_matches(actual, pattern, flags=0):
+    '''
+    Assert string matches pattern by search.
+
+    Parameters
+    ----------
+    actual : str
+    pattern : str
+    flags : int
+        Regex flags.
+    '''
     assert re.search(pattern, actual, flags), 'Actual:\n{}\n\nExpected a subset to match:\n{}'.format(actual, pattern)
 
 def assert_lines_equal(actual, expected):
     '''
-    Assert (long) lines equal
+    Assert (long) lines equal.
 
     Reports first line that differs, in detail.
 
     Parameters
     ----------
-    actual : iterable(str)
-    expected : iterable(str)
+    actual : ~typing.Iterable[str]
+        Actual lines.
+    expected : ~typing.Iterable[str]
+        Expected lines.
     '''
     # Note: the for loop is much faster than a single assert
     line_pairs = zip_longest(actual, expected)
@@ -129,14 +166,16 @@ def assert_lines_equal(actual, expected):
 
 def _assert_line_equals(actual, expected, i):
     '''
-    Assert long line equals
+    Assert long line equals.
 
     Parameters
     ----------
     actual : str
+        Actual line.
     expected : str
+        Expected line.
     i : int
-        Line index (if coming from a collection of lines)
+        Line index (if coming from a collection of lines), for prettier output.
     '''
     if actual != expected:
         diff = line_diff(actual, expected)
@@ -144,15 +183,19 @@ def _assert_line_equals(actual, expected, i):
 
 def assert_xml_equals(actual, expected):
     '''
-    Assert xml files/strings are equivalent
+    Assert xml files/strings are equivalent.
 
     Differences in formatting or attribute order are ignored. Comments are
     ignored as well. Differences in element order are significant though!
 
     Parameters
     ----------
-    actual, expected : IO or Path or str
-        File object or Path to XML file, or XML contents as string
+    actual : ~typing.BinaryIO or ~pathlib.Path or str
+        Actual XML, as file object or Path to XML file, or XML contents as
+        string.
+    expected : ~typing.BinaryIO or ~pathlib.Path or str
+        Expected XML, as file object or Path to XML file, or XML contents as
+        string.
     '''
     # Note: if this ever breaks, there is a way to write out XML to file
     # canonicalised. StringIO may help in not having to use any temp files
@@ -172,19 +215,22 @@ def assert_xml_equals(actual, expected):
 @contextmanager
 def assert_dir_unchanged(path, ignore=()):
     '''
-    Assert dir unchanged after code block
+    Assert dir unchanged after code block.
 
     Parameters
     ----------
-    ignore : Collection[pathlib.Path]
-        Paths to ignore in comparison
+    path : ~pathlib.Path
+        Dir to assert for changes.
+    ignore : ~typing.Collection[~pathlib.Path]
+        Paths to ignore in comparison.
 
     Examples
     --------
-    ::
-        with assert_dir_unchanged(Path('input')):
-            Path('input/child').mkdir()
-        # assert raised here
+    >>> with assert_dir_unchanged(Path('input')):
+    ...    Path('input/child').mkdir()
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    AssertionError: ...
     '''
     def contents():
         children = set(path.iterdir())
