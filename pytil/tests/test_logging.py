@@ -60,7 +60,7 @@ def test_configure(temp_dir_cwd, capsys, caplog):
     #
     # - level is DEBUG
     # - long format with fairly unambiguous source
-    log_file_content = path_.read(log_file)
+    log_file_content = log_file.read_text()
     def prefix(log_type, package, module_name):
         return r'{} [0-9]{{4}}-[0-9]{{2}}-[0-9]{{2}} [0-9]{{2}}:[0-9]{{2}}:[0-9]{{2}},[0-9]{{3}} {} \({}:[0-9]+\):'.format(
             log_type, package, module_name

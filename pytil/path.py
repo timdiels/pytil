@@ -31,23 +31,6 @@ import os
 #: The file system root to use (used for testing)
 _root = Path('/')
 
-def read(path): #TODO rm in favor of pathlib.Path.read_text and read_bytes
-    '''
-    Get file contents
-
-    Parameters
-    ----------
-    path : pathlib.Path
-        Path of file to read
-
-    Returns
-    -------
-    str
-        File contents
-    '''
-    with path.open('r') as f:
-        return f.read()
-
 def remove(path, force=False):
     '''
     Remove file or directory (recursively), unless it's missing
@@ -292,7 +275,7 @@ def assert_equals(file1, file2, contents=True, name=True, mode=True):
     if name:
         assert file1.name == file2.name
     if contents:
-        assert_text_equals(read(file1), read(file2))
+        assert_text_equals(file1.read_text(), file2.read_text())
     if mode:
         assert file1.stat().st_mode == file2.stat().st_mode
 

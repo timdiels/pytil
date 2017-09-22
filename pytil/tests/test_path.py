@@ -42,11 +42,6 @@ def contents():
 def use_tmp(temp_dir_cwd):
     pass
 
-def test_read(path, contents):
-    with path.open('w') as f:
-        f.write(contents)
-    assert path_.read(path) == contents
-
 class TestRemove(object):
 
     def test_missing(self, path):
