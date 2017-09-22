@@ -25,6 +25,7 @@ from pathlib import Path
 from pytil import path as path_
 import pytest
 from textwrap import dedent
+import os
 
 class TestConfigurationLoader(object):
 
@@ -57,7 +58,9 @@ class TestConfigurationLoader(object):
         # from: data/main.defaults.conf given we used __name__.parent as package_name
 
         # Then /etc/{directory_name}/{configuration_name}.conf should override the defaults 
-        path_.write(Path('etc/{}/{}.conf'.format(directory_name, configuration_stem)), contents=dedent('''\
+        path = Path('etc/{}/{}.conf'.format(directory_name, configuration_stem))
+        os.makedirs(str(path.parent))
+        path.write_text(dedent('''\
         [section]
         a=10
         b=20
@@ -69,7 +72,8 @@ class TestConfigurationLoader(object):
         # Then each xdg conf file should override the previous (testing with just 1 file here)
         xdg_conf_dir = Path('home/mittens/much_conf_dir')
         xdg_conf_file = xdg_conf_dir / directory_name / (configuration_stem + '.conf')
-        path_.write(xdg_conf_file, contents=dedent('''\
+        os.makedirs(str(xdg_conf_file.parent))
+        xdg_conf_file.write_text(dedent('''\
         [section]
         a=100
         b=200
@@ -79,7 +83,7 @@ class TestConfigurationLoader(object):
 
         # Finally the path arg should override the previous
         path = Path('local.conf')
-        path_.write(path, contents='''\
+        path.write_text('''\
         [section]
         a=1000
         g=7000
@@ -108,7 +112,7 @@ class TestConfigurationLoader(object):
         - Option names have '-' and ' ' replaced with '_'.
         '''
         path = Path('conf')
-        path_.write(path, contents=dedent('''\
+        path.write_text(dedent('''\
         [default]
         a=1
         b=2
@@ -162,7 +166,7 @@ class TestConfigurationLoader(object):
             When file path, use it as a config path
             '''
             path = Path('conf')
-            path_.write(path, contents=dedent('''\
+            path.write_text(dedent('''\
             [section]
             option = value
             '''))
@@ -175,8 +179,9 @@ class TestConfigurationLoader(object):
             When directory path, use {dir}/{configuration_name}.conf as config path
             '''
             dir_path = Path('dir') 
+            dir_path.mkdir()
             path = dir_path / (configuration_stem + '.conf')
-            path_.write(path, contents=dedent('''\
+            path.write_text(dedent('''\
             [section]
             option = value
             '''))

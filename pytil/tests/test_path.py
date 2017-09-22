@@ -42,38 +42,6 @@ def contents():
 def use_tmp(temp_dir_cwd):
     pass
 
-class TestWrite(object):
-
-    def assert_mode(self, path, expected):
-        actual = path.stat().st_mode & 0o777
-        assert actual == expected, '{:o} != {:o}'.format(actual, expected)
-
-    def test_happy_days(self, path, contents):
-        '''
-        When nothing special, write contents
-        '''
-        path_.write(path, contents)
-        with path.open('r') as f:
-            assert f.read() == contents
-        self.assert_mode(path, 0o644)  # open() creates files with this mode regardless of umask
-
-    @pytest.mark.parametrize('mode', (0o777, 0o220, 0o404))
-    def test_mode(self, path, contents, mode):
-        '''
-        When mode given, mode is set and contents were written
-
-        Even when mode is read-only for owner
-        '''
-        path_.write(path, contents, mode)
-
-        # correct mode
-        self.assert_mode(path, mode)
-
-        # correct contents
-        path.chmod(0o400)
-        with path.open('r') as f:
-            assert f.read() == contents
-
 def test_read(path, contents):
     with path.open('w') as f:
         f.write(contents)
@@ -283,7 +251,7 @@ def test_digest_file(path, contents):
     '''
     When file, digest only its contents
     '''
-    path_.write(path, contents)
+    path.write_text(contents)
     hash_ = hashlib.sha512()
     hash_.update(contents.encode())
     assert path_.hash(path).hexdigest() == hash_.hexdigest()
@@ -299,9 +267,10 @@ class TestDigestDirectory(object):
         Path('root/subdir1').mkdir()
         Path('root/emptydir').mkdir(mode=0o600)
         Path('root/subdir1/emptydir').mkdir()
-        path_.write(Path('root/file'), contents, 0o600)
+        Path('root/file').write_text(contents)
+        Path('root/file').chmod(0o600)
         Path('root/emptyfile').touch()
-        path_.write(Path('root/subdir1/subfile'), contents*2)
+        Path('root/subdir1/subfile').write_text(contents*2)
         return Path('root')
 
     @pytest.fixture
@@ -344,7 +313,7 @@ class TestDigestDirectory(object):
         '''
         When file content changes, hash changes
         '''
-        path_.write(root / 'file', contents * 3)
+        (root / 'file').write_text(contents * 3)
         current = path_.hash(root).hexdigest()
         assert original != current
 
@@ -393,12 +362,12 @@ class TestAssertEquals(object):
         file1 = Path('file1')
         file2 = Path('file2')
         contents = 'abc'
-        path_.write(file1, contents)
-        path_.write(file2, contents*2)
+        file1.write_text(contents)
+        file2.write_text(contents*2)
         path_.assert_equals(file1, file2, name=False, contents=False, mode=False)
         with pytest.raises(AssertionError):
             path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
-        path_.write(file2, contents)
+        file2.write_text(contents)
         path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
 
     def test_name(self):
