@@ -28,11 +28,9 @@ def _locate_bin(bins, n):
         n = bins[n]
     return n
 
-# XXX test performance compared to original alg
-
 # Original implementation by http://stackoverflow.com/users/699305/alexis
 # at http://stackoverflow.com/a/9453249/1031434
-# Modified slightly 
+# Modified slightly
 def merge_by_overlap(sets):
     '''
     Of a list of sets, merge those that overlap, in place.

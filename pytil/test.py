@@ -28,7 +28,6 @@ import logging
 import pytest
 import os
 import re
-import io
 
 @pytest.yield_fixture()
 def temp_dir_cwd(tmpdir):

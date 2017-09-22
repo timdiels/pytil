@@ -22,7 +22,7 @@ Test pytil.test
 from pytil.pkg_resources import resource_path
 from pytil.test import (
     reset_loggers, assert_dir_unchanged, assert_text_equals, assert_xml_equals,
-    assert_matches, assert_search_matches
+    assert_matches
 )
 from pathlib import Path
 from textwrap import dedent

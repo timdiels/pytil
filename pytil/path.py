@@ -172,7 +172,7 @@ def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  
 
 # Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
 
-def hash(path, hash_function=hashlib.sha512):
+def hash(path, hash_function=hashlib.sha512):  # @ReservedAssignment
     '''
     Hash file or directory
 

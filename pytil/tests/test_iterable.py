@@ -19,7 +19,6 @@
 Test pytil.iterable
 '''
 
-import pytest
 from pytil.iterable import is_sorted
 
 def test_is_sorted():

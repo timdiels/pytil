@@ -30,7 +30,7 @@ import os
 class TestConfigurationLoader(object):
 
     @pytest.yield_fixture(autouse=True)
-    def use_temp_dir(self, temp_dir_cwd):
+    def use_temp_dir(self, temp_dir_cwd):  # @UnusedVariable
         original = path_._root
         path_._root = Path.cwd()
         yield

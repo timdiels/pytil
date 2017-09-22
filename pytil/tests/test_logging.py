@@ -19,7 +19,7 @@
 Test pytil.logging
 '''
 
-from pytil import logging as logging_, path as path_
+from pytil import logging as logging_
 from pytil.test import assert_text_equals
 from pathlib import Path
 from textwrap import dedent
@@ -77,4 +77,4 @@ def test_configure(temp_dir_cwd, capsys, caplog):
             prefix('D', __name__, 'test_logging'),
         )
     )
-    assert re.match(pattern, log_file_content, re.MULTILINE), 'Actual:{}\n\nExpected to match:\n{}'.format(log_file_content, pattern)
+    assert re.match(pattern, log_file_content, re.MULTILINE), 'Actual:{}\n\nExpected to match:\n{}'.format(log_file_content, pattern)  # @UndefinedVariable
