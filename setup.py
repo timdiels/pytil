@@ -58,7 +58,6 @@ setup_args = dict(
         'observable': [],
         'path': [],
         'pkg_resources': [],
-        'pymysql': ['pymysql==0.*'],
         'series': [
             'numpy==1.*',
             'pandas==0.*'
