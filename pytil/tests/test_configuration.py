@@ -23,8 +23,8 @@ from xdg.BaseDirectory import xdg_config_dirs
 from pytil.configuration import ConfigurationLoader
 from pathlib import Path
 from pytil import path as path_
-import pytest
 from textwrap import dedent
+import pytest
 import os
 
 class TestConfigurationLoader(object):
@@ -61,33 +61,36 @@ class TestConfigurationLoader(object):
         path = Path('etc/{}/{}.conf'.format(directory_name, configuration_stem))
         os.makedirs(str(path.parent))
         path.write_text(dedent('''\
-        [section]
-        a=10
-        b=20
-        c=30
-        e=50
-        space-word = f2
-        '''))
+            [section]
+            a=10
+            b=20
+            c=30
+            e=50
+            space-word = f2
+            '''
+        ))
 
         # Then each xdg conf file should override the previous (testing with just 1 file here)
         xdg_conf_dir = Path('home/mittens/much_conf_dir')
         xdg_conf_file = xdg_conf_dir / directory_name / (configuration_stem + '.conf')
         os.makedirs(str(xdg_conf_file.parent))
         xdg_conf_file.write_text(dedent('''\
-        [section]
-        a=100
-        b=200
-        f=600
-        space_word = expected
-        '''))
+            [section]
+            a=100
+            b=200
+            f=600
+            space_word = expected
+            '''
+        ))
 
         # Finally the path arg should override the previous
         path = Path('local.conf')
         path.write_text('''\
-        [section]
-        a=1000
-        g=7000
-        ''')
+            [section]
+            a=1000
+            g=7000
+            '''
+        )
 
         # Test
         original = xdg_config_dirs[:]
@@ -113,27 +116,28 @@ class TestConfigurationLoader(object):
         '''
         path = Path('conf')
         path.write_text(dedent('''\
-        [default]
-        a=1
-        b=2
-        
-        # comment
-        ; comment
-        [section leader]
-        space thing = spaaace  # comment
-        under_score = 1  ; comment
-        dash-ing = yes
-        empty = 
-        colon : yep
-        
-        [override-some]
-        a=5
-        
-        [interpolation]
-        regular = 5
-        magic = ${regular}
-        very_magic = ${section leader:space thing}
-        '''))
+            [default]
+            a=1
+            b=2
+            
+            # comment
+            ; comment
+            [section leader]
+            space thing = spaaace  # comment
+            under_score = 1  ; comment
+            dash-ing = yes
+            empty = 
+            colon : yep
+            
+            [override-some]
+            a=5
+            
+            [interpolation]
+            regular = 5
+            magic = ${regular}
+            very_magic = ${section leader:space thing}
+            '''
+        ))
 
         configuration = loader.load(path)
         assert configuration == {
@@ -167,9 +171,10 @@ class TestConfigurationLoader(object):
             '''
             path = Path('conf')
             path.write_text(dedent('''\
-            [section]
-            option = value
-            '''))
+                [section]
+                option = value
+                '''
+            ))
 
             configuration = loader.load(path)
             assert configuration == {'section': {'option': 'value'}}  # found it
@@ -182,9 +187,10 @@ class TestConfigurationLoader(object):
             dir_path.mkdir()
             path = dir_path / (configuration_stem + '.conf')
             path.write_text(dedent('''\
-            [section]
-            option = value
-            '''))
+                [section]
+                option = value
+                '''
+            ))
 
             configuration = loader.load(dir_path)
             assert configuration == {'section': {'option': 'value'}}  # found it
