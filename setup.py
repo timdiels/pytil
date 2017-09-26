@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 
 setup_args = dict(
-    version='6.0.0',
+    version='6.0.1.dev',
     name='pytil',
     description='Python 3 utility library',
     long_description=Path('README.rst').read_text(),
