@@ -3,7 +3,7 @@ library.
 
 Links
 =====
-- `Documentation <http://pytil.readthedocs.io/en/latest/>`_
+- `Documentation <http://pytil.readthedocs.io/en/6.0.0/>`_
 - `PyPI <https://pypi.python.org/pypi/pytil/>`_
 - `GitHub <https://github.com/timdiels/pytil/>`_
 

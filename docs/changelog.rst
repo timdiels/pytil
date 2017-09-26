@@ -2,6 +2,84 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+6.0.0
+-----
+- Backwards incompatible changes:
+
+  - Remove ``asyncio.stubborn_gather``: More often than not, when you need this,
+    you should look into a full blown pipeline framework such as Nextflow
+    instead.
+
+  - Remove ``click.assert_runs``:  It is usually simpler to use pytest's
+    isolation and output capturing than to use this function
+
+  - Remove ``click.argument``: Click's arguments are required by default, you
+    can simply use the real click.argument directly.
+
+  - Remove ``dict.assign``: Esoteric and easily replaced by: ``destination.clear();
+    destination.update(source)``.
+
+  - Remove ``function.compose``: Compose can be found in other PyPI packages,
+    e.g. in Toolz: ``toolz.functoolz.compose``.
+
+  - Remove ``http.download``: `urllib.request.urlretrieve` can be used instead,
+    though the filename suggested by the server is not used. Only the extension of
+    the downloaded file will match that of the server.
+
+  - Remove ``inspect.call_args``: Esoteric, can achieve something very
+    similar with::
+
+        args = inspect.signature(f).bind_partial(*args, **kwargs)
+        args.apply_defaults()
+        dict(args.arguments)
+
+  - Remove ``iterable.sliding_window``: Use `more_itertools.windowed` instead.
+    Drop in replacement.
+
+  - Remove ``iterable.partition``: If your data is sorted by key, you can just
+    use `itertools.groupby` as drop in replacement. Else, you can use
+    ``toolz.itertoolz.groupby``, but arg order is swapped and element order may not be
+    preserved.
+
+  - Remove ``iterable.flatten``: Use `more_itertools.collapse` instead.
+    ``flatten(a, b)`` becomes ``collapse(a, levels=b)``.
+
+  - Remove ``path.write``: Use `pathlib.Path.write_text` instead. However, you
+    are now responsible for creating any missing ancestor directories
+    (`os.makedirs`). The use of mode can be replaced by ``p.touch();
+    p.chmod(mode); p.write_text()`` or a variation depending on your use case.
+
+  - Remove ``path.read``: Use `pathlib.Path.read_text` instead.
+
+  - Remove ``pymysql.patch``: Instead of globally patching it, use the ``conv``
+    argument when creating a pymysql Connection.
+
+  - `algorithms.multi_way_partitioning` now returns a frozenbag instead of a bag.
+
+  - `multi_dict.MultiDict.invert` now returns a MultiDict instead of a dict.
+
+- Enhancements/additions:
+
+  - Add `difflib.line_diff`
+  - Add `numpy.ArrayLike`
+  - Add `path.TemporaryDirectory`
+  - Add `path.is_descendant`
+  - Add `path.is_descendant_or_self`
+  - Add `path.sorted_lines`
+  - Add `path.tsv_lines`
+  - Add `pkg_resources.resource_copy`
+  - Add `test.assert_dir_unchanged`
+  - Add `test.assert_lines_equal`
+  - Add `test.assert_xml_equals`
+  - Add `test.reset_loggers`
+  - `test.assert_text_equals`: Show diff when not equal
+
+- Fixes:
+
+  - Fix package: Add missing data files and dependencies
+  - Fix formatting of `test.assert_matches`, `test.assert_search_matches`:
+    forgot newline after ``Actual:``
+
 5.0.0
 -----
 
