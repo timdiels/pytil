@@ -26,4 +26,4 @@ E.g. ``import numpy as np`` in ``module.py`` can be accessed with ``module.np``,
 but `help` or Sphinx documentation will not include them. We assume a user will
 not use anything not mentioned in the documentation.
 
-.. _simple project: http://python-project.readthedocs.io/en/1.1.1/simple.html
+.. _simple project: http://python-project.readthedocs.io/en/1.2.0/simple.html
