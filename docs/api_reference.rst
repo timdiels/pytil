@@ -11,26 +11,27 @@ Modules
 .. currentmodule:: pytil
 .. autosummary::
 
-    algorithms
-    click
-    configuration
-    data_frame
-    debug
-    dict
-    difflib
-    exceptions
-    hashlib
-    iterable
-    logging
-    multi_dict
-    numpy
-    observable
-    path
-    pkg_resources
-    series
-    set
-    sqlalchemy
-    test
+   algorithms
+   click
+   configuration
+   data_frame
+   debug
+   dict
+   difflib
+   exceptions
+   hashlib
+   iterable
+   logging
+   multi_dict
+   numpy
+   observable
+   path
+   pkg_resources
+   series
+   set
+   sqlalchemy
+   test
+
 
 Module content overview
 ------------------------
@@ -38,175 +39,175 @@ Module content overview
 .. rubric:: algorithms
 .. currentmodule:: pytil.algorithms
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    multi_way_partitioning
-    spread_points_in_hypercube
-    toset_from_tosets
+   multi_way_partitioning
+   spread_points_in_hypercube
+   toset_from_tosets
 
 .. rubric:: click
 .. currentmodule:: pytil.click
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    option
-    password_option
+   option
+   password_option
 
 .. rubric:: configuration
 .. currentmodule:: pytil.configuration
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    ConfigurationLoader
+   ConfigurationLoader
 
 .. rubric:: data_frame
 .. currentmodule:: pytil.data_frame
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    assert_equals
-    equals
-    replace_na_with_none
-    split_array_like
+   assert_equals
+   equals
+   replace_na_with_none
+   split_array_like
 
 .. rubric:: debug
 .. currentmodule:: pytil.debug
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    pretty_memory_info
+   pretty_memory_info
 
 .. rubric:: dict
 .. currentmodule:: pytil.dict
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    DefaultDict
-    pretty_print_head
-    invert
+   DefaultDict
+   pretty_print_head
+   invert
 
 .. rubric:: difflib
 .. currentmodule:: pytil.difflib
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    line_diff
+   line_diff
 
 .. rubric:: exceptions
 .. currentmodule:: pytil.exceptions
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    InvalidOperationError
-    UserException
-    exc_info
+   InvalidOperationError
+   UserException
+   exc_info
 
 .. rubric:: hashlib
 .. currentmodule:: pytil.hashlib
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    base85_digest
+   base85_digest
 
 .. rubric:: iterable
 .. currentmodule:: pytil.iterable
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    is_sorted
+   is_sorted
 
 .. rubric:: logging
 .. currentmodule:: pytil.logging
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    configure
-    set_level
+   configure
+   set_level
 
 .. rubric:: multi_dict
 .. currentmodule:: pytil.multi_dict
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    MultiDict
+   MultiDict
 
 .. rubric:: numpy
 .. currentmodule:: pytil.numpy
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    ArrayLike
+   ArrayLike
 
 .. rubric:: observable
 .. currentmodule:: pytil.observable
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    Set
+   Set
 
 .. rubric:: path
 .. currentmodule:: pytil.path
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    TemporaryDirectory
-    assert_equals
-    assert_mode
-    chmod
-    hash
-    is_descendant
-    is_descendant_or_self
-    remove
-    sorted_lines
-    tsv_lines
+   TemporaryDirectory
+   assert_equals
+   assert_mode
+   chmod
+   hash
+   is_descendant
+   is_descendant_or_self
+   remove
+   sorted_lines
+   tsv_lines
 
 .. rubric:: pkg_resources
 .. currentmodule:: pytil.pkg_resources
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    resource_copy
-    resource_path
+   resource_copy
+   resource_path
 
 .. rubric:: series
 .. currentmodule:: pytil.series
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    assert_equals
-    equals
-    invert
-    split
+   assert_equals
+   equals
+   invert
+   split
 
 .. rubric:: set
 .. currentmodule:: pytil.set
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    merge_by_overlap
+   merge_by_overlap
 
 .. rubric:: sqlalchemy
 .. currentmodule:: pytil.sqlalchemy
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    log_sql
-    pretty_sql
+   log_sql
+   pretty_sql
 
 .. rubric:: test
 .. currentmodule:: pytil.test
 .. autosummary::
-    :nosignatures:
+   :nosignatures:
 
-    assert_dir_unchanged
-    assert_lines_equal
-    assert_matches
-    assert_search_matches
-    assert_text_contains
-    assert_text_equals
-    assert_xml_equals
-    reset_loggers
-    temp_dir_cwd
+   assert_dir_unchanged
+   assert_lines_equal
+   assert_matches
+   assert_search_matches
+   assert_text_contains
+   assert_text_equals
+   assert_xml_equals
+   reset_loggers
+   temp_dir_cwd
 
 pytil.algorithms
 ----------------

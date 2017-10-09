@@ -33,7 +33,6 @@ intersphinx_mapping = {
 }
 
 default_role = 'any'
-
 autodoc_default_flags = ['members', 'show-inheritance']
 
 # The master toctree document.
