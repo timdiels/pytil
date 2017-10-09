@@ -42,7 +42,6 @@ Module content overview
    :nosignatures:
 
    multi_way_partitioning
-   spread_points_in_hypercube
    toset_from_tosets
 
 .. rubric:: click

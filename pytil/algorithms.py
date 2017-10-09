@@ -19,54 +19,10 @@
 Various algorithms.
 '''
 
-from sklearn.utils.extmath import cartesian
 from collections_extended import frozenbag, setlist
 from more_itertools import windowed
 import networkx as nx
 import numpy as np
-
-def spread_points_in_hypercube(point_count, dimension_count): #TODO rename points_spread_in_hypercube #TODO rename dimension_count -> dimensions
-    '''
-    Place points in a unit hypercube, approximately maximising the minimum of
-    distances between points.
-
-    Euclidean distance is used.
-
-    Parameters
-    ----------
-    point_count : int
-        Number of points to pick.
-    dimension_count : int
-        Number of dimensions of the hypercube.
-
-    Returns
-    -------
-    ~numpy.array[float]
-        Points spread approximately optimally across the hypercube. Array shape
-        is ``(point_count, dimension_count)``.
-
-    Raises
-    ------
-    ValueError
-        When ``point_count < 0 or dimension_count < 1``.
-
-    Notes
-    -----
-    The current implementation puts points in a hypergrid. The exact solution to
-    this problem is known for only a few ``n``. See also this `StackOverflow
-    question with solutions to the problem <https://stackoverflow.com/q/2723626/1031434>`_.
-    '''
-    # Current implementation simply puts points in a grid
-    if point_count < 0:
-        raise ValueError('point_count must be at least 0')
-    if dimension_count < 1:
-        raise ValueError('dimension_count must be at least 1')
-    if point_count == 0:
-        return np.empty(shape=(0,dimension_count))
-    side_count = np.ceil(point_count ** (1/dimension_count)) # number of points per side
-    points = np.linspace(0, 1, side_count)
-    points = cartesian([points]*dimension_count)
-    return points[:point_count]
 
 class _Bin(object):
     def __init__(self):
