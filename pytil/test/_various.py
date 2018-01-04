@@ -22,7 +22,10 @@ Test utilities.
 from formencode.doctest_xml_compare import xml_compare
 from contextlib import contextmanager
 from itertools import zip_longest
+from more_itertools import ilen
 from pathlib import Path
+from pytil.path import sorted_lines
+from pytil.test import assert_lines_equal
 from lxml import etree  # @UnresolvedImport
 import logging
 import pytest
@@ -245,6 +248,31 @@ def assert_dir_unchanged(path, ignore=()):
     yield
     actual = contents()
     assert actual == expected, '\nActual: {}\nExpected: {}'.format(actual, expected)
+
+# TODO probably need a more flexible way of doing this, e.g. some need to
+# compared as csv, some have a header, some don't, some as tsv, some just txt,
+# xml even, ...
+def assert_dir_equals(actual_dir, expected_dir, expected_files_count):
+    # Assert expected dir is set up correctly
+    assert \
+        ilen(expected_dir.iterdir()) == expected_files_count, \
+        'Some expected files are missing'
+
+    # Assert expected files match those in actual dir
+    for expected_file in expected_dir.iterdir():
+        if expected_file.suffix == '.log':
+            continue
+        print(expected_file.name)
+        actual_file = actual_dir / expected_file.name
+        assert_lines_equal(sorted_lines(actual_file), sorted_lines(expected_file))
+
+    # Assert actual dir has no additional files, ignoring log files
+    def children(dir_):
+        children = {child.name for child in dir_.iterdir()}
+        return {child for child in children if not child.endswith('.log')}
+    actual = children(actual_dir)
+    expected = children(expected_dir)
+    assert actual == expected, '\nActual {}\nExpected {}'.format(actual, expected)
 
 from pytil.difflib import line_diff
 from pytil import path as path_  # yay, 'resolving' circular dependencies

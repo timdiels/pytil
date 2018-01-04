@@ -208,6 +208,7 @@ Module content overview
 .. autosummary::
    :nosignatures:
 
+   assert_dir_equals
    assert_dir_unchanged
    assert_lines_equal
    assert_matches
