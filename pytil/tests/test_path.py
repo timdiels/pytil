@@ -20,6 +20,7 @@ Test pytil.path
 '''
 
 from pytil import path as path_
+from pytil.test import assert_file_mode
 from pathlib import Path
 from contextlib import contextmanager
 from itertools import product
@@ -138,67 +139,67 @@ class TestChmod(object):
     def test_file_assign(self, path, recursive):
         path.touch()
         path_.chmod(path, mode=0o777, recursive=recursive)
-        path_.assert_mode(path, 0o777)
+        assert_file_mode(path, 0o777)
         path_.chmod(path, mode=0o751, recursive=recursive)
-        path_.assert_mode(path, 0o751)
+        assert_file_mode(path, 0o751)
 
     @pytest.mark.parametrize('recursive', (False, True))    
     def test_file_add(self, path, recursive):
         path.touch()
         path.chmod(0o000)
         path_.chmod(path, 0o111, '+', recursive=recursive)
-        path_.assert_mode(path, 0o111)
+        assert_file_mode(path, 0o111)
         path_.chmod(path, 0o100, '+', recursive=recursive)
-        path_.assert_mode(path, 0o111)
+        assert_file_mode(path, 0o111)
         path_.chmod(path, 0o751, '+', recursive=recursive)
-        path_.assert_mode(path, 0o751)
+        assert_file_mode(path, 0o751)
 
     @pytest.mark.parametrize('recursive', (False, True))
     def test_file_subtract(self, path, recursive):
         path.touch()
         path.chmod(0o777)
         path_.chmod(path, 0o111, '-', recursive=recursive)
-        path_.assert_mode(path, 0o666)
+        assert_file_mode(path, 0o666)
         path_.chmod(path, 0o751, '-', recursive=recursive)
-        path_.assert_mode(path, 0o026)
+        assert_file_mode(path, 0o026)
 
     def test_dir_assign(self, root, child_dir, child_file, grand_child):
         with self.unchanged(child_dir, child_file, grand_child):
             path_.chmod(root, mode=0o777)
-            path_.assert_mode(root, 0o777)
+            assert_file_mode(root, 0o777)
             path_.chmod(root, mode=0o751)
-            path_.assert_mode(root, 0o751)
+            assert_file_mode(root, 0o751)
 
     def test_dir_add(self, root, child_dir, child_file, grand_child):
         with self.unchanged(child_dir, child_file, grand_child):
             root.chmod(0o000)
             path_.chmod(root, 0o111, '+')
-            path_.assert_mode(root, 0o111)
+            assert_file_mode(root, 0o111)
             path_.chmod(root, 0o100, '+')
-            path_.assert_mode(root, 0o111)
+            assert_file_mode(root, 0o111)
             path_.chmod(root, 0o751, '+')
-            path_.assert_mode(root, 0o751)
+            assert_file_mode(root, 0o751)
 
     def test_dir_subtract(self, root, child_dir, child_file, grand_child):
         with self.unchanged(child_dir, child_file, grand_child):
             root.chmod(mode=0o777)
             path_.chmod(root, 0o011, '-')
-            path_.assert_mode(root, 0o766)
+            assert_file_mode(root, 0o766)
             path_.chmod(root, 0o271, '-')
-            path_.assert_mode(root, 0o506)
+            assert_file_mode(root, 0o506)
 
     def test_dir_assign_recursive(self, root, child_dir, child_file, grand_child):
         path_.chmod(root, mode=0o777, recursive=True)
-        path_.assert_mode(root, 0o777)
-        path_.assert_mode(child_dir, 0o777)
-        path_.assert_mode(child_file, 0o666)
-        path_.assert_mode(grand_child, 0o666)
+        assert_file_mode(root, 0o777)
+        assert_file_mode(child_dir, 0o777)
+        assert_file_mode(child_file, 0o666)
+        assert_file_mode(grand_child, 0o666)
 
         path_.chmod(root, mode=0o751, recursive=True)
-        path_.assert_mode(root, 0o751)
-        path_.assert_mode(child_dir, 0o751)
-        path_.assert_mode(child_file, 0o640)
-        path_.assert_mode(grand_child, 0o640)
+        assert_file_mode(root, 0o751)
+        assert_file_mode(child_dir, 0o751)
+        assert_file_mode(child_file, 0o640)
+        assert_file_mode(grand_child, 0o640)
 
     def test_dir_add_recursive(self, root, child_dir, child_file, grand_child):
         grand_child.chmod(0o000)
@@ -207,22 +208,22 @@ class TestChmod(object):
         root.chmod(0o000)
 
         path_.chmod(root, 0o511, '+', recursive=True)
-        path_.assert_mode(root, 0o511)
-        path_.assert_mode(child_dir, 0o511)
-        path_.assert_mode(child_file, 0o400)
-        path_.assert_mode(grand_child, 0o400)
+        assert_file_mode(root, 0o511)
+        assert_file_mode(child_dir, 0o511)
+        assert_file_mode(child_file, 0o400)
+        assert_file_mode(grand_child, 0o400)
 
         path_.chmod(root, 0o500, '+', recursive=True)
-        path_.assert_mode(root, 0o511)
-        path_.assert_mode(child_dir, 0o511)
-        path_.assert_mode(child_file, 0o400)
-        path_.assert_mode(grand_child, 0o400)
+        assert_file_mode(root, 0o511)
+        assert_file_mode(child_dir, 0o511)
+        assert_file_mode(child_file, 0o400)
+        assert_file_mode(grand_child, 0o400)
 
         path_.chmod(root, 0o751, '+', recursive=True)
-        path_.assert_mode(root, 0o751)
-        path_.assert_mode(child_dir, 0o751)
-        path_.assert_mode(child_file, 0o640)
-        path_.assert_mode(grand_child, 0o640)
+        assert_file_mode(root, 0o751)
+        assert_file_mode(child_dir, 0o751)
+        assert_file_mode(child_file, 0o640)
+        assert_file_mode(grand_child, 0o640)
 
     def test_dir_subtract_recursive(self, root, child_dir, child_file, grand_child):
         root.chmod(mode=0o777)
@@ -231,16 +232,16 @@ class TestChmod(object):
         grand_child.chmod(0o777)
 
         path_.chmod(root, 0o222, '-', recursive=True)
-        path_.assert_mode(root, 0o555)
-        path_.assert_mode(child_dir, 0o555)
-        path_.assert_mode(child_file, 0o555)
-        path_.assert_mode(grand_child, 0o555)
+        assert_file_mode(root, 0o555)
+        assert_file_mode(child_dir, 0o555)
+        assert_file_mode(child_file, 0o555)
+        assert_file_mode(grand_child, 0o555)
 
         path_.chmod(root, 0o047, '-', recursive=True)
-        path_.assert_mode(root, 0o510)
-        path_.assert_mode(child_dir, 0o510)
-        path_.assert_mode(child_file, 0o511)
-        path_.assert_mode(grand_child, 0o511)
+        assert_file_mode(root, 0o510)
+        assert_file_mode(child_dir, 0o510)
+        assert_file_mode(child_file, 0o511)
+        assert_file_mode(grand_child, 0o511)
 
 def test_digest_file(path, contents):
     '''
@@ -347,55 +348,6 @@ class TestDigestDirectory(object):
         (root / 'file').chmod(0o404)
         current = path_.hash(root).hexdigest()
         assert original == current
-
-class TestAssertEquals(object):
-
-    def test_contents(self):
-        '''
-        Only when contents=True, assert file contents match  
-        '''
-        file1 = Path('file1')
-        file2 = Path('file2')
-        contents = 'abc'
-        file1.write_text(contents)
-        file2.write_text(contents*2)
-        path_.assert_equals(file1, file2, name=False, contents=False, mode=False)
-        with pytest.raises(AssertionError):
-            path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
-        file2.write_text(contents)
-        path_.assert_equals(file1, file2, contents=True, name=False, mode=False)
-
-    def test_name(self):
-        '''
-        When name=True, assert file names match  
-        '''
-        Path('dir1').mkdir()
-        Path('dir2').mkdir()
-        file1a = Path('dir1/file_a')
-        file2a = Path('dir2/file_a')
-        file2b = Path('dir2/file_b')
-        file1a.touch()
-        file2a.touch()
-        file2b.touch()
-        path_.assert_equals(file1a, file2b, name=False, contents=False, mode=False)
-        with pytest.raises(AssertionError):
-            path_.assert_equals(file1a, file2b, name=True, contents=False, mode=False)
-        path_.assert_equals(file1a, file2a, name=True, contents=False, mode=False)
-
-    def test_mode(self):
-        '''
-        When mode=True, assert file modes match  
-        '''
-        file1 = Path('file1')
-        file2 = Path('file2')
-        mode = 0o754
-        file1.touch(mode)
-        file2.touch(0o666)
-        path_.assert_equals(file1, file2, name=False, contents=False, mode=False)
-        with pytest.raises(AssertionError):
-            path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
-        file2.chmod(mode)
-        path_.assert_equals(file1, file2, mode=True, name=False, contents=False)
 
 class TestTemporaryDirectory:
 

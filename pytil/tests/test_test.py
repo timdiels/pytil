@@ -22,12 +22,16 @@ Test pytil.test
 from pytil.pkg_resources import resource_path
 from pytil.test import (
     reset_loggers, assert_dir_unchanged, assert_text_equals, assert_xml_equals,
-    assert_matches
+    assert_matches, assert_file_equals
 )
 from pathlib import Path
 from textwrap import dedent
 import logging
 import pytest
+
+@pytest.fixture(autouse=True)
+def use_tmp(temp_dir_cwd):
+    pass
 
 def test_reset_loggers():
     '''
@@ -97,3 +101,52 @@ def test_assert_xml_equals(temp_dir_cwd):  # @UnusedVariable
             Difference: text: 'val' != 'val2\''''
         )
     )
+
+class TestAssertFileEquals(object):
+
+    def test_contents(self):
+        '''
+        Only when contents=True, assert file contents match  
+        '''
+        file1 = Path('file1')
+        file2 = Path('file2')
+        contents = 'abc'
+        file1.write_text(contents)
+        file2.write_text(contents*2)
+        assert_file_equals(file1, file2, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            assert_file_equals(file1, file2, contents=True, name=False, mode=False)
+        file2.write_text(contents)
+        assert_file_equals(file1, file2, contents=True, name=False, mode=False)
+
+    def test_name(self):
+        '''
+        When name=True, assert file names match  
+        '''
+        Path('dir1').mkdir()
+        Path('dir2').mkdir()
+        file1a = Path('dir1/file_a')
+        file2a = Path('dir2/file_a')
+        file2b = Path('dir2/file_b')
+        file1a.touch()
+        file2a.touch()
+        file2b.touch()
+        assert_file_equals(file1a, file2b, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            assert_file_equals(file1a, file2b, name=True, contents=False, mode=False)
+        assert_file_equals(file1a, file2a, name=True, contents=False, mode=False)
+
+    def test_mode(self):
+        '''
+        When mode=True, assert file modes match  
+        '''
+        file1 = Path('file1')
+        file2 = Path('file2')
+        mode = 0o754
+        file1.touch(mode)
+        file2.touch(0o666)
+        assert_file_equals(file1, file2, name=False, contents=False, mode=False)
+        with pytest.raises(AssertionError):
+            assert_file_equals(file1, file2, mode=True, name=False, contents=False)
+        file2.chmod(mode)
+        assert_file_equals(file1, file2, mode=True, name=False, contents=False)

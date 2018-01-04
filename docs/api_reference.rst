@@ -161,8 +161,6 @@ Module content overview
    :nosignatures:
 
    TemporaryDirectory
-   assert_equals
-   assert_mode
    chmod
    hash
    is_descendant
@@ -210,6 +208,8 @@ Module content overview
 
    assert_dir_equals
    assert_dir_unchanged
+   assert_file_equals
+   assert_file_mode
    assert_lines_equal
    assert_matches
    assert_search_matches

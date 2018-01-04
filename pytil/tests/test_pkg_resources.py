@@ -20,7 +20,7 @@ Test pytil.pkg_resources
 '''
 
 from pytil.pkg_resources import resource_path, resource_copy
-from pytil import path as path_
+from pytil.test import assert_file_equals
 from pathlib import Path
 
 def test_resource_copy(temp_dir_cwd):  # @UnusedVariable
@@ -35,4 +35,4 @@ def test_resource_copy(temp_dir_cwd):  # @UnusedVariable
 
     # Assert actual == expected
     for file in ('file', 'subdir/file1', 'subdir/file2'):
-        path_.assert_equals(actual_dir / file, expected_dir / file)
+        assert_file_equals(actual_dir / file, expected_dir / file)

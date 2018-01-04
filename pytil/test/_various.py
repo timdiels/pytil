@@ -24,8 +24,9 @@ from contextlib import contextmanager
 from itertools import zip_longest
 from more_itertools import ilen
 from pathlib import Path
+from pytil import path as path_  # yay, 'resolving' circular dependencies
+from pytil.difflib import line_diff
 from pytil.path import sorted_lines
-from pytil.test import assert_lines_equal
 from lxml import etree  # @UnresolvedImport
 import logging
 import pytest
@@ -274,5 +275,38 @@ def assert_dir_equals(actual_dir, expected_dir, expected_files_count):
     expected = children(expected_dir)
     assert actual == expected, '\nActual {}\nExpected {}'.format(actual, expected)
 
-from pytil.difflib import line_diff
-from pytil import path as path_  # yay, 'resolving' circular dependencies
+def assert_file_mode(path, mode):
+    '''
+    Assert last 3 octal mode digits match given mode exactly.
+
+    Parameters
+    ----------
+    path : ~pathlib.Path
+        Path whose mode to assert.
+    mode : int
+        Expected mode.
+    '''
+    actual = path.stat().st_mode & 0o777
+    assert actual == mode, '{:o} != {:o}'.format(actual, mode)
+
+def assert_file_equals(actual_file, expected_file, contents=True, name=True, mode=True):
+    '''
+    Assert 2 files are equal.
+
+    Parameters
+    -----------
+    actual_file : ~pathlib.Path
+    expected_file : ~pathlib.Path
+    contents : bool
+        Assert file contents are equal.
+    name : bool
+        Assert file names are equal.
+    mode : bool
+        Assert the last 3 octal digits of file modes are equal.
+    '''
+    if name:
+        assert actual_file.name == expected_file.name
+    if contents:
+        assert_text_equals(actual_file.read_text(), expected_file.read_text())
+    if mode:
+        assert actual_file.stat().st_mode == expected_file.stat().st_mode
