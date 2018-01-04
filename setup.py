@@ -69,6 +69,7 @@ setup_args = dict(
             'lxml',
             'more-itertools==3.*',
             'formencode',
+            'openpyxl~=2.4',
         ],
         'various': [],
         'write': [],

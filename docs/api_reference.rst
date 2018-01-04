@@ -213,6 +213,7 @@ Module content overview
    assert_search_matches
    assert_text_contains
    assert_text_equals
+   assert_xlsx_equals
    assert_xml_equals
    reset_loggers
    temp_dir_cwd

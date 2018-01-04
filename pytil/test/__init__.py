@@ -1,4 +1,4 @@
-# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2017 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
 #
 # This file is part of pytil.
 #
@@ -14,5 +14,3 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
-
-__version__ = '7.0.0.dev'
