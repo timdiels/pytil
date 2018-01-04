@@ -32,6 +32,7 @@ Modules
    set
    sqlalchemy
    test
+   various
    write
 
 
@@ -218,6 +219,13 @@ Module content overview
    reset_loggers
    temp_dir_cwd
 
+.. rubric:: various
+.. currentmodule:: pytil.various
+.. autosummary::
+   :nosignatures:
+
+   join_multiline
+
 .. rubric:: write
 .. currentmodule:: pytil.write
 .. autosummary::
@@ -310,6 +318,10 @@ pytil.sqlalchemy
 pytil.test
 ----------
 .. automodule:: pytil.test
+
+pytil.various
+-------------
+.. automodule:: pytil.various
 
 pytil.write
 -----------
