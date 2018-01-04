@@ -25,12 +25,14 @@ Modules
    multi_dict
    numpy
    observable
+   parse
    path
    pkg_resources
    series
    set
    sqlalchemy
    test
+   write
 
 
 Module content overview
@@ -144,6 +146,14 @@ Module content overview
 
    Set
 
+.. rubric:: parse
+.. currentmodule:: pytil.parse
+.. autosummary::
+   :nosignatures:
+
+   csv
+   tsv
+
 .. rubric:: path
 .. currentmodule:: pytil.path
 .. autosummary::
@@ -158,7 +168,6 @@ Module content overview
    is_descendant_or_self
    remove
    sorted_lines
-   tsv_lines
 
 .. rubric:: pkg_resources
 .. currentmodule:: pytil.pkg_resources
@@ -207,6 +216,14 @@ Module content overview
    assert_xml_equals
    reset_loggers
    temp_dir_cwd
+
+.. rubric:: write
+.. currentmodule:: pytil.write
+.. autosummary::
+   :nosignatures:
+
+   csv
+   tsv
 
 pytil.algorithms
 ----------------
@@ -265,6 +282,10 @@ pytil.observable
 ----------------
 .. automodule:: pytil.observable
 
+pytil.parse
+-----------
+.. automodule:: pytil.parse
+
 pytil.path
 ----------
 .. automodule:: pytil.path
@@ -288,3 +309,7 @@ pytil.sqlalchemy
 pytil.test
 ----------
 .. automodule:: pytil.test
+
+pytil.write
+-----------
+.. automodule:: pytil.write

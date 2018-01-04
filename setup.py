@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 
 setup_args = dict(
-    version='6.0.1.dev',
+    version='7.0.0.dev',
     name='pytil',
     description='Python 3 utility library',
     long_description=Path('README.rst').read_text(),
@@ -57,6 +57,7 @@ setup_args = dict(
         'numpy': [],
         'observable': [],
         'path': [],
+        'parse': [],
         'pkg_resources': [],
         'series': [
             'numpy==1.*',
@@ -69,6 +70,8 @@ setup_args = dict(
             'more-itertools==3.*',
             'formencode',
         ],
+        'various': [],
+        'write': [],
     },
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[

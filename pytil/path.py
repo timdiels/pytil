@@ -295,43 +295,6 @@ def assert_equals(actual_file, expected_file, contents=True, name=True, mode=Tru
     if mode:
         assert actual_file.stat().st_mode == expected_file.stat().st_mode
 
-def tsv_lines(file, skip=0):
-    '''
-    Lines of tab separated (TSV) file.
-
-    Ignores empty lines and comment lines starting with ``#``.
-
-    For advanced stuff, use `pandas.read_table` instead.
-
-    Parameters
-    ----------
-    file : ~pathlib.Path
-        TSV file.
-    skip : int
-        Number of lines to skip (at the start) after empty/comment lines have
-        been removed.
-
-    Returns
-    ------
-    ~typing.Iterable[~typing.Sequence[str]]
-        Lines. Each line is a sequence of field/cell values.
-    '''
-    with file.open() as f:
-        for line in f.readlines():
-            line = line.rstrip('\n\r')
-
-            # Skip comment and empty lines
-            if line.startswith('#') or not line.strip():
-                continue
-
-            # Skip first `skip` lines
-            if skip:
-                skip -= 1
-                continue
-
-            #
-            yield line.split('\t')
-
 def is_descendant(descendant, ancestor):
     '''
     Get whether path is descendant of other path.
