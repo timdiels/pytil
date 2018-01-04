@@ -22,7 +22,6 @@ Various algorithms.
 from collections_extended import frozenbag, setlist
 from more_itertools import windowed
 import networkx as nx
-import numpy as np
 
 class _Bin(object):
     def __init__(self):
