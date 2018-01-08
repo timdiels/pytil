@@ -15,10 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-Test utilities.
-'''
-
 from formencode.doctest_xml_compare import xml_compare
 from contextlib import contextmanager
 from itertools import zip_longest

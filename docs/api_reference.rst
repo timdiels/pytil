@@ -320,6 +320,20 @@ pytil.test
 ----------
 .. automodule:: pytil.test
 
+   .. autofunction:: assert_dir_equals
+   .. autofunction:: assert_dir_unchanged
+   .. autofunction:: assert_file_equals
+   .. autofunction:: assert_file_mode
+   .. autofunction:: assert_lines_equal
+   .. autofunction:: assert_matches
+   .. autofunction:: assert_search_matches
+   .. autofunction:: assert_text_contains
+   .. autofunction:: assert_text_equals
+   .. autofunction:: assert_xlsx_equals
+   .. autofunction:: assert_xml_equals
+   .. autofunction:: reset_loggers
+   .. autofunction:: temp_dir_cwd
+
 pytil.various
 -------------
 .. automodule:: pytil.various

@@ -15,5 +15,18 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
+'''
+Test utilities.
+'''
+
+__all__ = (
+    'assert_dir_unchanged', 'assert_dir_equals', 'assert_file_mode',
+    'assert_file_equals', 'assert_lines_equal', 'assert_matches',
+    'assert_search_matches', 'assert_text_equals', 'assert_text_contains',
+    'assert_xlsx_equals', 'assert_xml_equals', 'reset_loggers', 'temp_dir_cwd',
+)
+
 from ._various import *
 from ._xlsx import *
+
+

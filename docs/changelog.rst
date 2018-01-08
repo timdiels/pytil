@@ -2,6 +2,31 @@ Changelog
 =========
 `Semantic versioning <semver_>`_ is used (starting with v3.0.0).
 
+7.0.0
+-----
+- Backwards incompatible changes:
+
+  - Remove ``path.tsv_lines``: use ``parse.tsv`` instead.
+  - Remove ``algorithms.spread_points_in_hypercube``: it simply returned opints
+    on a grid, which can be achieved with numpy.meshgrid, e.g. 3D grid::
+
+        import numpy as np
+        side = np.linspace(0, 1, ceil(n**(1/3)))
+        points = np.array(np.meshgrid(side, side, side)).reshape(3,-1).T
+
+  - Rename ``path.assert_mode`` to ``test.assert_file_mode``
+  - Rename ``path.assert_equals`` to ``test.assert_file_equals``
+
+- Enhancements/additions:
+
+  - Add ``test.assert_dir_equals``
+  - Add ``various.join_multiline``
+  - Add ``test.assert_xlsx_equals``
+  - Add ``parse.csv``
+  - Add ``parse.tsv``
+  - Add ``write.csv``
+  - Add ``write.tsv``
+
 6.0.0
 -----
 - Backwards incompatible changes:
@@ -66,18 +91,18 @@ Changelog
   - Add `path.is_descendant`
   - Add `path.is_descendant_or_self`
   - Add `path.sorted_lines`
-  - Add `path.tsv_lines`
+  - Add ``path.tsv_lines``
   - Add `pkg_resources.resource_copy`
-  - Add `test.assert_dir_unchanged`
-  - Add `test.assert_lines_equal`
-  - Add `test.assert_xml_equals`
-  - Add `test.reset_loggers`
-  - `test.assert_text_equals`: Show diff when not equal
+  - Add ``test.assert_dir_unchanged``
+  - Add ``test.assert_lines_equal``
+  - Add ``test.assert_xml_equals``
+  - Add ``test.reset_loggers``
+  - ``test.assert_text_equals``: Show diff when not equal
 
 - Fixes:
 
   - Fix package: Add missing data files and dependencies
-  - Fix formatting of `test.assert_matches`, `test.assert_search_matches`:
+  - Fix formatting of ``test.assert_matches``, ``test.assert_search_matches``:
     forgot newline after ``Actual:``
 
 5.0.0
