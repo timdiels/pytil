@@ -15,9 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
+import signal
+
 # http://stackoverflow.com/a/30091579/1031434
-from signal import signal, SIGPIPE, SIG_DFL
-signal(SIGPIPE, SIG_DFL) # Ignore SIGPIPE
+signal.signal(signal.SIGPIPE, signal.SIG_IGN)  # Ignore SIGPIPE
 
 # import fixtures
 from pytil.test import temp_dir_cwd  # @UnusedImport
