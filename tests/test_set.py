@@ -1,4 +1,4 @@
-# Copyright (C) 2017 VIB/BEG/UGent - Tim Diels <tim@diels.me>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,9 +15,13 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'Various utilities'
+'Test pytil.set'
+
+from pytil.set import merge_by_overlap
 
 
-def join_lines(text):
-    'Join multiline text into a single line'
-    return ' '.join(line.strip() for line in text.splitlines()).strip()
+def test_merge_by_overlap():
+    sets = [{1,2}, set(), {2,3}, {4,5,6}, {6,7}]
+    merge_by_overlap(sets)
+    # The order doesn't actually matter, our test is a bit too strict
+    assert sets == [{1,2,3}, {4,5,6,7}]

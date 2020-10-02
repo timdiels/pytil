@@ -1,0 +1,53 @@
+# Conda recipe
+{% set data = load_setup_py_data() %}
+
+package:
+  name: pytil
+  version: '{{ data['version'] }}'
+
+source:
+  path: ..
+
+build:
+  script: '{{ PYTHON }} -m pip install . -vv'
+
+requirements:
+  build:
+    - pip
+    - python
+  host:
+    # Conda recommends always adding the interpreter as a host dep
+    - python
+  run:
+    - python >=3.6  # we use fstrings, introduced in 3.6
+  run_constrained:  # Constrain optional runtime dependencies
+    - openpyxl >=2.4
+
+test:
+  source_files:
+    - pytest.ini
+    - tests
+
+  requires:
+    # anaconda
+    - pandas
+    - lxml
+    - openpyxl
+    - pytest >=3
+
+    # Only available on conda-forge currently
+    - formencode
+    - pytest-env
+
+  commands:
+    - pytest
+
+  # TODO adding downstreams: for some of our other pkgs here might be useful,
+  # though not sure how that'd work out with e.g. pytil==7 on their part when
+  # building pytil 8
+
+about:
+  home: https://github.com/timdiels/pytil
+  license: LGPL3
+  license_file: LICENSE.txt
+  summary: Personal library of Python utilities

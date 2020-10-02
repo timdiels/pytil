@@ -1,5 +1,0 @@
-[run]
-omit =
-    pytil/tests/*
-    venv/*
-
