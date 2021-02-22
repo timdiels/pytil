@@ -1,9 +1,9 @@
 name: Publish to anaconda
 
-# When creating a release in github
+# When publishing a release in github
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   publish-conda-pkg:
