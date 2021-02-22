@@ -2,9 +2,9 @@ name: Publish to anaconda
 
 # When version tagged on master branch
 on:
-  branches:
-    - master
   push:
+    branches:
+      - master
     tags:
       - v*
 
