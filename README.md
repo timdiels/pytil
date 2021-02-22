@@ -1,7 +1,7 @@
 My personal library of Python utilities.
 
 ### Links
-- [Conda](TODO)
+- [Conda](https://anaconda.org/timdiels/pytil)
 - [Old PyPI](https://pypi.python.org/pypi/pytil/), for older versions of the
   library.
 - [GitHub](https://github.com/timdiels/pytil/)
@@ -36,9 +36,9 @@ tests with `pytest`. (I only list dependencies in conda recipe, not in
 up dev env).
 
 #### Building a conda pkg
-This is just in case you want to try out the build before pushing a version tag
-to master, which builds for you and pushes to conda. The conda recipe runs
-pytest after the build either way.
+This is just in case you want to try out the build before creating a release on
+github. The github repo will publish to anaconda when you create a new release.
+The conda recipe runs pytest after the build either way.
 
 First time setup:
 
