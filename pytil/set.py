@@ -1,4 +1,4 @@
-# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,15 +15,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-Set utilities.
-'''
+'Set utilities'
+
 
 def _locate_bin(bins, n):
-    """
+    '''
     Find the bin where list n has ended up: Follow bin references until
     we find a bin that has not moved.
-    """
+    '''
     while bins[n] != n:
         n = bins[n]
     return n
@@ -68,19 +67,19 @@ def merge_by_overlap(sets):
                     # New number: tag it with a pointer to this row's bin
                     nums[num] = r
                     continue
-                else:
-                    dest = _locate_bin(bins, nums[num])
-                    if dest == r:
-                        continue  # already in the same bin
 
-                    if dest > r:
-                        dest, r = r, dest  # always merge into the smallest bin
+                dest = _locate_bin(bins, nums[num])
+                if dest == r:
+                    continue  # already in the same bin
 
-                    data[dest].update(data[r])
-                    data[r] = None
-                    # Update our indices to reflect the move
-                    bins[r] = dest
-                    r = dest 
+                if dest > r:
+                    dest, r = r, dest  # always merge into the smallest bin
+
+                data[dest].update(data[r])
+                data[r] = None
+                # Update our indices to reflect the move
+                bins[r] = dest
+                r = dest
 
     # Remove empty bins
     for i in reversed(range(len(data))):

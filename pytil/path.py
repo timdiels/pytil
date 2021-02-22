@@ -1,4 +1,4 @@
-# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,9 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-`python:pathlib` extensions.
-'''
+'`python:pathlib` extensions'
 
 from contextlib import suppress, contextmanager
 from pathlib import Path
@@ -27,8 +25,13 @@ import errno
 import time
 import os
 
+
 #: The file system root to use (used for testing)
 _root = Path('/')
+
+# Note: better delete/copy exists though we take into account nfs and most
+# others probably don't
+# https://plumbum.readthedocs.org/en/latest/utils.html
 
 def remove(path, force=False):
     '''
@@ -145,8 +148,9 @@ def chmod(path, mode, operator='=', recursive=False):
             chmod_children(parent, dirs, 0o777777, operator)
             chmod_children(parent, files, 0o777666, operator)
 
+# Used by cedalion
 @contextmanager
-def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  # @ReservedAssignment
+def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):
     '''
     An extension to `tempfile.TemporaryDirectory`.
 
@@ -170,7 +174,7 @@ def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  
             Fail silently.
     '''
     if dir:
-        dir = str(dir)  # @ReservedAssignment
+        dir = str(dir)
     temp_dir = tempfile.TemporaryDirectory(suffix, prefix, dir)
     try:
         yield Path(temp_dir.name)
@@ -183,9 +187,7 @@ def TemporaryDirectory(suffix=None, prefix=None, dir=None, on_error='ignore'):  
             if on_error != 'ignore' or ex.errno != errno.ENOTEMPTY:
                 raise
 
-# Note: good delete and copy here, but pb paths which we won't expose: https://plumbum.readthedocs.org/en/latest/utils.html
-
-def hash(path, hash_function=hashlib.sha512):  # @ReservedAssignment
+def hash(path, hash_function=hashlib.sha512):
     '''
     Hash file or directory.
 
@@ -241,22 +243,6 @@ def hash(path, hash_function=hashlib.sha512):  # @ReservedAssignment
                     break
                 hash_.update(buffer)
     return hash_
-
-def sorted_lines(file):
-    '''
-    Lines of file, sorted.
-
-    Parameters
-    ----------
-    file : ~pathlib.Path
-        Path to file whose lines to read.
-
-    Returns
-    -------
-    ~typing.List[str]
-        Sorted lines of file.
-    '''
-    return sorted(file.read_text().splitlines())
 
 def is_descendant(descendant, ancestor):
     '''

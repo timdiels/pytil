@@ -1,4 +1,4 @@
-# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'''
-`pandas.Series` extensions.
-'''
+'`pandas.Series` extensions'
 
-import pytil.data_frame as df_
+from pytil.data_frame import df_equals
+
 
 def invert(series):
     '''
@@ -44,45 +43,8 @@ def invert(series):
     df.set_index(series.name, inplace=True)
     return df[df.columns[0]]
 
-def split(series):
-    '''
-    Split values.
-
-    The index is dropped, but this may change in the future.
-
-    Parameters
-    ----------
-    series : ~pandas.Series[~pytil.numpy.ArrayLike]
-        Series with array-like values.
-
-    Returns
-    -------
-    ~pandas.Series
-        Series with values split across rows.
-
-    Examples
-    --------
-    >>> series = pd.Series([[1,2],[1,2],[3,4,5]])
-    >>> series
-    0       [1, 2]
-    1       [1, 2]
-    2    [3, 4, 5]
-    dtype: object
-    >>> split(series)
-    0    1
-    1    2
-    2    1
-    3    2
-    4    3
-    5    4
-    6    5
-    dtype: object
-    '''
-    s = df_.split_array_like(series.apply(list).to_frame('column'), 'column')['column']
-    s.name = series.name
-    return s
-
-def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=False, _return_reason=False):
+def equals(series1, series2, ignore_order=False, ignore_index=False,
+                             all_close=False, _return_reason=False):
     '''
     Get whether 2 series are equal.
 
@@ -132,16 +94,17 @@ def equals(series1, series2, ignore_order=False, ignore_index=False, all_close=F
 def _equals(series1, series2, ignore_order, ignore_index, all_close):
     if not ignore_index:
         if series1.name != series2.name:
-            return False, 'Series name differs: {!r} != {!r}'.format(series1.name, series2.name)
-    return df_.equals(
-        series1.to_frame(), 
+            return False, f'Series name differs: {series1.name!r} != {series2.name!r}'
+    return df_equals(
+        series1.to_frame(),
         series2.to_frame(),
         ignore_order={0} if ignore_order else set(),
         ignore_indices={0} if ignore_index else set(),
         all_close=all_close,
-        _return_reason=True  #TODO the reasons will be about dataframes, this is confusing. May need to copy paste after all and do the analog for a series. Or add an internal param so it outputs series info (pick the former option)
+        _return_reason=True
     )
 
+# Used by cedalion
 def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_close=False):
     '''
     Assert 2 series are equal.
@@ -158,5 +121,7 @@ def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_
     ignore_index : bool
     all_close : bool
     '''
-    equals_, reason = equals(actual, expected, ignore_order, ignore_index, all_close, _return_reason=True)
-    assert equals_, '{}\n\n{}\n\n{}'.format(reason, actual.to_string(), expected.to_string())
+    equals_, reason = equals(
+        actual, expected, ignore_order, ignore_index, all_close, _return_reason=True
+    )
+    assert equals_, f'{reason}\n\n{actual.to_string()}\n\n{expected.to_string()}'

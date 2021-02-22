@@ -1,4 +1,4 @@
-# Copyright (C) 2017 VIB/BEG/UGent - Tim Diels <tim@diels.me>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,9 +15,27 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'Various utilities'
+from pathlib import Path
+from textwrap import dedent
+
+import pytest
+
+from pytil.test import assert_dir_unchanged
 
 
-def join_lines(text):
-    'Join multiline text into a single line'
-    return ' '.join(line.strip() for line in text.splitlines()).strip()
+def test_assert_dir_unchanged(temp_dir_cwd):
+    dir_ = Path('dir')
+    dir_.mkdir()
+
+    # When dir unchanged, nothing happens
+    with assert_dir_unchanged(dir_):
+        pass
+
+    # When dir does change, raise
+    with pytest.raises(AssertionError) as ex:
+        with assert_dir_unchanged(dir_):
+            (dir_ / 'child').mkdir()
+    assert ex.value.args[0] == dedent('''
+        Actual: {'dir/child'}
+        Expected: set()'''
+    )

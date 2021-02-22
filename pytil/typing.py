@@ -1,4 +1,4 @@
-# Copyright (C) 2017 VIB/BEG/UGent - Tim Diels <tim@diels.me>
+# Copyright (C) 2017 VIB - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -15,9 +15,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-'Various utilities'
+'More types'
+
+import typing
 
 
-def join_lines(text):
-    'Join multiline text into a single line'
-    return ' '.join(line.strip() for line in text.splitlines()).strip()
+T = typing.TypeVar('T')
+
+class ArrayLike(typing.Generic[T]):
+
+    '''
+    Type representing any value that can be passed to `numpy.array` to create an array.
+
+    ``ArrayLike[T]`` is an array-like with data type ``T``.
+    '''

@@ -1,4 +1,4 @@
-# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <timdiels.m@gmail.com>
+# Copyright (C) 2016 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
@@ -16,16 +16,18 @@
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-Observable collections.
+Observable collections
+
+Potential future addition
+http://code.activestate.com/recipes/306864-list-and-dictionary-observer/
 '''
 
 from contextlib import contextmanager
 
+
 class Set(set):
 
-    '''
-    Observable set
-    '''
+    'Observable set'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -127,5 +129,3 @@ class Set(set):
     def clear(self):
         with self._notify_if_changed():
             super().clear()
-
-# Potential future additions http://code.activestate.com/recipes/306864-list-and-dictionary-observer/
