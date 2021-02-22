@@ -1,12 +1,10 @@
 name: Publish to anaconda
 
-# When version tagged on master branch
+# When creating a release in github
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - v*
+  release:
+    status:
+      types: [created]
 
 jobs:
   publish-conda-pkg:
