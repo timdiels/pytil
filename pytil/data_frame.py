@@ -51,7 +51,8 @@ def df_equals(df1, df2, ignore_order=frozenset(), ignore_indices=frozenset(),
         Axi in which to ignore order.
     ignore_indices : ~typing.Set[int]
         Axi of which to ignore the index. E.g. ``{1}`` allows differences in
-        ``df.columns.name`` and ``df.columns.equals(df2.columns)``.
+        ``df.columns.name`` and does not check
+        ``df.columns.equals(df2.columns)``.
     all_close : bool
         If `False`, values must match exactly, if `True`, floats are compared as if
         compared with `numpy.isclose`.
