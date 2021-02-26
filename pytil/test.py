@@ -24,7 +24,7 @@ import os
 
 
 # Used by cedalion
-@pytest.yield_fixture()
+@pytest.fixture
 def temp_dir_cwd(tmpdir):
     '''
     pytest fixture which sets current working directory to a temporary
