@@ -18,6 +18,7 @@
 'Test pytil.series'
 
 from pytil import series as series_
+from pytil.series import series_equals, assert_series_equals
 import pandas as pd
 import pytest
 
@@ -35,11 +36,11 @@ def test_equals():
     data_frame.equals
     '''
     series1 = pd.Series([1, 2, 3], index=['i1', 'i2', 'i3'])
-    assert series_.equals(series1, series1)
+    assert series_equals(series1, series1)
 
     series2 = pd.Series([2, 1, 3+1e-8], index=[1,2,3])
-    assert series_.equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
-    assert not series_.equals(series1, series2, ignore_index=True, all_close=True)
+    assert series_equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
+    assert not series_equals(series1, series2, ignore_index=True, all_close=True)
 
 def test_assert_equals():
     '''
@@ -47,9 +48,9 @@ def test_assert_equals():
     series.equals
     '''
     series1 = pd.Series([1, 2, 3], index=['i1', 'i2', 'i3'])
-    series_.assert_equals(series1, series1)
+    assert_series_equals(series1, series1)
 
     series2 = pd.Series([2, 1, 3+1e-8], index=[1,2,3])
-    series_.assert_equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
+    assert_series_equals(series1, series2, ignore_order=True, ignore_index=True, all_close=True)
     with pytest.raises(AssertionError):
-        series_.assert_equals(series1, series2, ignore_index=True, all_close=True)
+        assert_series_equals(series1, series2, ignore_index=True, all_close=True)

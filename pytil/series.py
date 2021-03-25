@@ -43,7 +43,7 @@ def invert(series):
     df.set_index(series.name, inplace=True)
     return df[df.columns[0]]
 
-def equals(series1, series2, ignore_order=False, ignore_index=False,
+def series_equals(series1, series2, ignore_order=False, ignore_index=False,
                              all_close=False, _return_reason=False):
     '''
     Get whether 2 series are equal.
@@ -105,10 +105,7 @@ def _equals(series1, series2, ignore_order, ignore_index, all_close):
     )
 
 # Used by cedalion
-#
-# TODO rename to assert_series_equals, same for equals etc. Like we did for
-# dataframe
-def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_close=False):
+def assert_series_equals(actual, expected, ignore_order=False, ignore_index=False, all_close=False):
     '''
     Assert 2 series are equal.
 
@@ -124,7 +121,7 @@ def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_
     ignore_index : bool
     all_close : bool
     '''
-    equals_, reason = equals(
+    equals_, reason = series_equals(
         actual, expected, ignore_order, ignore_index, all_close, _return_reason=True
     )
     assert equals_, f'{reason}\n\n{actual.to_string()}\n\n{expected.to_string()}'
