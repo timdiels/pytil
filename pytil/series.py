@@ -105,6 +105,9 @@ def _equals(series1, series2, ignore_order, ignore_index, all_close):
     )
 
 # Used by cedalion
+#
+# TODO rename to assert_series_equals, same for equals etc. Like we did for
+# dataframe
 def assert_equals(actual, expected, ignore_order=False, ignore_index=False, all_close=False):
     '''
     Assert 2 series are equal.
