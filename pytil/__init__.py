@@ -15,4 +15,4 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytil.  If not, see <http://www.gnu.org/licenses/>.
 
-__version__ = '8.0.0'
+__version__ = '8.0.1.dev'
