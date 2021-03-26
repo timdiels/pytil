@@ -40,7 +40,7 @@ test:
     - pytest-env
 
   commands:
-    - pytest
+    - pytest -l --tb=auto
 
   # TODO adding downstreams: for some of our other pkgs here might be useful,
   # though not sure how that'd work out with e.g. pytil==7 on their part when
