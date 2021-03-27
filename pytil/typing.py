@@ -1,4 +1,4 @@
-# Copyright (C) 2017 VIB - Tim Diels <tim@diels.me>
+# Copyright (C) 2017-2021 VIB - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #

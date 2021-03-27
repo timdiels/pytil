@@ -1,4 +1,4 @@
-# Copyright (C) 2015 VIB/BEG/UGent - Tim Diels <tim@diels.me>
+# Copyright (C) 2015-2021 VIB/BEG/UGent - Tim Diels <tim@diels.me>
 #
 # This file is part of pytil.
 #
