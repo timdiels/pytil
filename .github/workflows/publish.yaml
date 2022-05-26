@@ -10,15 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+    - uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: 3.8
-    - name: Add conda to system path
-      # $CONDA points to the root of the miniconda directory
-      run: echo $CONDA/bin >> $GITHUB_PATH
+        miniconda-version: latest
+        python-version: 3.8.*
+        auto-update-conda: true
+        conda-build-version: 3.*
     - name: Install conda tools
-      run: conda install -y anaconda-client conda-build
+      run: conda install -y anaconda-client
     - name: Build conda pkg
       # The conda pkg includes tests which are run by building the pkg.
       run: |
