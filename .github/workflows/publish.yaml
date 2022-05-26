@@ -17,17 +17,18 @@ jobs:
         auto-update-conda: true
         conda-build-version: 3.*
     - name: Install conda tools
+      shell: bash -l {0}
       run: conda install -y anaconda-client
     - name: Build conda pkg
+      shell: bash -l {0}
       # The conda pkg includes tests which are run by building the pkg.
       run: |
         mkdir dist
         conda build . --channel anaconda --channel conda-forge --output-folder dist
     - name: Publish to anaconda
+      shell: bash -l {0}
       # --all converts the pkg to all platforms, uploading all of them; this
       # only works on pure python pkgs.
       run: anaconda upload --all dist/linux-64/*.tar.bz2
       env:
-        # Do not pass secrets by CLI as other jobs on the same runner can see
-        # the command line
         ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
